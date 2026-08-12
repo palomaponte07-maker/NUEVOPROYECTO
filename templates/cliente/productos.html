@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Productos
+{% endblock %}
+
+{% block content %}
+<section class="productos py-5">
+
+    <div class="container">
+
+        <div class="row g-5">
+
+            {% for producto in productos %}
+
+            <div class="col-6 col-md-4 col-lg-3">
+
+                <div class="producto-card">
+
+                    <div class="linea-superior"></div>
+
+                        <a href="#">
+                            <img src="{{ producto.imagen.url }}"
+                            class="img-fluid producto-img"
+                            alt="{{ producto.nombre }}">
+                        </a>
+                        
+                    </div>
+
+                    <div class="producto-info">
+
+                        <h5>{{ producto.nombre }}</h5>
+
+                        {% if producto.precio_anterior %}
+                            <div class="precios">
+                                <span class="precio-viejo">
+                                    $ {{ producto.precio_anterior }}
+                                </span>
+
+                                <span class="precio">
+                                    $ {{ producto.precio }}
+                                </span>
+                            </div>
+
+                        {% else %}
+
+                            <span class="precio">
+                                $ {{ producto.precio }}
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                    <div class="linea-inferior"></div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        <div class="text-center mt-4">
+
+            <a href="#" class="btn-productos">
+                MOSTRAR MÁS PRODUCTOS
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

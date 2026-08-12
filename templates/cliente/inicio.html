@@ -1,0 +1,232 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Inicio
+{% endblock %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<!-- ================= BANNER ================= -->
+
+<section class="banner">
+
+    <div class="container-fluid p-0 position-relative">
+
+        <img src="{% static 'img/banner.png' %}" class="img-fluid w-100" alt="Banner">
+
+        <div class="banner-texto">
+
+           <h1 class="titulo-temporada">
+                <span>Nueva</span>
+                <span class="gris">2026</span><br>
+                <span>Temporada</span>
+            </h1>
+        </div>
+    </div>
+</section>
+
+<!-- ================= PRODUCTOS ================= -->
+
+<section class="productos py-5">
+
+    <div class="container">
+
+        <h2 class="titulo-seccion text-center mb-5">
+            Productos Destacados
+        </h2>
+   
+        <div class="row g-4">
+
+            <!-- Producto -->
+
+            <div class="col-lg-2 col-md-4 col-6"> 
+                <div class="producto text-center"> 
+                    <img src="{% static 'img/productos/polleraDua.jpg' %}" class="img-fluid" alt="Pollera Dua"> 
+                    
+                    <h6>Pollera Dua</h6> 
+                    
+                    <div class="precios">
+
+                        <p class="precio-viejo">$15.500</p>
+                    
+                        <p class="precio">$10.500</p>
+
+                    </div>
+                     
+                </div> 
+            </div>
+
+            <!-- Producto -->
+
+            <div class="col-lg-2 col-md-4 col-6">
+
+                <div class="producto text-center">
+
+                    <img src="{% static 'img/productos/topPrincess.jpg' %}" class="img-fluid" alt="Top Princess">
+
+                    <h6>Top Princess</h6>
+
+                    <div class="precios">
+
+                        <p class="precio-viejo">$15.500</p>
+
+                        <p class="precio">$10.500</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Producto -->
+
+            <div class="col-lg-2 col-md-4 col-6">
+
+                <div class="producto text-center">
+
+                    <img src="{% static 'img/productos/jeanGase.jpg' %}" class="img-fluid" alt="Jean Gase">
+
+                    <h6>Jean Gase</h6>
+                   
+                    <div class="precios">
+
+                        <p class="precio">$40.900</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Producto -->
+
+            <div class="col-lg-2 col-md-4 col-6">
+
+                <div class="producto text-center">
+
+                    <img src="{% static 'img/productos/pantalonRebecca.jpg' %}" class="img-fluid" alt="Pantalón Rebecca">
+
+                    <h6>Pantalón Rebecca</h6>
+
+                    <div class="precios">
+
+                        <p class="precio-viejo">$30.900</p>
+
+                        <p class="precio">$22.000</p>
+
+                    </div>
+                </div>
+
+            </div>
+           
+            <!-- Producto -->
+
+            <div class="col-lg-2 col-md-4 col-6">
+
+                <div class="producto text-center">
+
+                    <img src="{% static 'img/productos/remeraEmma.jpg' %}" class="img-fluid" alt="Remera Emma">
+
+                    <h6>Remera Emma</h6>
+
+                    <div class="precios">
+
+                        <p class="precio-viejo">$15.900</p>
+
+                        <p class="precio">$10.000</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+           
+            <!-- Producto -->
+
+            <div class="col-lg-2 col-md-4 col-6">
+
+                <div class="producto text-center">
+
+                    <img src="{% static 'img/productos/camperaBomber.jpg' %}" class="img-fluid" alt="Campera Bomber">
+
+                    <h6>Campera Bomber</h6>
+
+                    <div class="precios">
+
+                        <p class="precio">$56.900</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Botón -->
+
+        <div class="text-center mt-5">
+
+            <a href="#"
+                class="btn-productos">
+
+                VER TODOS LOS PRODUCTOS
+
+            </a>
+       
+        </div>
+
+    </div>
+
+</section>
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="container">
+
+        <div class="row align-items-center">
+
+           <div class="col-lg-4 text-center text-lg-start">
+
+            <strong class="footer-titulo">Medios de pago: </strong>
+
+            <img src="{% static 'img/mercadopagoLogo.jpg' %}" class="logo-pagos">
+
+        </div>
+
+            <div class="col-lg-4 text-center contacto-footer">
+
+                <div class="contacto-contenido">
+
+                    <strong class="footer-titulo">Contacto: </strong>
+
+                    <div class="redes">
+
+                        <a href="#">
+                            <i class="bi bi-instagram"></i> 
+                        Instagram
+                        </a>
+
+                        <a href="#">
+                            <i class="bi bi-whatsapp"></i> 
+                            WhatsApp
+                        </a>
+
+                        <a href="#">
+                            <i class="bi bi-geo-alt"></i> 
+                            Ubicación
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+{% endblock %}

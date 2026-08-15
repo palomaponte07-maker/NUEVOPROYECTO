@@ -84,7 +84,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'mssql',
         'NAME': 'TiendaOlivia',
-        'USER': 'colaboradocra',
+        'USER': 'colaboradora',
         'PASSWORD': 'Olivia2024!',
         'HOST': '192.168.0.196',
         'PORT': '1433',

@@ -84,11 +84,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'mssql',
         'NAME': 'TiendaOlivia',
-        'HOST': 'paloma',
-        'PORT': '',
+        'USER': 'colaboradocra',
+        'PASSWORD': 'Olivia2024!',
+        'HOST': '192.168.0.196',
+        'PORT': '1433',
         'OPTIONS': {
             'driver': 'ODBC Driver 18 for SQL Server',
-            'trusted_connection': 'yes',
             'extra_params': 'TrustServerCertificate=yes',
         },
     },

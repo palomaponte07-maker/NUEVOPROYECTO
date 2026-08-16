@@ -1,0 +1,298 @@
+*{
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: georgia, "Times New Roman", serif;
+    background-color: #eee7df;
+    color:#171717;
+}
+
+.header {
+    height: 120px;
+    background-color:#ffffff;
+    display: flex;
+    align-items: center;
+    padding: 0 65px;
+    position: relative;
+}
+
+.logo {
+    width: 150px;
+    color: #c11f25;
+    font-size: 50px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.logo-hojas{
+    display: block;
+    height: 25px;
+    font-size: 45px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.header h1 {
+    margin-left: 350px;
+    color: #c11f25;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.notificacion {
+    margin-left: auto;
+    color: #c11f25;
+    font-size: 32px;
+}
+
+.container {
+    width: 100%;
+    padding: 25px 65px 100px;
+}
+
+.seccion {
+    width: 100%;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+h2 {
+    color: #c11f25;
+    font-family: Arial, sans-serif;
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.btn-agregar {
+    background-color: #c11f25;
+    color: white;
+    text-decoration: none;
+    padding: 9px 38px;
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.btn-agregar:hover {
+    background-color: #c11f25;
+}
+
+
+.tabla-productos {
+    margin-top: 25px; 
+}
+
+.producto-header,
+.producto-row {
+    display: grid;
+    grid-template-columns:
+        150px
+        1.3fr
+        1fr
+        1fr
+        1fr
+        0.7fr
+        1.2fr;
+
+    align-items: center;
+    column-gap: 25px;
+}
+
+.producto-header {
+    font-family: Arial, sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.producto-row {
+    min-height: 165px;
+    margin-bottom: 5px;
+    font-size: 19px;
+}
+
+.producto-imagen img {
+    width: 108px;
+    height: 143px;
+    object-fit: cover;
+}
+
+.producto-nombre {
+    font-size: 20px;
+}
+
+.talles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    max-width: 120px;
+}
+
+.talles span {
+    border: 1px solid #777;
+    padding: 5px 7px;
+    font-size: 14px;
+}
+
+
+.acciones {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.btn-icon {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 37px;
+}
+
+.editar,
+.eliminar,
+.descuento {
+    color: #c11f25;
+}
+
+.btn-icon:hover {
+    transform: scale(1.1);
+}
+
+.ver-productos {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.ver-productos a {
+    border: 2px solid #c11f25;
+    padding: 20px 42px;
+    color: #c11f25;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.ver-productos a:hover {
+    background-color: #c11f25;
+    color: white;
+}
+
+.pedidos-section {
+    margin-top: 115px;
+}
+
+.tabla-pedidos {
+    margin-top: 70px;
+    background-color: #ffffff;
+    padding: 30px 0;
+    margin-left: -65px;
+    margin-right: -65px;
+}
+
+.pedido-header,
+.pedido-row {
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        1fr
+        1fr
+        1.4fr
+        1.3fr
+        0.7fr
+        1.2fr
+        1fr
+        1fr
+        1fr;
+
+    align-items: center;
+    text-align: center;
+    column-gap: 12px;
+}
+
+.pedido-header {
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+
+.pedido-row {
+    font-size: 19px;
+    min-height: 70px;
+}
+
+.btn-detalle {
+    background-color: white;
+    border: 3px solid #b9b9b9;
+    padding: 5px 10px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-detalle:hover {
+    background-color: #eeeeee;
+}
+
+.ver-pedidos {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -25px;
+}
+
+.ver-pedidos a {
+    color: #c11f25;
+    font-family: Arial, sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+footer {
+    height: 65px;
+    background-color: #c11f25;
+    margin-top: 40px;
+}
+
+@media (max-width: 1000px) {
+
+    .header {
+        padding: 20px;
+    }
+
+    .header h1 {
+        font-size: 25px;
+    }
+
+    .container {
+        padding: 25px 20px;
+        overflow-x: auto;
+    }
+
+    .producto-header,
+    .producto-row {
+        min-width: 1000px;
+    }
+
+    .tabla-pedidos {
+        margin-left: -20px;
+        margin-right: -20px;
+        overflow-x: auto;
+    }
+
+    .pedido-header,
+    .pedido-row {
+        min-width: 1100px;
+    }
+}

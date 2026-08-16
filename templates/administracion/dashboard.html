@@ -1,7 +1,179 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset=""UTF-8>
-    <meta neme="viewport" content=""widht=dive-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administración</title> 
+    <link rel ="stylesheet" href="{% static 'administracion/css/dashboard.css' %}">    
+</head>
 
+<body>
+    <header class="header">
+        <div class="logo">
+            <span class="logo-hoja"></span>
+            <span>Olivia</span>
+        </div>
+        <h1> panel de Administrción </h1>
+        <div class="notificacion">
+        </div>
+    </header> 
+    
+    <main class="container">
+        <section class="seccion productos-section">
+            <div class="section-header">
+                <h2>PRODUCTOS RECIENTES</h2>
+                <a href="#" class="btn-agregar">
+                     Agregar Producto
+                </a>
+            </div>
+            <div class="tabla-productos">
+                <div class="producto-header">
+                    <div>Productos:</div>
+                    <div>Descripción</div>
+                    <div>Talles</div>
+                    <div>Color</div>
+                    <div>Precio</div>
+                    <div>Stock</div>
+                    <div>Acciones</div>
+                </div>
+                <div class="producto-row">
+                     <div class="producto-imagen">
+                        <img src="https://via.placeholder.com/120x150" alt="Jean Gase">
+                    </div>
+                    <div class="producto-nombre">
+                        Jean Gase
+                    </div>
+                     <div class="talles">
+
+                        <span>38</span>
+                        <span>40</span>
+                        <span>42</span>
+                        <span>44</span>
+                        <span>46</span>
+                        <span>48</span>
+
+                    </div>
+                    <div>
+                        celecste
+                    </div>
+                     <div>
+                        $40.900
+                    </div>
+                    <div>
+                        14
+                    </div>
+                     <div class="acciones">
+                        <button class="btn-icon editar" title="Editar">
+                        </button>
+
+                        <button class="btn-icon eliminar" title="Eliminar">
+                        </button>
+
+                        <button class="btn-icon descuento" title="Descuento">
+                        </button>
+                </div>
+            </div>
+
+             <div class="producto-row">
+                    <div class="producto-imagen">
+                        <img src="https://via.placeholder.com/120x150" alt="Remera Emma">
+                    </div>
+                    <div class="producto-nombre">
+                        Remera Emma
+                    </div>
+                    <div class="talles">
+                        <span>Único</span>
+                    </div>
+                    <div>
+                        rojo y blanco
+                    </div>
+                    <div>
+                        $9.000
+                    </div>
+                    <div>
+                        5
+                    </div>
+
+                    <div class="acciones">
+                        <button class="btn-icon editar" title="Editar">
+                        </button>
+                        <button class="btn-icon eliminar" title="Eliminar">
+                        </button>
+                        <button class="btn-icon descuento" title="Descuento">
+                        </button>
+                    </div>
+                </div>
+            </div>
+                <div class="ver-productos">
+                    <a href="#">
+                        ver todos los productos
+                    </a>
+                </div>
+        </section>
+        
+        <section class="seccion pedidos-section">
+            <h2> PEDIDOS RECIENTES</h2>
+            <div class="tabla-pedidos">
+                <div class="pedido-header">
+                    <div>num.pedido</div>
+                    <div>Nombre</div>
+                    <div>Apellido</div>
+                    <div>Producto</div>
+                    <div>Cantidad de unidades</div>
+                    <div>talle</div>
+                    <div>Fecha</div>
+                    <div>Precio</div>
+                    <div>Estado</div>
+                    <div>Acción</div>
+                </div>
+                <div class="pedido-row">
+                    <div>1243</div>
+                    <div>Lucia</div>
+                    <div>González</div>
+                    <div>Jean Gase</div>
+                    <div>1</div>
+                    <div>42</div>
+                    <div>24 may, 2026</div>
+                    <div>$40.900</div>
+                    <div>pendiente</div>
+                </div>
+                <div> 
+                    <buton class="btn-detalle">
+                        detalle<br>
+                        pedido
+                    </buton>
+                </div>
+            </div>>
+
+            <div class="pedido-row">
+                <div>243</div>
+                <div>Marta</div>
+                <div>Rodríguez</div>
+                <div>Remera Emma</div>
+                <div>1</div>
+                <div>único</div>
+                <div>18 may, 2026</div>
+                <div>$9.000</div>
+                <div>confirmado</div>
+            </div>
+            <div> 
+                <button class="btn-detalle">
+                    Detalle<br>
+                    Pedido
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class=""ver-pedidos">
+        <a href="#">
+            ver todos --&gt;
+        </a>
+    </div>
+</section>
+</main>
+<footer></footer>
+
+</body>
+</html>

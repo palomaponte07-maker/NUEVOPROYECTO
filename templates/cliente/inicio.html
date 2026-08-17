@@ -40,7 +40,8 @@ Inicio
             {% for producto in productos_destacados %}
             
                 <div class="col-lg-2 col-md-4 col-6">
-                    <div class="producto text-center">
+
+                    <a href="{% url 'detalle_producto' producto.idProducto %}" class="producto text-center">
 
                         {% with imagen=producto.imagen_set.first %}
                             {% if imagen %}
@@ -64,7 +65,7 @@ Inicio
 
                         </div>
                     
-                    </div>
+                    </a>
 
                 </div>
 

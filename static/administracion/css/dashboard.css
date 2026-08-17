@@ -193,7 +193,7 @@ h2 {
 .tabla-pedidos {
     margin-top: 70px;
     background-color: #ffffff;
-    padding: 30px 0;
+    padding: 25px 0 15px;
     margin-left: -65px;
     margin-right: -65px;
 }
@@ -216,19 +216,18 @@ h2 {
 
     align-items: center;
     text-align: center;
-    column-gap: 12px;
 }
 
 .pedido-header {
     font-family: Arial, sans-serif;
     font-size: 20px;
     font-weight: bold;
-    margin-bottom: 40px;
+    margin-bottom: 25px;
 }
 
 .pedido-row {
     font-size: 19px;
-    min-height: 70px;
+    min-height: 80px;
 }
 
 .btn-detalle {

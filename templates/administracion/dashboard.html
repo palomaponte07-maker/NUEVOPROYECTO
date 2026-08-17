@@ -23,7 +23,7 @@
         <section class="seccion productos-section">
             <div class="section-header">
                 <h2>PRODUCTOS RECIENTES</h2>
-                <a href="#" class="btn-agregar">
+                <a href="{% url 'agregar_producto' %}"></a>
                      Agregar Producto
                 </a>
             </div>
@@ -69,11 +69,11 @@
                         </button>
 
                         <button class="btn-icon eliminar" title="Eliminar">
-                            🗑️
+                            🗑︎
                         </button>
 
                         <button class="btn-icon descuento" title="Descuento">
-                            🏷️
+                            🏷︎
                         </button>
                 </div>
             </div>
@@ -103,10 +103,10 @@
                             ✎
                         </button>
                         <button class="btn-icon eliminar" title="Eliminar">
-                            🗑️
+                            🗑︎
                         </button>
                         <button class="btn-icon descuento" title="Descuento">
-                            🏷️  
+                            🏷︎  
                         </button>
                     </div>
                 </div>
@@ -143,14 +143,13 @@
                     <div>24 may, 2026</div>
                     <div>$40.900</div>
                     <div>pendiente</div>
-                </div>
                 <div> 
                     <button class="btn-detalle">
-                        detalle<br>
+                        detalle <br>
                         pedido
                     </button>
                 </div>
-            </div>>
+            </div>
 
             <div class="pedido-row">
                 <div>243</div>
@@ -162,7 +161,6 @@
                 <div>18 may, 2026</div>
                 <div>$9.000</div>
                 <div>confirmado</div>
-            </div>
             <div> 
                 <button class="btn-detalle">
                     Detalle<br>
@@ -170,9 +168,10 @@
                 </button>
             </div>
         </div>
+      </div>
     </div>
-
-    <div class=""ver-pedidos">
+</div>
+    <div class="ver-pedidos">
         <a href="#">
             ver todos --&gt;
         </a>
@@ -180,6 +179,5 @@
 </section>
 </main>
 <footer></footer>
-
 </body>
 </html>

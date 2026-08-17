@@ -1,0 +1,217 @@
+/* agregar producto */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background-color: yellow;
+}
+body {
+    font-family: Georgia, "Times New Roman", serif;
+    background-color: #efe8e0;
+    color: #171717;
+    
+}
+.header {
+    height: 120px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    padding: 0 65px;
+    position: relative;
+}
+
+.logo {
+    width: 150px;
+    color: #c11f25;
+    font-size: 50px;
+    font-weight: bold;
+    font-style: italic;
+}
+.header h1 {
+    margin-left: 350;
+    color: #c11f25;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.btn-volver {
+    position: absolute;
+
+    right: 80px;
+
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background-color: #c11f25;
+    color: white;
+    text-decoration: none;
+
+    font-family: Arial, sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+}
+.contenedor {
+    min-height: calc(100vh - 135px);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding-top: 100px;
+}
+.formulario-producto {
+    width: 500px;
+    background-color: #ffffff;
+    padding: 0 18px 45px;
+}
+.campo {
+    display: flex;
+    flex-direction: column;
+}
+
+.campo label {
+    margin-bottom: 25px;
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.campo input,
+.campo select {
+    width: 100%;
+    height: 75px;
+     background-color: #eee7df;
+    border: 3px solid #171717;
+    padding: 0 15px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 20px;
+    outline: none;
+}
+
+.campo input::placeholder {
+    color: #bdbdbd;
+}
+
+.imagen-campo {
+    padding-top: 0;
+}
+
+.zona-imagen {
+    height: 75px;
+
+    border: 3px dashed #171717;
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+}
+.zona-imagen input {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    opacity: 0;
+
+    cursor: pointer;
+}
+
+.icono-subir {
+    font-family: Arial, sans-serif;
+
+    font-size: 48px;
+    font-weight: 200;
+
+    line-height: 1;
+
+    transform: translateY(-5px);
+}
+.descripcion-campo {
+    margin-top: 70px;
+}
+.fila-datos {
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        1fr
+        1fr;
+
+    gap: 55px;
+
+    margin-top: 115px;
+}
+
+.fila-datos .campo input {
+    height: 68px;
+}
+.categoria-campo {
+    margin-top: 70px;
+}
+
+.categoria-campo select {
+    appearance: auto;
+
+    cursor: pointer;
+}
+.btn-guardar {
+    margin-top: 20px;
+
+    width: 260px;
+    height: 45px;
+
+    background-color: #c11f25;
+
+    border: none;
+
+    color: white;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 21px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.btn-guardar:hover {
+    background-color: #a9181d;
+}
+@media (max-width: 700px) {
+
+    .header {
+        padding: 0 25px;
+    }
+
+    .logo {
+        width: 130px;
+        font-size: 35px;
+    }
+
+    .header h1 {
+        font-size: 24px;
+    }
+
+    .btn-volver {
+        right: 25px;
+    }
+
+    .formulario-producto {
+        width: calc(100% - 40px);
+    }
+
+    .fila-datos {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+}

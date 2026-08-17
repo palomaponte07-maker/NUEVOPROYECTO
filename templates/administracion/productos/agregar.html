@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" >
+        <meta name ="viewport" content = "width=device-width, initial-scale=1.0">
+        <title>Agregar Producto</title>
+        <link rel="stylesheet"
+        href="{% static 'administracion/css/productos.css' %}">
+    </head>
+
+    <body>
+        <header class="header">
+            <div class="logo">
+                <span> Oliviva</span>
+            </div>
+            <h1>Agregar Producto</h1>
+            <a href="#" class="btn-volver"></a>
+        </header>
+
+        <main class="contenedor">
+            <form class="formulario-producto">
+                <div class="campo imagen-campo">
+                    <label>Imagen del producto</label>
+                    <div class="zona-imagen">
+                        <span class="icono-subir"></span>
+                        <input type="file"
+                               name="imagen"
+                               accept="image/*">
+                    </div>
+                </div>
+
+                <div class="campo descripcion-campo">
+                    <label for="descripcion">
+                        Descripcion
+                    </label>
+
+                    <input 
+                          type="text"
+                          id="descripcion"
+                          name="descripcion"
+                          placeholder="Ej: Jean Gase">
+                </div>
+                <div class="fila-datos">
+                    <div class="campo">
+                        <label>
+                            Precio
+                        </label>
+
+                        <input 
+                              type="number"
+                              id="precio"
+                              name="precio"
+                              placeholder="$0">
+                    </div>
+
+                    <div class="campo">
+                        <label for="stock">
+                            Stock
+                        </label>
+                        <input 
+                              type="number"
+                              id="stock"
+                              name="stock"
+                              placeholder="0">
+                    </div>
+                    <div class="campo">
+                    <label from="color">
+                        Color
+                    </label>
+                    <input  
+                          type="text"
+                          id="color"
+                          name="color">
+                    </div>       
+                 </div>
+                </div>
+                <div class="campo categoria-campo">
+                    <label for="categoria">
+                        Categoría
+                    </label>
+                    <select id="categoria" name="categoria">
+                        <option value="">
+                            Seleccionar Categoria
+                        </option>
+                         <option value="jeans">
+                        Jeans
+                    </option>
+
+                    <option value="remeras">
+                        Remeras
+                    </option>
+
+                    <option value="camisas">
+                        Camisas
+                    </option>
+                      <option value="pantalones">
+                        Pantalones
+                    </option>
+
+                    <option value="vestidos">
+                        Vestidos
+                    </option>
+                </select>
+            </div>
+        </form>
+
+        <button type="submit" class="btn-guardar">
+            Guardar Producto
+        </button>
+    </main>
+</body>
+</html>

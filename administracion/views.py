@@ -5,3 +5,6 @@ def dashboard(request):
 
 def agregar_producto(request):
     return render(request, 'administracion/productos/agregar.html')
+
+def editar_producto(request):
+    return render(request, 'administracion/productos/editar.html')

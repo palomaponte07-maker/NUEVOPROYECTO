@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Producto</title>
+    <link rel="stylesheet"
+          href="{% static 'administracion/css/productos.css' %}">
+</head>
+<body>
+    <header class="header-productos">
+        <div class="logo-productos">
+          <span>Olivia</span>
+        </div>
+        <h1>Editar Producto</h1>
+        <a href="#" class="btn-volver-producto">↩</a>
+    </header>
+    <main class="editar-contenedor">
+        <div class="productos-editar">
+            <div class="editar-header">
+                <div>Productos:</div>
+                <div>Descripción</div>
+                <div>Precio</div>
+                <div>Stock</div>
+                <div>Color</div>
+            </div>
+
+            <div class="editar-row">
+                <div class="producto-imagen-editar">
+                    <img src="{% static 'administracion/img/jean-gase.jpg' %}"
+                         alt="jean Gase">
+                </div>
+                <div class="producto-dato">
+                    Jean Gase
+                </div>
+                <div class="producto-dato">
+                    $40.900
+                </div>
+                <div class="producto-dato">
+                    13
+                </div>
+                <div class="producto-dato">
+                    Celeste
+                </div>
+            </div>
+
+            <div class="editar-row">
+                <div class="producto-imagen-editar">
+                    <img src="{% static 'administracion/img/remera-emma.jpg' %}"
+                         alt="Remera Emma">
+                </div>
+                <div class="producto-dato">
+                    Remera Emma
+                </div>
+                <div class="producto-dato">
+                    $9.000
+                </div>
+                <div class="producto-dato">
+                    4
+                </div>
+                <div class="producto-dato">
+                    Rojo y Blanco
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

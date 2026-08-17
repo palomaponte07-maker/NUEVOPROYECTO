@@ -11,4 +11,10 @@ def inicio(request):
     )
 
 def productos(request):
-    return render(request, "cliente/productos.html")
+    productos = Producto.objects.all()
+
+    return render(
+        request,
+        "cliente/productos.html",
+        {"productos": productos}
+    )

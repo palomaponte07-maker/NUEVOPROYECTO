@@ -21,9 +21,13 @@ Productos
                     <div class="linea-superior"></div>
 
                         <a href="#">
-                            <img src="{{ producto.imagen.url }}"
-                            class="img-fluid producto-img"
-                            alt="{{ producto.nombre }}">
+                            {% with imagen=producto.imagen_set.first %}
+                                {% if imagen %}
+                                    <img src="{% static imagen.urlImagen %}"
+                                        class="img-fluid producto-img"
+                                        alt="{{ producto.nombre }}">
+                                {% endif %}
+                            {% endwith %}
                         </a>
                         
                     </div>
@@ -32,24 +36,17 @@ Productos
 
                         <h5>{{ producto.nombre }}</h5>
 
-                        {% if producto.precio_anterior %}
-                            <div class="precios">
-                                <span class="precio-viejo">
-                                    $ {{ producto.precio_anterior }}
-                                </span>
+                        <div class="precios">
 
-                                <span class="precio">
-                                    $ {{ producto.precio }}
-                                </span>
-                            </div>
-
-                        {% else %}
-
-                            <span class="precio">
-                                $ {{ producto.precio }}
+                            <span class="precio-viejo">
+                                $ {{ producto.precioOriginal|floatformat:0 }}
                             </span>
 
-                        {% endif %}
+                            <span class="precio">
+                                $ {{ producto.precioDescuento|floatformat:0 }}
+                            </span>
+                            
+                        </div>
 
                     </div>
 

@@ -1,0 +1,69 @@
+{% extends 'administrcion/base.html' %}
+{% load static %}
+{% block title %}
+Descuento Producto
+{% endblock %}
+{% block content %}
+
+<div class="contenedor-descuentos">
+    <div class="encabeado-descuentos">
+        <h1>Descuento Producto</h1>
+        <a href="{% url 'dashboard' %}" class="bth-volve">
+            <i class="di di-arrowaleft"></i>
+        </a>
+    </div>
+    <div class="tabla-descuentos">
+        <div class="fila encabezado">
+            <div>Producto</div>
+            <div>Nombre</div>
+            <div>Descuento</div>
+            <div></div>
+        </div>
+        {% for producto in productos %}
+        <form method="post" class="fila">
+            {% csrf_token %}
+            <div>
+                 {% with imagen=producto.imagen_set.first %}
+                    {% if imagen %}
+                    <img src="{{imagen.urlImagen}}"
+                         class="imagen-producto"
+                         alt="{{ producto.nombre }}">
+                    {% endif %}
+                 {% endwith %}
+            </div>
+            <div>
+                {{ producto.nombre}}
+            </div>
+            <div>
+                <select name=porcentaje>
+                    <option value="0"
+                       {% if producto.porcentajeDescuento == 0 %}
+                          selected
+                        {% endif %}>
+                        Sin descuento
+                    </option> 
+                    <option value="5">5%</option>
+                    <option value="10">10%</option>
+                    <option value="15">15%</option>
+                    <option value="20">20%</option>
+                    <option value="25">25%</option>
+                    <option value="30">30%</option>
+                    <option value="35">35%</option>
+                    <option value="40">40%</option>
+                    <option value="40">50%</option>
+                </select>
+            </div>
+            <div>
+                <botton type="sudmit" class="btn-aplicar">
+                    Aplicar
+                </botton>
+            </div>
+        </form>
+         {% empty %}
+
+        <p>No hay productos registrados.</p>
+
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

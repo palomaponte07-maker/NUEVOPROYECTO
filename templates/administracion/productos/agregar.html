@@ -30,11 +30,21 @@
                     </div>
                 </div>
 
-                <div class="campo descripcion-campo">
+                <div class="campo nombre-campo">
+                    <label for="nombre">
+                        Nombre
+                    </label>
+                    <input
+                    type="text"
+                    id="nombre"
+                    name="nombre"
+                    placeholder="Ej: Jean Gase"
+                    required>
+                </div>
+                    <div class="campo descripcion-campo">
                     <label for="descripcion">
                         Descripcion
                     </label>
-
                     <input 
                           type="text"
                           id="descripcion"
@@ -48,10 +58,11 @@
                         </label>
 
                         <input 
-                              type="number"
+                              type="text"
                               id="precio"
                               name="precio"
-                              placeholder="$0">
+                              placeholder="$0"
+                              step="0.01">
                     </div>
 
                     <div class="campo">
@@ -65,7 +76,7 @@
                               placeholder="0">
                     </div>
                     <div class="campo">
-                    <label from="color">
+                    <label for="color">
                         Color
                     </label>
                     <input  
@@ -74,6 +85,18 @@
                           name="color">
                     </div>       
                  </div>
+                 <div class="campo">
+                <div class="campo">
+                    <label for="talle">
+                        Talle
+                    </label>
+                    <input 
+                        type="text"
+                        id="talle"
+                        name="talle"
+                        placeholder="Ej: 38"
+                        required>
+                </div>
                 </div>
                 <div class="campo categoria-campo">
                     <label for="categoria">
@@ -103,11 +126,10 @@
                     </option>
                 </select>
             </div>
-        </form>
-
         <button type="submit" class="btn-guardar">
             Guardar Producto
         </button>
+    </form>
     </main>
 </body>
 </html>

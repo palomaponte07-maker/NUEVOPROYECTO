@@ -127,24 +127,24 @@ body {
 
     transform: translateY(-5px);
 }
+.nombre-campo {
+    margin-top: 70px;
+}
 .descripcion-campo {
     margin-top: 70px;
 }
 .fila-datos {
     display: grid;
-
     grid-template-columns:
         1fr
         1fr
         1fr;
-
-    gap: 55px;
-
-    margin-top: 115px;
+    gap: 35px;
+    margin-top: 70px;
 }
 
 .fila-datos .campo input {
-    height: 68px;
+    height: 50px;
 }
 .categoria-campo {
     margin-top: 70px;
@@ -189,7 +189,9 @@ body {
     }
 
     .header h1 {
+        margin-left: 0;
         font-size: 24px;
+        text-align: center;
     }
 
     .btn-volver {
@@ -205,6 +207,8 @@ body {
         gap: 25px;
     }
 }
+
+
 
 
 .header-producto{
@@ -329,3 +333,4 @@ body {
         overflow-x: auto;
     }
 }
+

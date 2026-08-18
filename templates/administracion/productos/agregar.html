@@ -21,6 +21,19 @@
         <main class="contenedor">
             <form method="POST" class="formulario-producto">
                 {% csrf_token %}
+
+
+
+
+                {% if form.errors %}
+                  <div style="color: red;">
+                {{ form.errors }}
+                  </div>
+                {% endif %}
+
+
+
+
                 <div class="campo imagen-campo">
                     <label>Imagen del producto</label>
                     <div class="zona-imagen">
@@ -104,33 +117,19 @@
                         Categoría
                     </label>
                     <select id="categoria" name="categoria">
-                        <option value="">
-                            Seleccionar Categoria
-                        </option>
-                         <option value="jeans">
-                        Jeans
-                    </option>
-
-                    <option value="remeras">
-                        Remeras
-                    </option>
-
-                    <option value="camisas">
-                        Camisas
-                    </option>
-                      <option value="pantalones">
-                        Pantalones
-                    </option>
-
-                    <option value="vestidos">
-                        Vestidos
-                    </option>
-                </select>
-            </div>
-        <button type="submit" class="btn-guardar">
-            Guardar Producto
-        </button>
-    </form>
-    </main>
-</body>
+                         <option value="">Seleccionar Categoría</option>
+                         {% for categoria in form.fields.categoria.queryset %}
+                           <option value="{{ categoria.idCategoria }}"
+                             {% if form.data.categoria == categoria.idCategoria|stringformat:"s" %}selected{% endif %}>
+                             {{ categoria.nombreCategoria }}
+                           </option>
+                          {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn-guardar">
+                Guardar Producto
+                </button>
+            </form>
+        </main>
+    </body>
 </html>

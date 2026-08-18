@@ -23,7 +23,7 @@
         <section class="seccion productos-section">
             <div class="section-header">
                 <h2>PRODUCTOS RECIENTES</h2>
-                <a href="{% url 'agregar_producto' %}"></a>
+                <a href="{% url 'agregar_producto' %}">
                      Agregar Producto
                 </a>
             </div>
@@ -37,85 +37,63 @@
                     <div>Stock</div>
                     <div>Acciones</div>
                 </div>
+
+                {% for producto in productos %}
                 <div class="producto-row">
-                     <div class="producto-imagen">
-                        <img src="https://via.placeholder.com/120x150" alt="Jean Gase">
-                    </div>
-                    <div class="producto-nombre">
-                        Jean Gase
-                    </div>
-                     <div class="talles">
+                     <div class="producto-info">
+                        {% with producto.imagen_set.first as imagen %}
+                            {% if imagen %}
+                             <img src="{{ imagen.urlImagen }}" alt="">
+                            {% else %}
+                             <img src="https://via.placeholder.com/120x150" alt="">
+                            {% endif %}
+                        {% endwith %}
 
-                        <span>38</span>
-                        <span>40</span>
-                        <span>42</span>
-                        <span>44</span>
-                        <span>46</span>
-                        <span>48</span>
-
+                        <span class="producto-nombre">
+                         {{ producto.nombre }}
+                        </span>
                     </div>
+
                     <div>
-                        celecste
+                       {{ producto.descripcion }}
                     </div>
-                     <div>
-                        $40.900
-                    </div>
-                    <div>
-                        14
-                    </div>
-                     <div class="acciones">
-                        <button class="btn-icon editar" title="Editar">
-                             ✎
-                        </button>
 
-                        <button class="btn-icon eliminar" title="Eliminar">
-                            🗑︎
-                        </button>
-
-                        <button class="btn-icon descuento" title="Descuento">
-                            🏷︎
-                        </button>
-                </div>
-            </div>
-
-             <div class="producto-row">
-                    <div class="producto-imagen">
-                        <img src="https://via.placeholder.com/120x150" alt="Remera Emma">
-                    </div>
-                    <div class="producto-nombre">
-                        Remera Emma
-                    </div>
                     <div class="talles">
-                        <span>Único</span>
-                    </div>
-                    <div>
-                        rojo y blanco
-                    </div>
-                    <div>
-                        $9.000
-                    </div>
-                    <div>
-                        5
+                        <span>{{ producto.talle }}</span>
                     </div>
 
-                    <div class="acciones">
-                        <button class="btn-icon editar" title="Editar">
-                            ✎
-                        </button>
-                        <button class="btn-icon eliminar" title="Eliminar">
-                            🗑︎
-                        </button>
-                        <button class="btn-icon descuento" title="Descuento">
-                            🏷︎  
-                        </button>
+                     <div>
+                      {{ producto.color }}
+                     </div>
+
+                     <div>
+                      ${{ producto.precioDescuento }}
+                     </div>
+
+                     <div>
+                     {{ producto.stock }}
+                       </div>
+
+                      <div class="acciones">
+                         <button class="btn-icon editar" title="Editar">
+                             ✎
+                         </button>
+                         <button class="btn-icon eliminar" title="Eliminar">
+                              🗑︎
+                         </button> 
+                         <button class="btn-icon descuento" title="Descuento">
+                             🏷︎
+                         </button>
+                        </div>
+
                     </div>
-                </div>
+
+                {% empty %}
+              <div class="producto-row">
+                 <div>No hay productos registrados.</div>
+              </div>
+             {% endfor %}
             </div>
-                <div class="ver-productos">
-                    <a href="#">
-                        ver todos los productos
-                    </a>
-                </div>
         </section>
         
         <section class="seccion pedidos-section">

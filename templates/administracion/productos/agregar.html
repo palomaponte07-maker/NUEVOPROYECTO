@@ -19,7 +19,8 @@
         </header>
 
         <main class="contenedor">
-            <form class="formulario-producto">
+            <form method="POST" class="formulario-producto">
+                {% csrf_token %}
                 <div class="campo imagen-campo">
                     <label>Imagen del producto</label>
                     <div class="zona-imagen">
@@ -60,9 +61,9 @@
                         <input 
                               type="text"
                               id="precio"
-                              name="precio"
+                              name="precioOriginal"
                               placeholder="$0"
-                              step="0.01">
+                              inputmode="decimal">
                     </div>
 
                     <div class="campo">

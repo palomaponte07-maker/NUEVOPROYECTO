@@ -8,7 +8,7 @@
     --fuente-general: "Open Sans", sans-serif;
 }
 
-/* ================= GENERAL ================= */
+
 
 body {
     background-color: var(--color-fondo);
@@ -18,7 +18,7 @@ body {
     padding: 0;
 }
 
-/* ================= HEADER ================= */
+
 
 header,
 .navbar {
@@ -27,7 +27,7 @@ header,
     box-shadow: none;
 }
 
-/* Logo */
+
 
 .logo-navbar{
     width: 170px;
@@ -39,7 +39,7 @@ header,
     height: auto;
 }
 
-/* Menú */
+
 
 .navbar-nav .nav-link{
     font-family: var(--fuente-titulos);
@@ -61,7 +61,7 @@ header,
     text-underline-offset: 6px;
 }
 
-/* Bolsa de compras */
+
 
 .bolsa-carrito{
     color: var(--color-rojo);
@@ -74,7 +74,7 @@ header,
     color: #9d181d;
 }
 
-/* Nueva Temporada */
+
 
 .titulo-temporada{
     font-family: var(--fuente-titulos);
@@ -92,9 +92,9 @@ header,
     font-weight: 500;
 }
 
-/* PRODUCTOS */
 
-/* Nombre del producto */
+
+
 
 .producto h6{
     font-family: var(--fuente-titulos);
@@ -104,7 +104,7 @@ header,
     margin-top: 15px;
 }
 
-/* Precio */
+
 .precios {
     display: flex;
     justify-content: center;
@@ -128,7 +128,7 @@ header,
     text-decoration: line-through;
 }
 
-/* Botón "Ver todos los productos" */
+
 
 .btn-productos{
     font-family: var(--fuente-general);
@@ -222,4 +222,242 @@ footer a:hover{
     display: flex;
     align-items: center;
     gap: 5px;
+}
+
+.detalle-producto {
+    background-color: var(--color-fondo);
+    padding: 50px 0 70px;
+    min-height: 600px;
+}
+
+.detalle-contenido {
+    display: flex;
+    gap: 60px;
+    align-items: flex-start;
+}
+
+
+
+
+.detalle-imagenes {
+    display: flex;
+    gap: 38px;
+    width: 48%;
+}
+
+.miniaturas {
+    display: flex;
+    flex-direction: column;
+    gap: 33px;
+    width: 120px;
+}
+
+.miniatura {
+    width: 90px;
+    height: 120px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.imagen-principal {
+    flex: 1;
+}
+
+.imagen-principal img {
+    width: 390px;
+    height: 520px;
+    object-fit: cover;
+}
+
+
+
+
+.detalle-info {
+    flex: 1;
+    padding-top: 3px;
+}
+
+.detalle-info h1 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 34px;
+    font-weight: 600;
+    margin: 0 0 25px;
+}
+
+.detalle-precio {
+    margin-bottom: 25px;
+}
+
+.precio-detalle {
+    font-family: "Open Sans", sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.detalle-dato h3,
+.detalle-talle h3,
+.detalle-cantidad h3,
+.detalle-descripcion h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 23px;
+    font-weight: 600;
+}
+
+.detalle-dato h3 {
+    margin-bottom: 20px;
+}
+
+.detalle-dato span {
+    font-weight: 400;
+}
+
+
+
+
+.detalle-talle {
+    margin-bottom: 25px;
+}
+
+.detalle-talle h3 {
+    margin-bottom: 8px;
+}
+
+.talles {
+    display: flex;
+    gap: 15px;
+}
+
+.talle {
+    background-color: transparent;
+    border: 1px solid #aaa;
+    padding: 8px 13px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.talle:hover {
+    border-color: #222;
+}
+
+
+
+
+.detalle-cantidad {
+    margin-bottom: 20px;
+}
+
+.detalle-cantidad h3 {
+    margin: 0;
+}
+
+.detalle-cantidad span {
+    font-weight: 400;
+}
+
+
+
+
+.detalle-descripcion {
+    max-width: 500px;
+}
+
+.detalle-descripcion h3 {
+    margin-bottom: 12px;
+}
+
+.detalle-descripcion p {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 18px;
+    line-height: 1.45;
+    margin: 0;
+}
+
+
+
+.detalle-boton {
+    margin-top: 18px;
+}
+
+.btn-carrito {
+    display: block;
+    width: 100%;
+    max-width: 355px;
+    padding: 10px 20px;
+    background-color: var(--color-rojo);
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-family: "Open Sans", sans-serif;
+    font-size: 18px;
+    border: none;
+}
+
+.btn-carrito:hover {
+    color: white;
+    text-decoration: none;
+}
+
+
+
+
+.enlace-producto {
+    text-decoration: none;
+    color: inherit;
+}
+
+.enlace-producto:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.producto-info h1 {
+    color: inherit;
+    text-decoration: none;
+}
+
+.detalle-info h1 {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+
+@media (max-width: 992px) {
+
+    .detalle-contenido {
+        flex-direction: column;
+    }
+
+    .detalle-imagenes {
+        width: 100%;
+    }
+
+    .detalle-info {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 576px) {
+
+    .detalle-imagenes {
+        gap: 15px;
+    }
+
+    .miniaturas {
+        width: 70px;
+        gap: 15px;
+    }
+
+    .miniatura {
+        width: 65px;
+        height: 85px;
+    }
+
+    .detalle-info h1 {
+        font-size: 30px;
+    }
+
 }

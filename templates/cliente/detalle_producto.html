@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{{ producto.nombre }}
+{% endblock %}
+
+{% block content %}
+
+<section class="detalle-producto">
+
+    <div class="container">
+
+        <div class="detalle-contenido">
+
+            
+            <div class="detalle-imagenes">
+
+                <div class="miniaturas">
+
+                    {% for imagen in producto.imagen_set.all %}
+
+                        <img src="{% static imagen.urlImagen %}"
+                             class="miniatura"
+                             alt="{{ producto.nombre }}">
+
+                    {% endfor %}
+
+                </div>
+
+                <div class="imagen-principal">
+
+                    {% with imagen=producto.imagen_set.first %}
+
+                        {% if imagen %}
+
+                            <img src="{% static imagen.urlImagen %}"
+                                 alt="{{ producto.nombre }}">
+
+                        {% endif %}
+
+                    {% endwith %}
+
+                </div>
+
+            </div>
+
+
+            <!-- INFORMACIÓN DEL PRODUCTO -->
+            <div class="detalle-info">
+
+                <h1>{{ producto.nombre }}</h1>
+
+
+                <!-- PRECIO -->
+
+                {% if producto.precioDescuento %}
+
+                    <div class="detalle-precio">
+
+                        <span class="precio-detalle">
+                            ${{ producto.precioDescuento|floatformat:0 }}
+                        </span>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="detalle-precio">
+
+                        <span class="precio-detalle">
+                            ${{ producto.precioOriginal|floatformat:0 }}
+                        </span>
+
+                    </div>
+
+                {% endif %}
+
+
+                <!-- COLOR -->
+
+                <div class="detalle-dato">
+
+                    <h3>Color: <span>{{ producto.color }}</span></h3>
+
+                </div>
+
+
+                <!-- TALLE -->
+
+                <div class="detalle-talle">
+
+                    <h3>Talle:</h3>
+
+                    <div class="talles">
+
+                        <button type="button" class="talle">
+                            {{ producto.talle }}
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CANTIDAD / STOCK -->
+
+                <div class="detalle-cantidad">
+
+                    <h3>
+                        Cantidad:
+                        <span>{{ producto.stock }}</span>
+                    </h3>
+
+                </div>
+
+
+                <!-- DESCRIPCIÓN -->
+
+                <div class="detalle-descripcion">
+
+                    <h3>Descripción de producto</h3>
+
+                    <p>
+                        {{ producto.descripcion }}
+                    </p>
+
+                </div>
+
+
+                <!-- BOTÓN -->
+
+                <div class="detalle-boton">
+
+                    <a href="#" class="btn-carrito">
+                        AGREGAR AL CARRITO
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

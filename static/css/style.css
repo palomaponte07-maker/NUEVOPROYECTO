@@ -8,7 +8,7 @@
     --fuente-general: "Open Sans", sans-serif;
 }
 
-/* ================= GENERAL ================= */
+
 
 body {
     background-color: var(--color-fondo);
@@ -18,7 +18,7 @@ body {
     padding: 0;
 }
 
-/* ================= HEADER ================= */
+
 
 header,
 .navbar {
@@ -27,7 +27,7 @@ header,
     box-shadow: none;
 }
 
-/* Logo */
+
 
 .logo-navbar{
     width: 170px;
@@ -39,7 +39,7 @@ header,
     height: auto;
 }
 
-/* Menú */
+
 
 .navbar-nav .nav-link{
     font-family: var(--fuente-titulos);
@@ -61,7 +61,7 @@ header,
     text-underline-offset: 6px;
 }
 
-/* Bolsa de compras */
+
 
 .bolsa-carrito{
     color: var(--color-rojo);
@@ -74,7 +74,7 @@ header,
     color: #9d181d;
 }
 
-/* Nueva Temporada */
+
 
 .titulo-temporada{
     font-family: var(--fuente-titulos);
@@ -92,9 +92,9 @@ header,
     font-weight: 500;
 }
 
-/* PRODUCTOS */
 
-/* Nombre del producto */
+
+
 
 .producto h6{
     font-family: var(--fuente-titulos);
@@ -104,7 +104,7 @@ header,
     margin-top: 15px;
 }
 
-/* Precio */
+
 .precios {
     display: flex;
     justify-content: center;
@@ -128,7 +128,7 @@ header,
     text-decoration: line-through;
 }
 
-/* Botón "Ver todos los productos" */
+
 
 .btn-productos{
     font-family: var(--fuente-general);
@@ -237,7 +237,7 @@ footer a:hover{
 }
 
 
-/* IMÁGENES */
+
 
 .detalle-imagenes {
     display: flex;
@@ -270,7 +270,7 @@ footer a:hover{
 }
 
 
-/* INFORMACIÓN */
+
 
 .detalle-info {
     flex: 1;
@@ -312,7 +312,7 @@ footer a:hover{
 }
 
 
-/* TALLES */
+
 
 .detalle-talle {
     margin-bottom: 25px;
@@ -341,7 +341,7 @@ footer a:hover{
 }
 
 
-/* CANTIDAD */
+
 
 .detalle-cantidad {
     margin-bottom: 20px;
@@ -356,7 +356,7 @@ footer a:hover{
 }
 
 
-/* DESCRIPCIÓN */
+
 
 .detalle-descripcion {
     max-width: 500px;
@@ -374,7 +374,6 @@ footer a:hover{
 }
 
 
-/* BOTÓN */
 
 .detalle-boton {
     margin-top: 18px;
@@ -400,7 +399,7 @@ footer a:hover{
 }
 
 
-/* QUITAR ESTILO AZUL DE LOS ENLACES DE PRODUCTOS */
+
 
 .enlace-producto {
     text-decoration: none;
@@ -412,8 +411,17 @@ footer a:hover{
     color: inherit;
 }
 
+.producto-info h1 {
+    color: inherit;
+    text-decoration: none;
+}
 
-/* RESPONSIVE */
+.detalle-info h1 {
+    text-decoration: none;
+    color: inherit;
+}
+
+
 
 @media (max-width: 992px) {
 

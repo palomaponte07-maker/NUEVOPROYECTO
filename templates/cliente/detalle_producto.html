@@ -46,13 +46,14 @@
             </div>
 
 
-            <!-- INFORMACIÓN DEL PRODUCTO -->
+            
             <div class="detalle-info">
+                
+                <h1>
+                    {{ producto.nombre }}
+                </h1>
 
-                <h1>{{ producto.nombre }}</h1>
 
-
-                <!-- PRECIO -->
 
                 {% if producto.precioDescuento %}
 
@@ -77,7 +78,6 @@
                 {% endif %}
 
 
-                <!-- COLOR -->
 
                 <div class="detalle-dato">
 
@@ -86,7 +86,6 @@
                 </div>
 
 
-                <!-- TALLE -->
 
                 <div class="detalle-talle">
 
@@ -103,7 +102,6 @@
                 </div>
 
 
-                <!-- CANTIDAD / STOCK -->
 
                 <div class="detalle-cantidad">
 
@@ -115,7 +113,6 @@
                 </div>
 
 
-                <!-- DESCRIPCIÓN -->
 
                 <div class="detalle-descripcion">
 
@@ -128,7 +125,6 @@
                 </div>
 
 
-                <!-- BOTÓN -->
 
                 <div class="detalle-boton">
 

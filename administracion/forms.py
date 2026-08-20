@@ -8,8 +8,6 @@ class ProductoForm(forms.ModelForm):
             'categoria',
             'nombre',
             'descripcion',
-            'precioOriginal',
             'color',
             'talle',
-            'stock',
         ]

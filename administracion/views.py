@@ -15,8 +15,6 @@ def agregar_producto(request):
 
         if form.is_valid():
             producto =form.save(commit=False)
-            producto.precioDescuento = producto.precioOriginal
-            producto.porcentajeDescuento = 0
             producto.save()
             return redirect('dashboard')
 

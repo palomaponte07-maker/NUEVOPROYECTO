@@ -21,7 +21,7 @@ class Producto(models.Model):
     porcentajeDescuento = models.DecimalField(max_digits=10, decimal_places=2)
     fechaInicioDescuento = models.DateTimeField(null=True,blank=True)
     fechaFinDescuento = models.DateTimeField(null=True,blank=True)
-    stockProducto = models.IntegerField()
+    stockProducto = models.IntegerField(default=0)
     estado = models.BooleanField(default=True)
     stockDeposito = models.IntegerField()
 

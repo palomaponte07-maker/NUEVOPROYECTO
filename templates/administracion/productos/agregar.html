@@ -19,27 +19,38 @@
         </header>
 
         <main class="contenedor">
-            <form method="POST" class="formulario-producto">
+            <form method="POST" 
+            enctype="multipart/form-data"
+            class="formulario-producto">
                 {% csrf_token %}
-
-
                 {% if form.errors %}
-                  <div style="color: red;">
-                {{ form.errors }}
+                  <div class="color-formulario;">
+                    {{ form.errors }}
                   </div>
                 {% endif %}
-
-
-
 
                 <div class="campo imagen-campo">
                     <label>Imagen del producto</label>
                     <div class="zona-imagen">
-                        <span class="icono-subir"></span>
+                        <label class="imagen-upload">
+                        <span>↑</span>
                         <input type="file"
                                name="imagen"
                                accept="image/*">
+                        </label>
+                        <label class="imagen-upload">
+                        <span>↑</span>
+                        <input type="file"
+                               name="imagen"
+                               accept="image/*">
+                        </label>
+                        <div class="imagen-agregar">
+                         + agregar
+                        </div>
                     </div>
+                    <small>
+                     Podés cargar varias fotos del mismo producto (Imágenes).
+                   </small>
                 </div>
 
                 <div class="campo nombre-campo">
@@ -51,22 +62,23 @@
                     id="nombre"
                     name="nombre"
                     placeholder="Ej: Jean Gase"
+                    value="{{ form.nombre.value|default:'' }}"
                     required>
                 </div>
                     <div class="campo descripcion-campo">
                     <label for="descripcion">
                         Descripcion
                     </label>
-                    <input 
-                          type="text"
-                          id="descripcion"
-                          name="descripcion"
-                          placeholder="Ej: Jean Gase">
+                    <textarea
+                    id="descripcion"
+                    name="descripcion"
+                    placeholder="Ej. Jean de tiro alto con lavado celeste claro..."
+                    required>{{ form.descripcion.value|default:'' }}</textarea>
                 </div>
                 <div class="fila-datos">
                     <div class="campo">
                         <label>
-                            Precio
+                            Precio (costo)
                         </label>
 
                         <input 
@@ -74,9 +86,64 @@
                               id="precioCosto"
                               name="precioCosto"
                               placeholder="$0"
-                              inputmode="decimal">
+                              inputmode="decimal"
+                              placeholder="$0"
+                              min="0"
+                             step="0.01"
+                             value="{{ form.precioCosto.value|default:'' }}"
+                             required>
                     </div>
+                     <div class="campo">
 
+                      <label for="IVA">
+                         IVA
+                     </label>
+
+                     <select id="IVA"
+                             name="IVA"
+                             required>
+                         <option value="0"
+                             {% if form.IVA.value == "0" %}selected{% endif %}>
+                             0%
+                         </option>
+
+                         <option value="10.5"
+                             {% if form.IVA.value == "10.5" %}selected{% endif %}>
+                             10,5%
+                         </option>
+
+                         <option value="21"
+                             {% if not form.IVA.value or form.IVA.value == "21" %}selected{% endif %}>
+                             21%
+                         </option>
+
+                          <option value="27"
+                             {% if form.IVA.value == "27" %}selected{% endif %}>
+                             27%
+                         </option>
+                         </select>
+
+                     </div>
+
+                   </div>
+
+                   <div class="campo">
+
+                <label for="precioVentaVisual">
+                    Precio
+                </label>
+
+                <input
+                    type="text"
+                    id="precioVentaVisual"
+                    placeholder="$0"
+                    readonly>
+
+                <small>
+                    Se calcula automáticamente con el costo + IVA.
+                </small>
+
+            </div>
                     <div class="campo">
                         <label for="stockProducto">
                             Stock
@@ -85,8 +152,139 @@
                               type="number"
                               id="stockProducto"
                               name="stockProducto"
-                              placeholder="0">
+                              placeholder="0"
+                              min="0"
+                              value="{{ form.stockProducto.value|default:'0' }}"
+                              required>
                     </div>
+
+                     <div class="campo">
+
+                    <label for="stockDeposito">
+                        Stock en depósito
+                    </label>
+
+                    <input
+                        type="number"
+                        id="stockDeposito"
+                        name="stockDeposito"
+                        placeholder="0"
+                        min="0"
+                        value="{{ form.stockDeposito.value|default:'0' }}"
+                        required>
+
+                </div>
+
+            </div>
+
+            <div class="seccion-descuento">
+
+                <h2>Descuento</h2>
+
+                <div class="campo">
+
+                    <label for="porcentajeDescuento">
+                        Porcentaje de descuento
+                    </label>
+
+                    <input
+                        type="number"
+                        id="porcentajeDescuento"
+                        name="porcentajeDescuento"
+                        placeholder="0%"
+                        min="0"
+                        max="100"
+                        step="0.01"
+                        value="{{ form.porcentajeDescuento.value|default:'0' }}">
+
+                </div>
+                <div class="fila-datos">
+
+                    <div class="campo">
+
+                        <label for="fechaInicioDescuento">
+                            Inicio
+                        </label>
+
+                        <input
+                            type="datetime-local"
+                            id="fechaInicioDescuento"
+                            name="fechaInicioDescuento"
+                            value="{{ form.fechaInicioDescuento.value|default:'' }}">
+
+                    </div>
+                     <div class="campo">
+
+                        <label for="fechaFinDescuento">
+                            Fin
+                        </label>
+                    
+                        <input
+                            type="datetime-local"
+                            id="fechaFinDescuento"
+                            name="fechaFinDescuento"
+                            value="{{ form.fechaFinDescuento.value|default:'' }}">
+
+                    </div>
+                       <div class="campo estado-producto">
+
+                <label>
+
+                    <input
+                        type="checkbox"
+                        name="estado"
+                        value="True"
+                        {% if form.estado.value != False %}checked{% endif %}>
+
+                    Publicar producto
+                    (queda activo y visible en la tienda)
+
+                </label>
+
+            </div>
+
+
+            <!-- BOTÓN -->
+
+            <button type="submit" class="btn-guardar">
+                GUARDAR PRODUCTO
+            </button>
+
+        </form>
+
+    </main>
+
+
+    <!-- CÁLCULO DEL PRECIO -->
+
+    <script>
+
+        const precioCosto = document.getElementById("precioCosto");
+        const iva = document.getElementById("IVA");
+        const precioVenta = document.getElementById("precioVentaVisual");
+
+        function calcularPrecio() {
+
+            const costo = parseFloat(precioCosto.value) || 0;
+            const porcentajeIVA = parseFloat(iva.value) || 0;
+
+            const precioFinal =
+                costo + (costo * porcentajeIVA / 100);
+
+            precioVenta.value =
+                "$" + precioFinal.toFixed(2);
+
+        }
+
+        precioCosto.addEventListener("input", calcularPrecio);
+        iva.addEventListener("change", calcularPrecio);
+
+        calcularPrecio();
+
+    </script>
+
+</html>
+                </div>
                     <div class="campo">
                     <label for="color">
                         Color
@@ -114,7 +312,8 @@
                     <label for="categoria">
                         Categoría
                     </label>
-                    <select id="categoria" name="categoria">
+                    <select id="categoria" name="categoria"
+                     required>
                          <option value="">Seleccionar Categoría</option>
                          {% for categoria in form.fields.categoria.queryset %}
                            <option value="{{ categoria.idCategoria }}"

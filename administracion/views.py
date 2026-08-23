@@ -15,6 +15,11 @@ def agregar_producto(request):
 
         if form.is_valid():
             producto =form.save(commit=False)
+            producto.porcentajeDescuento = 0
+            producto.precioVenta = (
+                producto.precioCosto +
+                (producto.precioCosto * producto.IVA / 100)
+            )
             producto.save()
             return redirect('dashboard')
 

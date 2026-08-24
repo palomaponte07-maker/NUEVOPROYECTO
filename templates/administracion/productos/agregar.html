@@ -1,81 +1,104 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8" >
-        <meta name ="viewport" content = "width=device-width, initial-scale=1.0">
-        <title>Agregar Producto</title>
-        <link rel="stylesheet"
-        href="{% static 'administracion/css/productos.css' %}">
-    </head>
+<head>
+    <meta charset="UTF-8" >
+    <meta name ="viewport" content = "width=device-width, initial-scale=1.0">
+    <title>Agregar Producto</title>
+    <link rel="stylesheet"
+          href="{% static 'administracion/css/productos.css' %}">
+</head>
 
-    <body>
-        <header class="header">
-            <div class="logo">
-                <span> Oliviva</span>
-            </div>
-            <h1>Agregar Producto</h1>
-            <a href="#" class="btn-volver">↩</a>
-        </header>
+<body>
+    <header class="header">
+        <div class="logo">
+            <span> Oliviva</span>
+        </div>
+        <h1>Agregar Producto</h1>
+        <a href="#" class="btn-volver">↩</a>
+    </header>
 
-        <main class="contenedor">
-            <form method="POST" 
-            enctype="multipart/form-data"
-            class="formulario-producto">
-                {% csrf_token %}
-                {% if form.errors %}
-                  <div class="color-formulario;">
+    <main class="contenedor">
+        <form method="POST" 
+              enctype="multipart/form-data"
+              class="formulario-producto">
+             {% csrf_token %}
+             {% if form.errors %}
+               <div class="color-formulario;">
                     {{ form.errors }}
-                  </div>
-                {% endif %}
+               </div>
+             {% endif %}
 
-                <div class="campo imagen-campo">
-                    <label>Imagen del producto</label>
-                    <div class="zona-imagen">
-                        <label class="imagen-upload">
+            <div class="campo imagen-campo">
+                <label>Imagen del producto</label>
+                <div class="zona-imagen">
+                    <label class="imagen-upload">
                         <span>↑</span>
                         <input type="file"
                                name="imagen"
                                accept="image/*">
-                        </label>
-                        <label class="imagen-upload">
-                        <span>↑</span>
-                        <input type="file"
-                               name="imagen"
-                               accept="image/*">
-                        </label>
-                        <div class="imagen-agregar">
-                         + agregar
-                        </div>
-                    </div>
-                    <small>
-                     Podés cargar varias fotos del mismo producto (Imágenes).
-                   </small>
-                </div>
-
-                <div class="campo nombre-campo">
-                    <label for="nombre">
-                        Nombre
                     </label>
-                    <input
+                    
+                    <label class="imagen-upload">
+                        <span>↑</span>
+                        <input type="file"
+                               name="imagen"
+                               accept="image/*">
+                    </label>
+                    <div class="imagen-agregar">
+                      + agregar
+                    </div>
+                </div>
+                <small>
+                    Podés cargar varias fotos del mismo producto (Imágenes).
+                </small>
+            </div>
+
+            <div class="campo nombre-campo">
+                <label for="nombre">
+                    Nombre
+                </label>
+                <input
                     type="text"
                     id="nombre"
                     name="nombre"
                     placeholder="Ej: Jean Gase"
                     value="{{ form.nombre.value|default:'' }}"
                     required>
-                </div>
-                    <div class="campo descripcion-campo">
-                    <label for="descripcion">
-                        Descripcion
-                    </label>
-                    <textarea
+            </div>
+                    
+            <div class="campo descripcion-campo">
+                <label for="descripcion">
+                    Descripcion
+                </label>
+                <textarea
                     id="descripcion"
                     name="descripcion"
                     placeholder="Ej. Jean de tiro alto con lavado celeste claro..."
                     required>{{ form.descripcion.value|default:'' }}</textarea>
-                </div>
-                <div class="fila-datos">
+            </div>
+            
+            <div class="campo categoria-campo">
+                <label for="categoria">
+                    Categoría
+                </label>
+                <select 
+                    id="categoria" 
+                    name="categoria"
+                    required>
+                    <option value="">Seleccionar Categoría</option>
+
+                    {% for categoria in form.fields.categoria.queryset %}
+                        <option value="{{ categoria.idCategoria }}"
+                            {% if form.data.categoria == categoria.idCategoria|stringformat:"s" %}selected{% endif %}>
+                            {{ categoria.nombreCategoria }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+
+            <div class="fila-datos">
                     <div class="campo">
                         <label>
                             Precio (costo)
@@ -307,21 +330,6 @@
                         placeholder="Ej: 38"
                         required>
                 </div>
-                </div>
-                <div class="campo categoria-campo">
-                    <label for="categoria">
-                        Categoría
-                    </label>
-                    <select id="categoria" name="categoria"
-                     required>
-                         <option value="">Seleccionar Categoría</option>
-                         {% for categoria in form.fields.categoria.queryset %}
-                           <option value="{{ categoria.idCategoria }}"
-                             {% if form.data.categoria == categoria.idCategoria|stringformat:"s" %}selected{% endif %}>
-                             {{ categoria.nombreCategoria }}
-                           </option>
-                          {% endfor %}
-                    </select>
                 </div>
                 <button type="submit" class="btn-guardar">
                 Guardar Producto

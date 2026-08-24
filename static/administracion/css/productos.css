@@ -11,6 +11,7 @@ body {
     color: #171717;
     
 }
+
 .header {
     height: 120px;
     background-color: #ffffff;
@@ -19,7 +20,11 @@ body {
     padding: 0 65px;
     position: relative;
 }
-
+.producto-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 .logo {
     width: 170px;
     color: #c11f25;
@@ -256,7 +261,7 @@ body {
 .productos-editar {
     width: 100%;
 
-    padding: 0 155px;
+    padding: 0 80px;
 }
 
 .editar-header,
@@ -265,10 +270,12 @@ body {
 
     grid-template-columns:
         180px
-        280px
+        250px
+        150px
+        150px
         180px
-        180px
-        250px;
+        120px
+        150px;
 
     align-items: center;
 }
@@ -287,11 +294,11 @@ body {
     text-align: center;
 }
 .editar-row {
-    min-height: 260px;
+    min-height: 220px;
 
-    font-size: 24px;
+    font-size: 22px;
 
-    margin-bottom: 0;
+    margin-bottom: 20;
 }
 .producto-imagen-editar {
     display: flex;

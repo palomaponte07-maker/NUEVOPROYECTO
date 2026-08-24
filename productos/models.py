@@ -19,21 +19,31 @@ class Producto(models.Model):
     )
 
     nombre = models.CharField(max_length=100)
-    descripcion = models.TextField()
-
-    precioVenta = models.DecimalField(max_digits=10, decimal_places=2)
     precioCosto = models.DecimalField(max_digits=10, decimal_places=2)
-    IVA = models.DecimalField(max_digits=5, decimal_places=2)
+    precioVenta = models.DecimalField(max_digits=10, decimal_places=2)
+    IVA = models.DecimalField(max_digits=5, decimal_places=2, default=21)
 
     color = models.CharField(max_length=50)
     talle = models.CharField(max_length=20)
+    descripcion = models.TextField()
 
-    porcentajeDescuento = models.DecimalField(max_digits=10, decimal_places=2)
-    fechaInicioDescuento = models.DateTimeField()
-    fechaFinDescuento = models.DateTimeField()
+    porcentajeDescuento = models.DecimalField(
+        max_digits=10,
+        decimal_places=2
+    )
 
-    stockProducto = models.IntegerField()
-    estado = models.BooleanField()
+    fechaInicioDescuento = models.DateTimeField(
+        null=True,
+        blank=True
+    )
+
+    fechaFinDescuento = models.DateTimeField(
+        null=True,
+        blank=True
+    )
+
+    stockProducto = models.IntegerField(default=0)
+    estado = models.BooleanField(default=True)
     stockDeposito = models.IntegerField()
 
     def __str__(self):

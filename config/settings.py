@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'mssql',
-        'NAME': 'TiendaOlivia',
+        'NAME': 'Olivia',
         'USER': 'colaboradora',
         'PASSWORD': 'Olivia2024!',
         'HOST': '192.168.0.196',

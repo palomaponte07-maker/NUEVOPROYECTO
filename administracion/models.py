@@ -4,7 +4,8 @@ class Administrador(models.Model):
     idAdministrador = models.AutoField(primary_key=True)
 
     nombreAdministrador = models.CharField(max_length=100)
-
+    class Meta:
+        db_table = 'Administrador'
     def __str__(self):
         return self.nombreAdministrador
 
@@ -32,6 +33,9 @@ class Notificacion(models.Model):
     )
 
     fecha = models.DateField()
+
+    class Meta:
+        db_table = 'Notificacion'
 
     def __str__(self):
         return f"Notificación {self.idNotificacion}"

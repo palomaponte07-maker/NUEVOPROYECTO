@@ -14,6 +14,8 @@ class Cliente(models.Model):
     ciudad = models.CharField(max_length = 100)
     provincia = models.CharField(max_length = 100)
 
+    class Meta:
+        db_table = 'Cliente'
     def __str__(self):
         return f"{self.nombre} {self.apellido}"
 

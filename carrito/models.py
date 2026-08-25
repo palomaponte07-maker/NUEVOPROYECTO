@@ -14,7 +14,8 @@ class Carrito(models.Model):
     cantidad = models.IntegerField(default=0)
     precioUnitario = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     subTotal = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-
+    class Meta:
+        db_table = 'Carrito'
     def __str__(self):
         return f"Carrito {self.idCarrito}" 
 
@@ -32,6 +33,8 @@ class CarritoProducto(models.Model):
     precioUnitario = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     subTotal = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 
+    class Meta:
+        db_table = 'CarritoProducto'
     def __str__(self):
         return f"CarritoProducto {self.carrito.idCarrito} - {self.producto.nombre}"
     

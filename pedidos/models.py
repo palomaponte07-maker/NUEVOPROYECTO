@@ -13,8 +13,9 @@ class Pedido(models.Model):
     codTransaccion = models.CharField(max_length=100, blank=True, null=True)
     fechaPago = models.DateTimeField(blank=True, null=True)
     metodoPago = models.CharField(max_length=50, blank=True, null=True)
-    
 
+    class Meta:
+        db_table = 'Pedido'
     def __str__(self):
         return f"Pedido {self.numeroPedido}"
 
@@ -35,8 +36,9 @@ class DetallePedido(models.Model):
     cantidad = models.IntegerField()
     precioUnitario = models.DecimalField(max_digits=10, decimal_places=2)
     subTotal = models.DecimalField(max_digits=10, decimal_places=2)
- 
 
+    class Meta:
+        db_table = 'DetallePedido'
     def __str__(self):
         return f"Detalle {self.idDetallePedido}"
 

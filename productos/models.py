@@ -69,6 +69,14 @@ class Imagen(models.Model):
         db_column='idProducto'
     )
 
+    variante = models.ForeignKey(
+        ProductoVariante,
+        on_delete=models.CASCADE,
+        db_column='idVariante',
+        null=True,
+        blank=True
+    )
+
     urlImagen = models.CharField(max_length=255)
     class Meta:
         db_table = 'Imagen'

@@ -3,11 +3,7 @@ from .models import Producto
 from django.utils import timezone
 
 def inicio(request):
-    ahora = timezone.now()
     productos_destacados = Producto.objects.filter(
-        porcentajeDescuento__gt=0,
-        fechaInicioDescuento__lte=ahora,
-        fechaFinDescuento__gte=ahora,
         estado=True
     )
 
@@ -18,7 +14,7 @@ def inicio(request):
     )
 
 def productos(request):
-    productos = Producto.objects.all(
+    productos = Producto.objects.filter(
          estado=True
     )
 

@@ -53,15 +53,18 @@ Inicio
 
                         <h6>{{ producto.nombre }}</h6>
 
+                        
                         <div class="precios">
 
-                            <p class="precio-viejo">
-                                ${{ producto.precioOriginal|floatformat:0 }}
-                            </p>
+                            <span class="precio">
+                                ${{ producto.precioVenta|floatformat:0 }}
+                            </span>
 
-                            <p class="precio">
-                                ${{ producto.precioDescuento|floatformat:0 }}
-                            </p>
+                            {% if producto.porcentajeDescuento > 0 %}
+                                <span class="descuento">
+                                    {{ producto.porcentajeDescuento|floatformat:0 }}% OFF
+                                </span>
+                            {% endif %}
 
                         </div>
                     
@@ -73,13 +76,13 @@ Inicio
 
         </div>
 
-        <div class="text-center mt-5">
+    </div>
 
-            <a href="{% url 'productos' %}" class="btn-productos">
-                VER TODOS LOS PRODUCTOS
-            </a>
-       
-        </div>
+    <div class="text-center mt-5">
+
+        <a href="{% url 'productos' %}" class="btn-productos">
+            VER TODOS LOS PRODUCTOS
+        </a>
 
     </div>
 

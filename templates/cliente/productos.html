@@ -20,7 +20,7 @@ Productos
 
                     <div class="linea-superior"></div>
 
-                        <a href="#">
+                        <a href="{% url 'detalle_producto' producto.idProducto %}">
                             {% with imagen=producto.imagen_set.first %}
                                 {% if imagen %}
                                     <img src="{% static imagen.urlImagen %}"
@@ -38,15 +38,17 @@ Productos
 
                         <div class="precios">
 
-                            <span class="precio-viejo">
-                                $ {{ producto.precioOriginal|floatformat:0 }}
+                            <span class="precio">
+                                $ {{ producto.precioVenta|floatformat:0 }}
                             </span>
 
-                            <span class="precio">
-                                $ {{ producto.precioDescuento|floatformat:0 }}
-                            </span>
-                            
                         </div>
+
+                        {% if producto.porcentajeDescuento > 0 %} 
+                            <span class="descuento"> 
+                                {{ producto.porcentajeDescuento|floatformat:0 }}% OFF 
+                            </span> 
+                        {% endif %}
 
                     </div>
 

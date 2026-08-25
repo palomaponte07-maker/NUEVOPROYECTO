@@ -94,39 +94,38 @@ header,
 
 
 
-
-
-.producto h6{
+.producto h6 {
     font-family: var(--fuente-titulos);
     font-size: 26px;
     font-weight: 500;
     color: var(--color-texto);
     margin-top: 15px;
+    min-height: 32px;
 }
-
 
 .precios {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    min-height: 30px;
+    margin-top: 5px;
 }
 
-.precio,
-.precio-viejo{
+.precio {
     font-family: var(--fuente-general);
     font-size: 18px;
-}
-
-.precio{
     color: var(--color-texto);
     font-weight: 400;
 }
 
-.precio-viejo{
-    color: #777;
-    text-decoration: line-through;
+.descuento {
+    font-family: var(--fuente-general);
+    font-size: 16px;
+    color: var(--color-rojo);
+    font-weight: 700;
+    margin-left: 10px;
 }
+
 
 
 

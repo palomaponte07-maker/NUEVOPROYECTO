@@ -8,15 +8,11 @@ class ProductoForm(forms.ModelForm):
             'categoria',
             'nombre',
             'descripcion',
+            'precio',
             'precioCosto',
             'IVA',
-            'color',
-            'talle',
-            'procentajeDescuento',
             'fechaInicioDescuento',
             'fechaFinDescuento',
-            'stockProducto',
-            'stockDeposito',
             'estado',
         ]
         widgets = {
@@ -27,4 +23,3 @@ class ProductoForm(forms.ModelForm):
                 attrs={'type': 'datetime-local'}
             ),
         }
-#precio venta no locolacamos xq el precio se clacula automaticamente con precio costo +IVA

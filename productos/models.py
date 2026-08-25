@@ -19,6 +19,7 @@ class Producto(models.Model):
     )
 
     nombre = models.CharField(max_length=100)
+
     precioCosto = models.DecimalField(max_digits=10, decimal_places=2)
     precioVenta = models.DecimalField(max_digits=10, decimal_places=2)
     IVA = models.DecimalField(max_digits=5, decimal_places=2, default=21)
@@ -43,12 +44,37 @@ class Producto(models.Model):
     )
 
     stockProducto = models.IntegerField(default=0)
-    estado = models.BooleanField(default=True)
-    stockDeposito = models.IntegerField()
 
+    precioCosto = models.DecimalField(max_digits=10,decimal_places=2)
+    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    IVA = models.DecimalField(max_digits=5, decimal_places=2, default=21)
+    descripcion = models.TextField()
+    porcentajeDescuento = models.DecimalField(max_digits=10, decimal_places=2)
+    fechaInicioDescuento = models.DateTimeField(null=True,blank=True)
+    fechaFinDescuento = models.DateTimeField(null=True,blank=True)
+
+    estado = models.BooleanField(default=True)
     def __str__(self):
         return self.nombre
 
+
+class ProductoVariante(models.Model):
+     idVariante = models.AutoField(primary_key=True)
+
+     producto = models.ForeignKey(
+        Producto,
+        on_delete=models.CASCADE,
+        db_column='idProducto',
+        related_name='variantes'
+    )
+
+     color = models.CharField(max_length=50)
+     talle = models.CharField(max_length=20)
+
+     stockProducto = models.IntegerField(default=0)
+     stockDeposito = models.IntegerField(default=0)
+     def __str__(self):
+        return f"{self.producto.nombre} - {self.color} - {self.talle}"
 
 class Imagen(models.Model):
     idImagen = models.AutoField(primary_key=True)

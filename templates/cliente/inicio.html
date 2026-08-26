@@ -44,8 +44,8 @@ Inicio
                     <a href="{% url 'detalle_producto' producto.idProducto %}" class="producto text-center">
 
                         {% with imagen=producto.imagen_set.first %}
-                            {% if imagen %}
-                                <img src="{% static imagen.urlImagen %}" 
+                            {% if imagen and imagen.imagen %}
+                                <img src="{{ imagen.imagen.url }}"
                                 class="img-fluid"
                                 alt="{{ producto.nombre }}">
                             {% endif %}

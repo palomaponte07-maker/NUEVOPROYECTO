@@ -75,9 +75,15 @@ class Imagen(models.Model):
         null=True,
         blank=True
     )
+ 
+    imagen = models.ImageField(
+    upload_to='productos/',
+    null=True,
+    blank=True
+    )
 
-    urlImagen = models.CharField(max_length=255)
     class Meta:
         db_table = 'Imagen'
+
     def __str__(self):
-        return self.urlImagen
+        return self.imagen.name

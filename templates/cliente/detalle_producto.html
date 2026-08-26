@@ -20,7 +20,7 @@
 
                     {% for imagen in producto.imagen_set.all %}
 
-                        <img src="{% static imagen.urlImagen %}"
+                        <img src="{% static imagen.imagen %}"
                              class="miniatura"
                              alt="{{ producto.nombre }}">
 
@@ -51,27 +51,19 @@
                     {{ producto.nombre }}
                 </h1>
 
-                {% if producto.precioDescuento %}
+                <div class="detalle-precio">
 
-                    <div class="detalle-precio">
+                    <span class="precio-detalle">
+                        ${{ producto.precioVenta|floatformat:0 }}
+                    </span>
 
-                        <span class="precio-detalle">
-                            ${{ producto.precioDescuento|floatformat:0 }}
-                        </span>
+                </div>
 
-                    </div>
+                <div class="detalle-dato">
 
-                {% else %}
+                    <h3>IVA: <span>{{ producto.IVA }}%</span></h3>
 
-                    <div class="detalle-precio">
-
-                        <span class="precio-detalle">
-                            ${{ producto.precioOriginal|floatformat:0 }}
-                        </span>
-
-                    </div>
-
-                {% endif %}
+                </div>
 
                 <div class="detalle-dato">
 
@@ -119,11 +111,10 @@
                 <div class="detalle-cantidad">
 
                     <h3>Stock disponible:</h3>
+                    
+                    <span id="stock-disponible">-</span>
 
-                        <span id="stock-disponible">-</span>
-
-                    </div>          
-
+                            
                 </div>
 
 

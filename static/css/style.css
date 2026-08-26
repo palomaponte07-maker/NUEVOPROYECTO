@@ -276,6 +276,16 @@ footer a:hover{
     padding-top: 3px;
 }
 
+.color {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid #999;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+
 .detalle-info h1 {
     font-family: "Cormorant Garamond", serif;
     font-size: 34px;

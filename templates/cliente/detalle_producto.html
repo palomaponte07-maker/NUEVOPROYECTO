@@ -44,16 +44,12 @@
                 </div>
 
             </div>
-
-
             
             <div class="detalle-info">
                 
                 <h1>
                     {{ producto.nombre }}
                 </h1>
-
-
 
                 {% if producto.precioDescuento %}
 
@@ -77,15 +73,25 @@
 
                 {% endif %}
 
-
-
                 <div class="detalle-dato">
 
-                    <h3>Color: <span>{{ producto.color }}</span></h3>
+                    <h3>Color:</h3>
+                    
+                    <div class="colores">
+
+                        {% for color in colores %}
+
+                            <button type="button"
+                                class="color"
+                                data-color="{{ color }}"
+                                title="{{ color }}">
+                            </button>
+
+                        {% endfor %}
+
+                    </div>
 
                 </div>
-
-
 
                 <div class="detalle-talle">
 
@@ -93,25 +99,32 @@
 
                     <div class="talles">
 
-                        <button type="button" class="talle">
-                            {{ producto.talle }}
-                        </button>
+                        {% for talle in talles %}
+
+                            <button type="button"
+                                class="talle"
+                                data-talle="{{ talle }}">
+
+                                {{ talle }}
+
+                            </button>
+
+                        {% endfor %}
 
                     </div>
 
                 </div>
 
 
-
                 <div class="detalle-cantidad">
 
-                    <h3>
-                        Cantidad:
-                        <span>{{ producto.stock }}</span>
-                    </h3>
+                    <h3>Stock disponible:</h3>
+
+                        <span id="stock-disponible">-</span>
+
+                    </div>          
 
                 </div>
-
 
 
                 <div class="detalle-descripcion">
@@ -123,8 +136,6 @@
                     </p>
 
                 </div>
-
-
 
                 <div class="detalle-boton">
 
@@ -141,5 +152,38 @@
     </div>
 
 </section>
+
+<script>
+
+    const colores = {
+        "negro": "#000000",
+        "blanco": "#FFFFFF",
+        "rojo": "#FF0000",
+        "azul": "#0000FF",
+        "celeste": "#87CEEB",
+        "verde": "#008000",
+        "amarillo": "#FFFF00",
+        "naranja": "#FFA500",
+        "rosa": "#FFC0CB",
+        "violeta": "#800080",
+        "morado": "#800080",
+        "marron": "#A52A2A",
+        "marrón": "#A52A2A",
+        "beige": "#F5F5DC",
+        "gris": "#808080"
+    };
+
+
+    document.querySelectorAll(".color").forEach(function(boton) {
+
+        const nombreColor = boton.dataset.color.toLowerCase().trim();
+
+        if (colores[nombreColor]) {
+            boton.style.backgroundColor = colores[nombreColor];
+        }
+
+    });
+
+</script>
 
 {% endblock %}

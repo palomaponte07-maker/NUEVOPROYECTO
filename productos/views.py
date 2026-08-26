@@ -26,13 +26,30 @@ def productos(request):
 
 def detalle_producto(request, id):
     producto = get_object_or_404(
-        Producto, 
+        Producto,
         idProducto=id,
-        estado = True
-        )
+        estado=True
+    )
+
+    variantes = producto.variantes.all()
+
+    colores = variantes.values_list(
+        'color',
+        flat=True
+    ).distinct()
+
+    talles = variantes.values_list(
+        'talle',
+        flat=True
+    ).distinct()
 
     return render(
         request,
         "cliente/detalle_producto.html",
-        {"producto": producto}
+        {
+            "producto": producto,
+            "variantes": variantes,
+            "colores": colores,
+            "talles": talles
+        }
     )

@@ -6,214 +6,341 @@
 }
 
 body {
-    font-family: Georgia, "Times New Roman", serif;
-    background-color: #efe8e0;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
     color: #171717;
-    
 }
 
 .header {
-    height: 120px;
-    background-color: #ffffff;
+    height: 100px;
     display: flex;
     align-items: center;
     padding: 0 65px;
     position: relative;
+    background-color: #ffffff;
 }
-.producto-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+
 .logo {
-    width: 170px;
     color: #c11f25;
-    font-size: 50px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 32px;
     font-weight: bold;
     font-style: italic;
 }
+
 .header h1 {
-    margin-left: 400px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     color: #c11f25;
-    font-size: 32px;
-    font-weight: bold;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 28px;
+    font-weight: normal;
 }
 
 .btn-volver {
     position: absolute;
-    right: 80px;
-    width: 38px;
-    height: 38px;
+    right: 55px;
+    width: 34px;
+    height: 34px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background-color: #c11f25;
+    background-color: #c91e26;
     color: white;
     text-decoration: none;
-    font-family: Arial, sans-serif;
-    font-size: 25px;
-    font-weight: bold;
+    font-size: 22px;
 }
+
 .contenedor {
-    min-height: calc(100vh - 135px);
+    min-height: calc(100vh - 100px);
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 100px;
-}
-.formulario-producto {
-    width: 500px;
+    justify-content: center;
+    padding: 25px 20px 50px;
     background-color: #ffffff;
-    padding: 0 18px 45px;
 }
+
+.formulario-producto {
+    width: 630px;
+    background-color: #eee7df;
+    border-radius: 15px;
+    padding: 32px 28px 28px;
+}
+
 .campo {
     display: flex;
     flex-direction: column;
 }
 
 .campo label {
-    margin-bottom: 25px;
-    font-size: 23px;
+    margin-bottom: 8px;
+    font-size: 15px;
     font-weight: bold;
 }
 
 .campo input,
-.campo select {
+.campo select,
+.campo textarea {
     width: 100%;
-    height: 75px;
-     background-color: #eee7df;
-    border: 3px solid #171717;
-    padding: 0 15px;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 20px;
+    background-color: #ffffff;
+    border: 1px solid #444;
+    border-radius: 3px;
+    padding: 8px 9px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
     outline: none;
 }
 
-.campo input::placeholder {
-    color: #bdbdbd;
+.campo input,
+.campo select {
+    height: 36px;
+}
+
+.campo textarea {
+
+    height: 76px;
+
+    resize: vertical;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+    border-color: #c11f25;
+}
+
+.campo input::placeholder,
+.campo textarea::placeholder {
+    color: #777;
 }
 
 .imagen-campo {
-    padding-top: 0;
+    margin-bottom: 22px;
+}
+.imagen-campo > label {
+    margin-bottom: 9px;
+}
+.imagenes-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
-.zona-imagen {
-    height: 75px;
-
-    border: 3px dashed #171717;
-
-    position: relative;
-
+.zona-imagen,
+.imagen-agregar {
+    width: 84px;
+    height: 84px;
+    border: 2px dashed #292929;
+    border-radius: 7px;
     display: flex;
     align-items: center;
     justify-content: center;
-
-    overflow: hidden;
+    position: relative;
+    background-color: #f4f0eb;
+    cursor: pointer;
 }
-.zona-imagen input {
-    position: absolute;
 
+.zona-imagen input,
+.imagen-agregar input {
+
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
-
     opacity: 0;
-
     cursor: pointer;
 }
 
 .icono-subir {
-    font-family: Arial, sans-serif;
-
-    font-size: 48px;
-    font-weight: 200;
-
-    line-height: 1;
-
-    transform: translateY(-5px);
+    font-size: 31px;
+    color: #171717;
 }
+
+.imagen-agregar {
+    border: 1px dashed #aaa;
+    color: #999;
+    font-size: 13px;
+}
+
+.imagen-campo small {
+    display: block;
+    margin-top: 8px;
+    color: #777;
+    font-size: 11px;
+}
+
 .nombre-campo {
-    margin-top: 70px;
+    margin-top: 20px;
 }
 .descripcion-campo {
-    margin-top: 70px;
+    margin-top: 17px;
 }
-.fila-datos {
+
+.categoria-campo {
+    margin-top: 18px;
+}
+
+.variantes-seccion {
+
+    margin-top: 20px;
+}
+
+.titulo-seccion {
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 12px;
+}
+
+.titulo-seccion > label {
+    margin-bottom: 4px;
+
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.titulo-seccion small {
+
+    color: #777;
+
+    font-size: 11px;
+}
+.variante {
+    position: relative;
     display: grid;
     grid-template-columns:
-        1fr
+        1.2fr
+        .8fr
         1fr
         1fr;
-    gap: 35px;
-    margin-top: 70px;
+    gap: 10px;
+    padding: 12px;
+    margin-bottom: 10px;
+    background-color: #f4f0eb;
+    border: 1px solid #d0c8c0;
+    border-radius: 7px;
 }
 
-.fila-datos .campo input {
-    height: 50px;
-}
-.categoria-campo {
-    margin-top: 70px;
-}
 
-.categoria-campo select {
-    appearance: auto;
-
+.btn-agregar-variante {
+    margin-top: 4px;
+    border: none;
+    background: transparent;
+    color: #c11f25;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
     cursor: pointer;
 }
-.btn-guardar {
-    margin-top: 20px;
 
-    width: 260px;
-    height: 45px;
+.btn-agregar-variante:hover {
+    text-decoration: underline;
+}
 
-    background-color: #c11f25;
+.fila-precios {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 90px;
+    margin-top: 22px;
+}
 
-    border: none;
 
-    color: white;
+.precio-venta-campo {
+    margin-top: 17px;
+}
 
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 21px;
+.precio-venta-campo input[readonly] {
+    background-color: #e5dfd8;
     font-weight: bold;
+    color: #333;
+}
 
+.precio-venta-campo small {
+    margin-top: 5px;
+    color: #777;
+    font-size: 11px;
+}
+
+
+.publicar-producto {
+    margin-top: 19px;
+    font-size: 14px;
+}
+
+
+.publicar-producto input {
+    margin-right: 8px;
+    accent-color: #1976d2;
+}
+
+
+.btn-guardar {
+    width: 100%;
+    height: 42px;
+    margin-top: 24px;
+    border: none;
+    border-radius: 7px;
+    background-color: #c91e26;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
     cursor: pointer;
 }
 
 .btn-guardar:hover {
     background-color: #a9181d;
 }
+
+
+/* =====================================
+   ERRORES
+   ===================================== */
+
+.errores {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f8d7da;
+    color: #842029;
+    font-size: 13px;
+}
+
+/* =====================================
+   RESPONSIVE
+   ===================================== */
+
 @media (max-width: 700px) {
 
     .header {
-        padding: 0 25px;
+        padding: 0 20px;
     }
 
     .logo {
-        width: 130px;
-        font-size: 35px;
+        font-size: 25px;
     }
 
     .header h1 {
-        margin-left: 0;
-        font-size: 24px;
-        text-align: center;
+        display: none;
     }
 
     .btn-volver {
-        right: 25px;
+        right: 20px;
     }
 
     .formulario-producto {
-        width: calc(100% - 40px);
+        width: 100%;
+        padding: 25px 18px;
     }
 
-    .fila-datos {
+    .fila-precios {
         grid-template-columns: 1fr;
-        gap: 25px;
+        gap: 15px;
+    }
+    .variante {
+        grid-template-columns: 1fr 1fr;
     }
 }
-
-
 
 
 .header-producto{

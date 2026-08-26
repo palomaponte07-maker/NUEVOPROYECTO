@@ -2,339 +2,501 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" >
-    <meta name ="viewport" content = "width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
     <title>Agregar Producto</title>
     <link rel="stylesheet"
           href="{% static 'administracion/css/productos.css' %}">
 </head>
 
 <body>
-    <header class="header">
-        <div class="logo">
-            <span> Oliviva</span>
+
+<header class="header">
+    <div class="logo">
+        <span>Oliviva</span>
+    </div>
+    <h1>Agregar Producto</h1>
+    <a href="#" class="btn-volver">←</a>
+</header>
+
+<main class="contenedor">
+    <form method="POST"
+          enctype="multipart/form-data"
+          class="formulario-producto">
+
+        {% csrf_token %}
+        {% if form.errors %}
+            <div class="errores">
+                {{ form.errors }}
+            </div>
+        {% endif %}
+        <div class="campo imagen-campo">
+            <label>
+                Imágenes del producto
+            </label>
+            <div class="imagenes-container"
+                 id="imagenesContainer">
+                <label class="zona-imagen">
+
+                    <span class="icono-subir">
+                        ↑
+                    </span>
+                    <input
+                        type="file"
+                        name="imagen"
+                        accept="image/*">
+
+                </label>
+
+                <label class="zona-imagen">
+                    <span class="icono-subir">
+                        ↑
+                    </span>
+                    <input
+                        type="file"
+                        name="imagen"
+                        accept="image/*">
+
+                </label>
+                <label class="imagen-agregar">
+                    <span>
+                        + agregar
+                    </span>
+                    <input
+                        type="file"
+                        name="imagen"
+                        accept="image/*">
+                </label>
+            </div>
+
+
+            <small>
+                Podés cargar varias fotos del mismo producto (Imágenes).
+            </small>
+
         </div>
-        <h1>Agregar Producto</h1>
-        <a href="#" class="btn-volver">↩</a>
-    </header>
 
-    <main class="contenedor">
-        <form method="POST" 
-              enctype="multipart/form-data"
-              class="formulario-producto">
-             {% csrf_token %}
-             {% if form.errors %}
-               <div class="color-formulario;">
-                    {{ form.errors }}
-               </div>
-             {% endif %}
+        <div class="campo nombre-campo">
+            <label for="nombre">
+                Nombre
+            </label>
+            <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                placeholder="Ej: Jean Gase"
+                value="{{ form.nombre.value|default:'' }}"
+                required>
 
-            <div class="campo imagen-campo">
-                <label>Imagen del producto</label>
-                <div class="zona-imagen">
-                    <label class="imagen-upload">
-                        <span>↑</span>
-                        <input type="file"
-                               name="imagen"
-                               accept="image/*">
-                    </label>
-                    
-                    <label class="imagen-upload">
-                        <span>↑</span>
-                        <input type="file"
-                               name="imagen"
-                               accept="image/*">
-                    </label>
-                    <div class="imagen-agregar">
-                      + agregar
-                    </div>
-                </div>
+        </div>
+        <div class="campo descripcion-campo">
+            <label for="descripcion">
+                Descripción
+            </label>
+            <textarea
+                id="descripcion"
+                name="descripcion"
+                placeholder="Ej: Jean de tiro alto con lavado celeste claro..."
+                required>{{ form.descripcion.value|default:'' }}</textarea>
+
+        </div>
+
+        <div class="campo categoria-campo">
+            <label for="categoria">
+                Categoría
+            </label>
+            <select
+                id="categoria"
+                name="categoria"
+                required>
+                <option value="">
+                    Seleccionar categoría
+                </option>
+                {% for categoria in form.fields.categoria.queryset %}
+                    <option>
+                        value="{{ categoria.idCategoria }}"
+                        {% if form.data.categoria == categoria.idCategoria|stringformat:"s" %}
+                            selected
+                        {% endif %}>
+                        {{ categoria.nombreCategoria }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="variantes-seccion">
+            <div class="titulo-seccion">
+                <label>
+                    Variantes
+                </label>
                 <small>
-                    Podés cargar varias fotos del mismo producto (Imágenes).
+                    Si el producto tiene varios talles y/o colores,
+                    cargá una variante por cada combinación.
                 </small>
             </div>
+            <div id="variantes-container">
+                <div class="variante">
+                    <div class="campo">
 
-            <div class="campo nombre-campo">
-                <label for="nombre">
-                    Nombre
-                </label>
-                <input
-                    type="text"
-                    id="nombre"
-                    name="nombre"
-                    placeholder="Ej: Jean Gase"
-                    value="{{ form.nombre.value|default:'' }}"
-                    required>
-            </div>
-                    
-            <div class="campo descripcion-campo">
-                <label for="descripcion">
-                    Descripcion
-                </label>
-                <textarea
-                    id="descripcion"
-                    name="descripcion"
-                    placeholder="Ej. Jean de tiro alto con lavado celeste claro..."
-                    required>{{ form.descripcion.value|default:'' }}</textarea>
-            </div>
-            
-            <div class="campo categoria-campo">
-                <label for="categoria">
-                    Categoría
-                </label>
-                <select 
-                    id="categoria" 
-                    name="categoria"
-                    required>
-                    <option value="">Seleccionar Categoría</option>
+                        <label>
+                            Color
+                        </label>
 
-                    {% for categoria in form.fields.categoria.queryset %}
-                        <option value="{{ categoria.idCategoria }}"
-                            {% if form.data.categoria == categoria.idCategoria|stringformat:"s" %}selected{% endif %}>
-                            {{ categoria.nombreCategoria }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </div>
+                        <input
+                            type="text"
+                            name="color[]"
+                            placeholder="Ej: Celeste"
+                            required>
 
+                    </div>
+                    <div class="campo">
 
-            <div class="fila-datos">
+                        <label>
+                            Talle
+                        </label>
+
+                        <input
+                            type="text"
+                            name="talle[]"
+                            placeholder="Ej: 42"
+                            required>
+
+                    </div>
+
                     <div class="campo">
                         <label>
-                            Precio (costo)
+                            Stock en tienda
+                        </label>
+                        <input
+                            type="number"
+                            name="stockProducto[]"
+                            value="0"
+                            min="0"
+                            required>
+
+                    </div>
+
+                    <div class="campo">
+                        <label>
+                            Stock en depósito
                         </label>
 
-                        <input 
-                              type="text"
-                              id="precioCosto"
-                              name="precioCosto"
-                              placeholder="$0"
-                              inputmode="decimal"
-                              placeholder="$0"
-                              min="0"
-                             step="0.01"
-                             value="{{ form.precioCosto.value|default:'' }}"
-                             required>
+                        <input
+                            type="number"
+                            name="stockDeposito[]"
+                            value="0"
+                            min="0"
+                            required>
                     </div>
-                     <div class="campo">
+                </div>
+            </div>
 
-                      <label for="IVA">
-                         IVA
-                     </label>
+            <button
+                type="button"
+                id="agregar-variante"
+                class="btn-agregar-variante">
 
-                     <select id="IVA"
-                             name="IVA"
-                             required>
-                         <option value="0"
-                             {% if form.IVA.value == "0" %}selected{% endif %}>
-                             0%
-                         </option>
+                + Agregar variante
+            </button>
+        </div>
 
-                         <option value="10.5"
-                             {% if form.IVA.value == "10.5" %}selected{% endif %}>
-                             10,5%
-                         </option>
+        <div class="fila-precios">
+            <div class="campo">
+                <label for="precioCosto">
+                    Precio (costo)
+                </label>
+                <input
+                    type="number"
+                    id="precioCosto"
+                    name="precioCosto"
+                    placeholder="$0"
+                    inputmode="decimal"
+                    min="0"
+                    step="0.01"
+                    value="{{ form.precioCosto.value|default:'' }}"
+                    required>
 
-                         <option value="21"
-                             {% if not form.IVA.value or form.IVA.value == "21" %}selected{% endif %}>
-                             21%
-                         </option>
+            </div>
+            <div class="campo">
 
-                          <option value="27"
-                             {% if form.IVA.value == "27" %}selected{% endif %}>
-                             27%
-                         </option>
-                         </select>
-
-                     </div>
-
-                   </div>
-
-                   <div class="campo">
-
-                <label for="precioVentaVisual">
-                    Precio
+                <label for="IVA">
+                    IVA
                 </label>
 
+                <select
+                    id="IVA"
+                    name="IVA"
+                    required>
+                    <option
+                        value="0"
+                        {% if form.IVA.value == "0" %}
+                            selected
+                        {% endif %}>
+                        0%
+                    </option>
+                    <option
+                        value="10.5"
+                        {% if form.IVA.value == "10.5" %}
+                            selected
+                        {% endif %}>
+                        10,5%
+                    </option>
+
+                    <option
+                        value="21"
+                        {% if not form.IVA.value or form.IVA.value == "21" %}
+                            selected
+                        {% endif %}>
+                        21%
+                    </option>
+                    <optio>
+                        value="27"
+                        {% if form.IVA.value == "27" %}
+                            selected
+                        {% endif %}>
+                        27%
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="campo precio-venta-campo">
+            <label for="precioVentaVisual">
+                Precio venta
+            </label>
+            <input
+                type="text"
+                id="precioVentaVisual"
+                placeholder="$0"
+                readonly>
+            <input
+                type="hidden"
+                id="precioVenta"
+                name="precioVenta">
+
+            <small>
+                Se calcula automáticamente con el costo + IVA.
+            </small>
+        </div>
+
+        <div class="seccion-descuento">
+            <h2>
+                Descuento
+            </h2>
+            <div class="campo">
+
+                <label for="porcentajeDescuento">
+                    Porcentaje de descuento
+                </label>
+                <input
+                    type="number"
+                    id="porcentajeDescuento"
+                    name="porcentajeDescuento"
+                    placeholder="0%"
+                    min="0"
+                    max="100"
+                    step="0.01"
+                    value="{{ form.porcentajeDescuento.value|default:'0' }}">
+
+            </div>
+
+            <div class="fila-descuento">
+                <div class="campo">
+                    <label for="fechaInicioDescuento">
+                        Inicio
+                    </label>
+                    <input
+                        type="datetime-local"
+                        id="fechaInicioDescuento"
+                        name="fechaInicioDescuento"
+                        value="{{ form.fechaInicioDescuento.value|default:'' }}">
+
+                </div>
+                <div class="campo">
+                    <label for="fechaFinDescuento">
+                        Fin
+                    </label>
+                    <input
+                        type="datetime-local"
+                        id="fechaFinDescuento"
+                        name="fechaFinDescuento"
+                        value="{{ form.fechaFinDescuento.value|default:'' }}">
+                </div>
+            </div>
+        </div>
+
+        <div class="publicar-producto">
+            <label>
+                <input
+                    type="checkbox"
+                    name="estado"
+                    value="True"
+                    checked>
+
+                Publicar producto
+                (queda activo y visible en la tienda)
+
+            </label>
+        </div>
+
+        <button
+            type="submit"
+            class="btn-guardar">
+            GUARDAR PRODUCTO
+        </button>
+    </form>
+</main>
+
+<script>
+const precioCosto =
+    document.getElementById("precioCosto");
+
+const iva =
+    document.getElementById("IVA");
+
+const precioVentaVisual =
+    document.getElementById("precioVentaVisual");
+
+
+const precioVenta =
+    document.getElementById("precioVenta");
+
+function calcularPrecio() {
+
+    const costo =
+        parseFloat(precioCosto.value) || 0;
+
+    const porcentajeIVA =
+        parseFloat(iva.value) || 0;
+
+    const precioFinal =
+        costo + (costo * porcentajeIVA / 100);
+
+    precioVentaVisual.value =
+        "$" + precioFinal.toFixed(2);
+
+
+    precioVenta.value =
+        precioFinal.toFixed(2);
+
+}
+
+precioCosto.addEventListener(
+    "input",
+    calcularPrecio
+);
+iva.addEventListener(
+    "change",
+    calcularPrecio
+);
+
+calcularPrecio();
+
+const variantesContainer =
+    document.getElementById(
+        "variantes-container"
+    );
+
+
+const btnAgregarVariante =
+    document.getElementById(
+        "agregar-variante"
+    );
+btnAgregarVariante.addEventListener(
+    "click",
+    function () {
+
+        const variante =
+            document.createElement("div");
+
+
+        variante.classList.add(
+            "variante"
+        );
+
+        variante.innerHTML = `
+            <div class="campo">
+                <label>
+                    Color
+                </label>
                 <input
                     type="text"
-                    id="precioVentaVisual"
-                    placeholder="$0"
-                    readonly>
-
-                <small>
-                    Se calcula automáticamente con el costo + IVA.
-                </small>
-
-            </div>
-                    <div class="campo">
-                        <label for="stockProducto">
-                            Stock
-                        </label>
-                        <input 
-                              type="number"
-                              id="stockProducto"
-                              name="stockProducto"
-                              placeholder="0"
-                              min="0"
-                              value="{{ form.stockProducto.value|default:'0' }}"
-                              required>
-                    </div>
-
-                     <div class="campo">
-
-                    <label for="stockDeposito">
-                        Stock en depósito
-                    </label>
-
-                    <input
-                        type="number"
-                        id="stockDeposito"
-                        name="stockDeposito"
-                        placeholder="0"
-                        min="0"
-                        value="{{ form.stockDeposito.value|default:'0' }}"
-                        required>
-
-                </div>
-
+                    name="color[]"
+                    placeholder="Ej: Negro"
+                    required>
             </div>
 
-            <div class="seccion-descuento">
+            <div class="campo">
+                <label>
+                    Talle
+                </label>
+                <input
+                    type="text"
+                    name="talle[]"
+                    placeholder="Ej: 40"
+                    required>
+            </div>
 
-                <h2>Descuento</h2>
 
-                <div class="campo">
-
-                    <label for="porcentajeDescuento">
-                        Porcentaje de descuento
-                    </label>
-
-                    <input
-                        type="number"
-                        id="porcentajeDescuento"
-                        name="porcentajeDescuento"
-                        placeholder="0%"
-                        min="0"
-                        max="100"
-                        step="0.01"
-                        value="{{ form.porcentajeDescuento.value|default:'0' }}">
-
-                </div>
-                <div class="fila-datos">
-
-                    <div class="campo">
-
-                        <label for="fechaInicioDescuento">
-                            Inicio
-                        </label>
-
-                        <input
-                            type="datetime-local"
-                            id="fechaInicioDescuento"
-                            name="fechaInicioDescuento"
-                            value="{{ form.fechaInicioDescuento.value|default:'' }}">
-
-                    </div>
-                     <div class="campo">
-
-                        <label for="fechaFinDescuento">
-                            Fin
-                        </label>
-                    
-                        <input
-                            type="datetime-local"
-                            id="fechaFinDescuento"
-                            name="fechaFinDescuento"
-                            value="{{ form.fechaFinDescuento.value|default:'' }}">
-
-                    </div>
-                       <div class="campo estado-producto">
+            <div class="campo">
 
                 <label>
-
-                    <input
-                        type="checkbox"
-                        name="estado"
-                        value="True"
-                        {% if form.estado.value != False %}checked{% endif %}>
-
-                    Publicar producto
-                    (queda activo y visible en la tienda)
-
+                    Stock en tienda
                 </label>
+                <input
+                    type="number"
+                    name="stockProducto[]"
+                    value="0"
+                    min="0"
+                    required>
 
             </div>
 
+            <div class="campo">
+                <label>
+                    Stock en depósito
+                </label>
+                <input
+                    type="number"
+                    name="stockDeposito[]"
+                    value="0"
+                    min="0"
+                    required>
 
-            <!-- BOTÓN -->
+            </div>
 
-            <button type="submit" class="btn-guardar">
-                GUARDAR PRODUCTO
+            <button
+                type="button"
+                class="btn-eliminar-variante"
+                title="Eliminar variante">
+
+                ×
+
             </button>
 
-        </form>
+        `;
+        variantesContainer.appendChild(
+            variante
+        );
 
-    </main>
+        const btnEliminar =
+            variante.querySelector(
+                ".btn-eliminar-variante"
+            );
+
+        btnEliminar.addEventListener(
+            "click",
+            function () {
+                variante.remove();
+
+            }
+        );
 
 
-    <!-- CÁLCULO DEL PRECIO -->
+    }
+);
 
-    <script>
-
-        const precioCosto = document.getElementById("precioCosto");
-        const iva = document.getElementById("IVA");
-        const precioVenta = document.getElementById("precioVentaVisual");
-
-        function calcularPrecio() {
-
-            const costo = parseFloat(precioCosto.value) || 0;
-            const porcentajeIVA = parseFloat(iva.value) || 0;
-
-            const precioFinal =
-                costo + (costo * porcentajeIVA / 100);
-
-            precioVenta.value =
-                "$" + precioFinal.toFixed(2);
-
-        }
-
-        precioCosto.addEventListener("input", calcularPrecio);
-        iva.addEventListener("change", calcularPrecio);
-
-        calcularPrecio();
-
-    </script>
-
-</html>
-                </div>
-                    <div class="campo">
-                    <label for="color">
-                        Color
-                    </label>
-                    <input  
-                          type="text"
-                          id="color"
-                          name="color">
-                    </div>       
-                 </div>
-                 <div class="campo">
-                <div class="campo">
-                    <label for="talle">
-                        Talle
-                    </label>
-                    <input 
-                        type="text"
-                        id="talle"
-                        name="talle"
-                        placeholder="Ej: 38"
-                        required>
-                </div>
-                </div>
-                <button type="submit" class="btn-guardar">
-                Guardar Producto
-                </button>
-            </form>
-        </main>
-    </body>
+</script>
+</body>
 </html>

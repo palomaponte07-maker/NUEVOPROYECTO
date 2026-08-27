@@ -52,30 +52,44 @@
                             {% endif %}
                         {% endwith %}
 
-                        <span class="producto-nombre">
+                        <div class="producto-nombre">
                          {{ producto.nombre }}
-                        </span>
+                        </div>
                     </div>
 
                     <div>
                        {{ producto.descripcion }}
                     </div>
 
-                    <div class="talles">
-                        <span>{{ producto.talle }}</span>
-                    </div>
+                <div class="talles">
+                    {% for variante in producto.variantes.all %}
+                        <span>{{ variante.talle }}</span>
+                    {% empty %}
+                        <span>Sin talle</span>
+                    {% endfor %}
+                </div>
 
-                     <div>
-                      {{ producto.color }}
-                     </div>
+                <div>
+                    {% for variante in producto.variantes.all %}
+                        {{ variante.color }}
+                        {% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                         Sin color
+                        {% endfor %}
+                </div>
 
-                     <div>
-                      ${{ producto.precioDescuento }}
-                     </div>
+                <div>
+                     ${{ producto.precioVenta }}
+                </div>
 
-                     <div>
-                     {{ producto.stock }}
-                       </div>
+                <div>
+                    {% for variante in producto.variantes.all %}
+                        {{ variante.stockProducto }}
+                        {% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        0
+                    {% endfor %}
+                </div>
 
                       <div class="acciones">
                          <button class="btn-icon editar" title="Editar">

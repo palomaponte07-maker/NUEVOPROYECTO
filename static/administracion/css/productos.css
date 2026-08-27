@@ -429,15 +429,13 @@ body {
 }
 .producto-imagen-editar {
     display: flex;
-
     justify-content: center;
     align-items: center;
 }
 
 .producto-imagen-editar img {
-    width: 155px;
-    height: 207px;
-
+    width: 80px;
+    height: 100px;
     object-fit: cover;
 }
 .producto-dato {

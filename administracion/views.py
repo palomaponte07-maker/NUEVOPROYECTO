@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import ProductoForm
 from productos.models import Producto
+from productos.models import Producto, Imagen
 from pedidos.models import Pedido,DetallePedido
 
 def dashboard(request):
@@ -19,8 +20,9 @@ def dashboard(request):
 
 def agregar_producto(request):
     if request.method == 'POST':
-        form = ProductoForm(request.POST)
 
+        form = ProductoForm(request.POST,request.FILES)
+        print("ARCHIVOS RECIBIDOS:", request.FILES)
         if form.is_valid():
             producto =form.save(commit=False)
             producto.porcentajeDescuento = 0
@@ -29,6 +31,18 @@ def agregar_producto(request):
                 (producto.precioCosto * producto.IVA / 100)
             )
             producto.save()
+            # Obtener las fotos enviadas desde el formulario
+            fotos = request.FILES.getlist('foto')
+
+            print("FOTOS:", fotos)
+
+            # Guardar cada foto relacionada con el producto
+            for foto in fotos:
+                Imagen.objects.create(
+                    producto=producto,
+                    imagen=foto
+                )
+
             return redirect('dashboard')
 
     else:

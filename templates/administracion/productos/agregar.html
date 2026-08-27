@@ -21,7 +21,7 @@
 </header>
 
 <main class="contenedor">
-    <form method="POST"
+    <form method="POST" 
           enctype="multipart/form-data"
           class="formulario-producto">
 
@@ -44,7 +44,7 @@
                     </span>
                     <input
                         type="file"
-                        name="imagen"
+                        name="foto"
                         accept="image/*">
 
                 </label>
@@ -55,7 +55,7 @@
                     </span>
                     <input
                         type="file"
-                        name="imagen"
+                        name="foto"
                         accept="image/*">
 
                 </label>
@@ -65,7 +65,7 @@
                     </span>
                     <input
                         type="file"
-                        name="imagen"
+                        name="foto"
                         accept="image/*">
                 </label>
             </div>
@@ -114,8 +114,7 @@
                     Seleccionar categoría
                 </option>
                 {% for categoria in form.fields.categoria.queryset %}
-                    <option>
-                        value="{{ categoria.idCategoria }}"
+                    <option value="{{ categoria.idCategoria }}"
                         {% if form.data.categoria == categoria.idCategoria|stringformat:"s" %}
                             selected
                         {% endif %}>

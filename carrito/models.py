@@ -21,8 +21,26 @@ class Carrito(models.Model):
 
 class CarritoProducto(models.Model):
     idCarritoProducto = models.AutoField(primary_key=True)
-    carrito = models.ForeignKey(Carrito,on_delete=models.CASCADE,db_column="idCarrito")
-    producto = models.ForeignKey("productos.Producto",on_delete=models.CASCADE,db_column="idProducto")
+
+    carrito = models.ForeignKey(
+        Carrito,
+        on_delete=models.CASCADE,
+        db_column="idCarrito",
+    )
+
+    producto = models.ForeignKey(
+        "productos.Producto",
+        on_delete=models.CASCADE,
+        db_column="idProducto"
+    )
+
+    variante = models.ForeignKey(
+        "productos.ProductoVariante",
+        on_delete=models.CASCADE,
+        db_column="idVariante",
+        null=True,
+        blank=True
+    )
 
     numeroPedido = models.IntegerField(blank=True, null=True)
     fecha = models.DateTimeField(blank=True, null=True)
@@ -30,11 +48,21 @@ class CarritoProducto(models.Model):
     total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     estadoPago = models.CharField(max_length=20, blank=True, null=True)
     cantidad = models.IntegerField()
-    precioUnitario = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    subTotal = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    precioUnitario = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        blank=True,
+        null=True
+    )
+    subTotal = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        blank=True,
+        null=True
+    )
 
     class Meta:
         db_table = 'CarritoProducto'
+
     def __str__(self):
         return f"CarritoProducto {self.carrito.idCarrito} - {self.producto.nombre}"
-    

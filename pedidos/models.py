@@ -33,6 +33,14 @@ class DetallePedido(models.Model):
         db_column="idProducto"
     )
 
+    variante = models.ForeignKey(
+        "productos.ProductoVariante",
+        on_delete=models.PROTECT,
+        db_column="idVariante",
+        null=True,
+        blank=True
+    )
+
     cantidad = models.IntegerField()
     precioUnitario = models.DecimalField(max_digits=10, decimal_places=2)
     subTotal = models.DecimalField(max_digits=10, decimal_places=2)

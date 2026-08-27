@@ -74,9 +74,13 @@
 
                 
 
-                <a href="#" class="fs-4 text-dark">
+                <a href="#"
+                    class="fs-4 text-dark"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#carritoLateral"
+                    aria-controls="carritoLateral">
 
-                    <i class="bi bi-bag bolsa-carrito"></i>
+                        <i class="bi bi-bag bolsa-carrito"></i>
 
                 </a>
 
@@ -92,6 +96,129 @@
         {% endblock %}
 
     </main>
+
+    <!-- Carrito lateral -->
+    <div class="offcanvas offcanvas-end carrito-lateral"
+        tabindex="-1"
+        id="carritoLateral"
+        aria-labelledby="carritoTitulo">
+
+        <div class="offcanvas-header">
+
+            <h5 class="offcanvas-title carrito-titulo" id="carritoTitulo">
+                Carrito de compras
+            </h5>
+
+            <button type="button"
+                class="btn-close"
+                data-bs-dismiss="offcanvas"
+                aria-label="Cerrar">
+            </button>
+
+        </div>
+
+
+        <div class="offcanvas-body">
+
+            <!-- Productos del carrito -->
+            <div class="carrito-productos">
+
+                <!-- Producto -->
+                <div class="carrito-producto">
+
+                    <div class="carrito-producto-contenido">
+
+                        <div class="carrito-imagen">
+                            <!-- La imagen real la conectaremos después -->
+                        </div>
+
+                        <div class="carrito-detalle">
+
+                            <h6>Nombre del producto</h6>
+
+                            <p>Talle: 38</p>
+
+                            <p>$40.900</p>
+
+                        </div>
+
+                    </div>
+
+
+                    <button type="button"
+                        class="carrito-eliminar"
+                        aria-label="Eliminar producto">
+
+                        <i class="bi bi-trash"></i>
+
+                    </button>
+
+
+                    <div class="carrito-cantidad">
+
+                        <button type="button">−</button>
+
+                        <span>1</span>
+
+                        <button type="button">+</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="carrito-resumen">
+
+                <div class="carrito-linea">
+                    <span>Productos</span>
+                    <span>1</span>
+                </div>
+
+                <div class="carrito-linea">
+                    <span>Subtotal</span>
+                    <span>$40.900</span>
+                </div>
+
+                <div class="carrito-linea">
+                    <span>IVA</span>
+                    <span>$8.589</span>
+                </div>
+
+                <div class="carrito-linea carrito-total">
+                    <span>TOTAL</span>
+                    <span>$49.489</span>
+                </div>
+
+            </div>
+
+        
+
+
+        
+            <div class="carrito-info">
+
+                <p>
+                    <i class="bi bi-shield-check"></i>
+                    Compra 100% segura
+                </p>
+
+                <p>
+                    <i class="bi bi-clock"></i>
+                    Tu carrito vence en 24 horas
+                </p>
+
+            </div>
+
+
+            <button type="button" class="iniciar-compra">
+                INICIAR COMPRA
+            </button>
+
+        </div>
+
+    </div>
 
     <!-- Bootstrap JS -->
 

@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
 from .forms import ProductoForm
-from productos.models import Producto
 from productos.models import Producto, Imagen
 from pedidos.models import Pedido,DetallePedido
 
 def dashboard(request):
     productos = Producto.objects.all().order_by('-idProducto')[:10]
-
+    for producto in productos:
+        producto.precio_mostrar = f"{producto.precioVenta:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
     pedidos = Pedido.objects.select_related('cliente').prefetch_related('detallepedido_set__producto').order_by('-idPedido')[:10]
     return render(
         request, 

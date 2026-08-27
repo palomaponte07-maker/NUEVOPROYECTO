@@ -31,10 +31,11 @@
                 <div class="producto-header">
                     <div>Productos:</div>
                     <div>Descripción</div>
+                    <div>Precio</div>
                     <div>Talles</div>
                     <div>Color</div>
-                    <div>Precio</div>
-                    <div>Stock</div>
+                    <div>Stock Producto</div>
+                    <div>Stock Depocito</div>
                     <div>Acciones</div>
                 </div>
 
@@ -51,45 +52,51 @@
                              </div>
                             {% endif %}
                         {% endwith %}
-
-                        <div class="producto-nombre">
-                         {{ producto.nombre }}
-                        </div>
                     </div>
 
                     <div>
                        {{ producto.descripcion }}
                     </div>
 
-                <div class="talles">
-                    {% for variante in producto.variantes.all %}
-                        <span>{{ variante.talle }}</span>
-                    {% empty %}
-                        <span>Sin talle</span>
-                    {% endfor %}
-                </div>
+                    
+                    <div>
+                     ${{ producto.precio_mostrar }}
+                    </div>
 
-                <div>
-                    {% for variante in producto.variantes.all %}
-                        {{ variante.color }}
-                        {% if not forloop.last %}, {% endif %}
-                    {% empty %}
-                         Sin color
+                    <div class="talles">
+                        {% for variante in producto.variantes.all %}
+                            <span>{{ variante.talle }}</span>
+                        {% empty %}
+                            <span>Sin talle</span>
                         {% endfor %}
-                </div>
+                    </div>
 
-                <div>
-                     ${{ producto.precioVenta }}
-                </div>
+                    <div>
+                        {% for variante in producto.variantes.all %}
+                            {{ variante.color }}
+                            {% if not forloop.last %}, {% endif %}
+                        {% empty %}
+                            Sin color
+                            {% endfor %}
+                    </div>
 
-                <div>
-                    {% for variante in producto.variantes.all %}
-                        {{ variante.stockProducto }}
-                        {% if not forloop.last %}, {% endif %}
-                    {% empty %}
-                        0
-                    {% endfor %}
-                </div>
+                    <div>
+                        {% for variante in producto.variantes.all %}
+                            {{ variante.stockProducto }}
+                            {% if not forloop.last %}, {% endif %}
+                        {% empty %}
+                            0
+                        {% endfor %}
+                    </div>
+
+                    <div>
+                        {% for variante in producto.depocito.all %}
+                            {{ variante.stockDepocito }}
+                            {% if not forloop.last %}, {% endif %}
+                        {% empty %}
+                            0
+                        {% endfor %}
+                    </div>
 
                       <div class="acciones">
                          <button class="btn-icon editar" title="Editar">

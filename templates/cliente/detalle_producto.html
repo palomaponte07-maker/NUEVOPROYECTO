@@ -12,19 +12,10 @@
     <div class="container">
 
         <div class="detalle-contenido">
-
             
             <div class="detalle-imagenes">
 
-                <div class="miniaturas">
-
-                    {% for imagen in producto.imagen_set.all %}
-
-                        <img src="{% static imagen.imagen %}"
-                             class="miniatura"
-                             alt="{{ producto.nombre }}">
-
-                    {% endfor %}
+                <div class="miniaturas" id="miniaturas">
 
                 </div>
 
@@ -32,10 +23,11 @@
 
                     {% with imagen=producto.imagen_set.first %}
 
-                        {% if imagen %}
+                        {% if imagen and imagen.imagen %}
 
-                            <img src="{% static imagen.urlImagen %}"
-                                 alt="{{ producto.nombre }}">
+                            <img id="imagen-principal"
+                                src="{{ imagen.imagen.url }}"
+                                alt="{{ producto.nombre }}">
 
                         {% endif %}
 
@@ -44,6 +36,7 @@
                 </div>
 
             </div>
+
             
             <div class="detalle-info">
                 
@@ -144,6 +137,8 @@
 
 </section>
 
+{{ variantes_data|json_script:"variantes-data" }}
+
 <script>
 
     const colores = {
@@ -165,15 +160,226 @@
     };
 
 
-    document.querySelectorAll(".color").forEach(function(boton) {
+    const variantes = JSON.parse(
+        document.getElementById("variantes-data").textContent
+    );
 
-        const nombreColor = boton.dataset.color.toLowerCase().trim();
 
-        if (colores[nombreColor]) {
-            boton.style.backgroundColor = colores[nombreColor];
+    let colorSeleccionado = null;
+    let talleSeleccionado = null;
+
+
+    const botonesColor = document.querySelectorAll(".color");
+    const botonesTalle = document.querySelectorAll(".talle");
+    const stockElemento = document.getElementById("stock-disponible");
+
+
+    function normalizar(valor) {
+
+        return valor
+            .toLowerCase()
+            .trim();
+
+    }
+
+
+    function tieneStockColor(color) {
+
+        return variantes.some(function(variante) {
+
+            return normalizar(variante.color) === normalizar(color)
+                && variante.stockProducto > 0;
+
+        });
+
+    }
+
+
+    function actualizarColores() {
+
+        botonesColor.forEach(function(boton) {
+
+            const color = boton.dataset.color;
+
+            if (tieneStockColor(color)) {
+
+                boton.disabled = false;
+                boton.classList.remove("agotado");
+
+            } else {
+
+                boton.disabled = true;
+                boton.classList.add("agotado");
+                boton.classList.remove("seleccionado");
+
+            }
+
+        });
+
+    }
+
+
+    function actualizarTalles() {
+
+        botonesTalle.forEach(function(boton) {
+
+            const talle = boton.dataset.talle;
+
+            if (!colorSeleccionado) {
+
+                boton.disabled = true;
+                boton.classList.add("agotado");
+                boton.classList.remove("seleccionado");
+
+                return;
+
+            }
+
+
+            const varianteDisponible = variantes.some(function(variante) {
+
+                return normalizar(variante.color) === normalizar(colorSeleccionado)
+                    && normalizar(variante.talle) === normalizar(talle)
+                    && variante.stockProducto > 0;
+
+            });
+
+
+            if (varianteDisponible) {
+
+                boton.disabled = false;
+                boton.classList.remove("agotado");
+
+            } else {
+
+                boton.disabled = true;
+                boton.classList.add("agotado");
+                boton.classList.remove("seleccionado");
+
+            }
+
+        });
+
+    }
+
+
+    function actualizarStock() {
+
+        if (!colorSeleccionado || !talleSeleccionado) {
+
+            stockElemento.textContent = "-";
+
+            return;
+
         }
 
+
+        const varianteEncontrada = variantes.find(function(variante) {
+
+            return normalizar(variante.color) === normalizar(colorSeleccionado)
+                && normalizar(variante.talle) === normalizar(talleSeleccionado)
+                && variante.stockProducto > 0;
+
+        });
+
+
+        if (varianteEncontrada) {
+
+            stockElemento.textContent =
+                varianteEncontrada.stockProducto;
+
+        } else {
+
+            stockElemento.textContent = "No disponible";
+
+        }
+
+    }
+
+
+    botonesColor.forEach(function(boton) {
+
+        const nombreColor = normalizar(boton.dataset.color);
+
+
+        if (colores[nombreColor]) {
+
+            boton.style.backgroundColor = colores[nombreColor];
+
+        }
+
+
+        boton.addEventListener("click", function() {
+
+            if (boton.disabled) {
+                return;
+            }
+
+
+            botonesColor.forEach(function(botonColor) {
+
+                botonColor.classList.remove("seleccionado");
+
+            });
+
+
+            boton.classList.add("seleccionado");
+
+
+            colorSeleccionado = boton.dataset.color;
+
+
+            talleSeleccionado = null;
+
+
+            botonesTalle.forEach(function(botonTalle) {
+
+                botonTalle.classList.remove("seleccionado");
+
+            });
+
+
+            stockElemento.textContent = "-";
+
+
+            actualizarTalles();
+
+        });
+
     });
+
+
+    botonesTalle.forEach(function(boton) {
+
+        boton.addEventListener("click", function() {
+
+            if (boton.disabled) {
+                return;
+            }
+
+
+            botonesTalle.forEach(function(botonTalle) {
+
+                botonTalle.classList.remove("seleccionado");
+
+            });
+
+
+            boton.classList.add("seleccionado");
+
+
+            talleSeleccionado = boton.dataset.talle;
+
+
+            actualizarStock();
+
+        });
+
+    });
+
+
+    actualizarColores();
+    actualizarTalles();
 
 </script>
 

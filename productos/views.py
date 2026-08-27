@@ -33,6 +33,25 @@ def detalle_producto(request, id):
 
     variantes = producto.variantes.all()
 
+    variantes_data = []
+
+    for variante in variantes:
+
+        imagenes = []
+
+        for imagen in variante.imagen_set.all():
+
+            if imagen.imagen:
+                imagenes.append(imagen.imagen.url)
+
+        variantes_data.append({
+            'idVariante': variante.idVariante,
+            'color': variante.color,
+            'talle': variante.talle,
+            'stockProducto': variante.stockProducto,
+            'imagenes': imagenes
+        })
+
     colores = variantes.values_list(
         'color',
         flat=True
@@ -49,6 +68,7 @@ def detalle_producto(request, id):
         {
             "producto": producto,
             "variantes": variantes,
+            "variantes_data": variantes_data,
             "colores": colores,
             "talles": talles
         }

@@ -101,6 +101,23 @@ header,
     color: var(--color-texto);
     margin-top: 15px;
     min-height: 32px;
+    text-decoration: none;
+}
+
+.producto,
+.producto:hover,
+.producto:visited,
+.producto:active {
+    text-decoration: none;
+    color: var(--color-texto);
+}
+
+.producto-link,
+.producto-link:hover,
+.producto-link:visited,
+.producto-link:active {
+    text-decoration: none;
+    color: var(--color-texto);
 }
 
 .precios {
@@ -222,6 +239,8 @@ footer a:hover{
     align-items: center;
     gap: 5px;
 }
+
+
 
 .detalle-producto {
     background-color: var(--color-fondo);
@@ -365,6 +384,20 @@ footer a:hover{
 }
 
 
+.color.agotado,
+.talle.agotado {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.color.seleccionado {
+    outline: 2px solid #c11f25;
+    outline-offset: 3px;
+}
+
+.talle.seleccionado {
+    border: 2px solid #c11f25;
+}
 
 
 .detalle-descripcion {

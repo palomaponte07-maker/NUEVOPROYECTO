@@ -42,10 +42,13 @@
                 <div class="producto-row">
                      <div class="producto-info">
                         {% with producto.imagen_set.first as imagen %}
-                            {% if imagen %}
-                             <img src="{{ imagen.urlImagen }}" alt="">
+                            {% if imagen and imagen.imagen %}
+                               <img src="{{ imagen.imagen.url }}" 
+                                    alt="{{ producto.nombre }}">
                             {% else %}
-                             <img src="https://via.placeholder.com/120x150" alt="">
+                             <div class="sin-imagen">
+                                Sin imagen
+                             </div>
                             {% endif %}
                         {% endwith %}
 
@@ -111,35 +114,12 @@
                     <div>Estado</div>
                     <div>Acción</div>
                 </div>
-                <div class="pedido-row">
-                    <div>1243</div>
-                    <div>Lucia</div>
-                    <div>González</div>
-                    <div>Jean Gase</div>
-                    <div>1</div>
-                    <div>42</div>
-                    <div>24 may, 2026</div>
-                    <div>$40.900</div>
-                    <div>pendiente</div>
-                <div> 
                     <button class="btn-detalle">
                         detalle <br>
                         pedido
                     </button>
                 </div>
             </div>
-
-            <div class="pedido-row">
-                <div>243</div>
-                <div>Marta</div>
-                <div>Rodríguez</div>
-                <div>Remera Emma</div>
-                <div>1</div>
-                <div>único</div>
-                <div>18 may, 2026</div>
-                <div>$9.000</div>
-                <div>confirmado</div>
-            <div> 
                 <button class="btn-detalle">
                     Detalle<br>
                     Pedido

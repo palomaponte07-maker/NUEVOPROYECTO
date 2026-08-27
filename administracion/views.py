@@ -1,13 +1,21 @@
 from django.shortcuts import render, redirect
 from .forms import ProductoForm
-from productos.models import Producto, Imagen
+from productos.models import Producto
+from pedidos.models import Pedido,DetallePedido
 
 def dashboard(request):
     productos = Producto.objects.all().order_by('-idProducto')[:10]
+
+    pedidos = Pedido.objects.select_related('cliente').prefetch_related('detallepedido_set__producto').order_by('-idPedido')[:10]
     return render(
         request, 
         'administracion/dashboard.html',
-        {'productos': productos} )
+        {
+            'productos': productos,
+            'pedidos': pedidos,
+
+        }
+    )
 
 def agregar_producto(request):
     if request.method == 'POST':

@@ -775,3 +775,519 @@ footer a:hover{
         margin-top: 12px;
     }
 }
+
+
+
+
+
+
+/* =========================================================
+   CHECKOUT / CARRITO PRODUCTO
+   ========================================================= */
+
+.checkout {
+    background-color: #efe8e0;
+    min-height: 100vh;
+    padding-bottom: 60px;
+}
+
+
+/* =========================================================
+   TITULO INICIAR COMPRA
+   ========================================================= */
+
+.checkout-titulo {
+    font-family: 'Cormorant Garamond', serif;
+    color: #c11f25;
+    font-size: 38px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 22px;
+    letter-spacing: 0.5px;
+}
+
+
+/* =========================================================
+   FORMULARIO IZQUIERDO
+   ========================================================= */
+
+.checkout-formulario {
+    background-color: #f8f5f2;
+    border: 1px solid #ddd3c8;
+    padding: 35px 40px;
+    border-radius: 3px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+
+/* SECCIONES */
+
+.checkout-seccion h2 {
+    font-family: 'Cormorant Garamond', serif;
+    color: #333;
+    font-size: 23px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+
+/* LABELS */
+
+.checkout .form-label {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 6px;
+}
+
+
+/* INPUTS */
+
+.checkout .form-control {
+    height: 43px;
+    border: 1px solid #cfc5ba;
+    border-radius: 2px;
+    background-color: #fffdfb;
+    color: #333;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    padding: 9px 12px;
+    box-shadow: none;
+    transition: border-color 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.checkout .form-control::placeholder {
+    color: #aaa29b;
+    font-size: 12px;
+}
+
+.checkout .form-control:focus {
+    border-color: #c11f25;
+    box-shadow: 0 0 0 2px rgba(193, 31, 37, 0.08);
+    outline: none;
+}
+
+
+/* =========================================================
+   SEPARADORES
+   ========================================================= */
+
+.checkout-separador {
+    width: 100%;
+    height: 1px;
+    background-color: #d8cbbd;
+    margin: 30px 0;
+}
+
+
+/* =========================================================
+   METODO DE PAGO
+   ========================================================= */
+
+.metodo-pago {
+    margin-top: 5px;
+}
+
+.metodo-pago-opcion {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    cursor: pointer;
+    width: fit-content;
+    font-family: 'Open Sans', sans-serif;
+}
+
+
+/* Ocultamos el radio original */
+
+.metodo-pago-opcion input {
+    display: none;
+}
+
+
+/* Círculo */
+
+.radio-personalizado {
+    width: 19px;
+    height: 19px;
+    border: 1px solid #999;
+    border-radius: 50%;
+    background-color: #fff;
+    position: relative;
+}
+
+
+/* Círculo seleccionado */
+
+.metodo-pago-opcion input:checked + .radio-personalizado {
+    border-color: #c11f25;
+}
+
+.metodo-pago-opcion input:checked + .radio-personalizado::after {
+    content: "";
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    background-color: #c11f25;
+    border-radius: 50%;
+    top: 4px;
+    left: 4px;
+}
+
+
+.metodo-pago-texto {
+    font-size: 14px;
+    color: #333;
+}
+
+
+/* =========================================================
+   BOTONES
+   ========================================================= */
+
+.checkout-botones {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 18px;
+    padding: 0 8px;
+}
+
+
+/* VOLVER */
+
+.btn-volver {
+    border: none;
+    background: transparent;
+    color: #555;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 10px 5px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.btn-volver:hover {
+    color: #c11f25;
+}
+
+
+/* CONFIRMAR */
+
+.btn-confirmar {
+    border: none;
+    background-color: #c11f25;
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background-color 0.2s ease,
+                transform 0.2s ease;
+}
+
+.btn-confirmar:hover {
+    background-color: #a9191f;
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   TU PEDIDO
+   ========================================================= */
+
+.pedido {
+    background-color: #f8f5f2;
+    border: 1px solid #ddd3c8;
+    border-radius: 3px;
+    padding: 27px 25px 22px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+
+/* ENCABEZADO */
+
+.pedido-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #d8cbbd;
+    margin-bottom: 20px;
+}
+
+.pedido-header i {
+    color: #c11f25;
+    font-size: 21px;
+}
+
+.pedido-header h2 {
+    margin: 0;
+    color: #c11f25;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 27px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   PRODUCTO
+   ========================================================= */
+
+.pedido-producto {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #d8cbbd;
+}
+
+
+.pedido-producto-contenido {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    position: relative;
+}
+
+
+/* IMAGEN */
+
+.pedido-imagen {
+    width: 82px;
+    height: 105px;
+    background-color: #ddd5cd;
+    flex-shrink: 0;
+}
+
+
+/* DETALLE */
+
+.pedido-detalle {
+    min-width: 0;
+    padding-right: 22px;
+}
+
+
+.pedido-detalle h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    line-height: 1.15;
+    color: #333;
+    font-weight: 600;
+    margin: 0 0 7px;
+}
+
+
+.pedido-detalle p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    color: #555;
+    margin: 2px 0;
+    line-height: 1.25;
+}
+
+
+.pedido-detalle .pedido-precio {
+    font-size: 17px;
+    color: #222;
+    font-weight: 600;
+    margin-top: 7px;
+}
+
+
+/* ELIMINAR */
+
+.pedido-eliminar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    background: transparent;
+    color: #999;
+    font-size: 17px;
+    cursor: pointer;
+    padding: 2px;
+}
+
+.pedido-eliminar:hover {
+    color: #c11f25;
+}
+
+
+/* =========================================================
+   CANTIDAD
+   ========================================================= */
+
+.pedido-cantidad {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    margin: 15px 0 0 95px;
+    border: 1px solid #c8beb4;
+    border-radius: 2px;
+    overflow: hidden;
+    background-color: #fffdfb;
+}
+
+
+.pedido-cantidad button,
+.pedido-cantidad span {
+    width: 31px;
+    height: 29px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+}
+
+
+.pedido-cantidad button {
+    background: transparent;
+    color: #555;
+    cursor: pointer;
+}
+
+
+.pedido-cantidad button:hover {
+    background-color: #c11f25;
+    color: white;
+}
+
+
+.pedido-cantidad span {
+    border-left: 1px solid #ddd3c8;
+    border-right: 1px solid #ddd3c8;
+    color: #333;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   RESUMEN
+   ========================================================= */
+
+.pedido-resumen {
+    padding-top: 18px;
+}
+
+
+.pedido-linea {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: #444;
+    margin-bottom: 7px;
+}
+
+
+.pedido-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #cfc4b8;
+    margin-top: 12px;
+    padding-top: 12px;
+}
+
+
+.pedido-total span:first-child {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+}
+
+
+.pedido-total span:last-child {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 21px;
+    font-weight: 600;
+    color: #c11f25;
+}
+
+
+/* =========================================================
+   COMPRA SEGURA
+   ========================================================= */
+
+.pedido-seguro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-top: 20px;
+    padding-top: 14px;
+    border-top: 1px solid #e0d7ce;
+}
+
+
+.pedido-seguro i {
+    color: #777;
+    font-size: 13px;
+}
+
+
+.pedido-seguro span {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 10px;
+    color: #777;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 991px) {
+
+    .checkout-titulo {
+        font-size: 34px;
+    }
+
+    .checkout-formulario {
+        padding: 30px;
+    }
+
+    .pedido {
+        margin-top: 10px;
+    }
+
+}
+
+
+@media (max-width: 767px) {
+
+    .checkout {
+        padding-top: 30px !important;
+    }
+
+    .checkout-titulo {
+        font-size: 30px;
+        margin-bottom: 18px;
+    }
+
+    .checkout-formulario {
+        padding: 25px 20px;
+    }
+
+    .checkout-botones {
+        padding: 0;
+    }
+
+    .pedido {
+        padding: 22px 18px;
+    }
+
+    .pedido-header h2 {
+        font-size: 24px;
+    }
+
+}

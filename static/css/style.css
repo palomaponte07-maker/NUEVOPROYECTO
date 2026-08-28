@@ -519,42 +519,42 @@ footer a:hover{
 }
 
 
-/* ENCABEZADO */
+
 .carrito-lateral .offcanvas-header {
-    padding: 28px 30px 12px 34px;
+    padding: 30px 45px 15px;
 }
 
 .carrito-titulo {
     color: #c11f25;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 30px;
+    font-size: 32px;
     font-weight: 600;
 }
 
 
-/* CUERPO */
+
 .carrito-lateral .offcanvas-body {
-    padding: 0 28px 28px 34px;
+    padding: 0 45px 35px;
 }
 
 
-/* SEPARADORES */
+
 .carrito-productos::before {
     content: "";
     display: block;
     border-top: 1px solid #777;
     border-bottom: 1px solid #777;
-    height: 36px;
-    margin-bottom: 20px;
+    height: 38px;
+    margin-bottom: 25px;
 }
 
 
-/* PRODUCTO */
+
 .carrito-producto {
     position: relative;
-    min-height: 155px;
-    padding-bottom: 22px;
-    margin-bottom: 22px;
+    min-height: 165px;
+    padding: 0 55px 25px 0;
+    margin-bottom: 25px;
     border-bottom: 1px solid #999;
 }
 
@@ -562,59 +562,65 @@ footer a:hover{
 
 .carrito-producto-contenido {
     display: flex;
-    gap: 20px;
+    align-items: flex-start;
+    gap: 22px;
 }
 
 
-/* IMAGEN */
+
 .carrito-imagen {
-    width: 105px;
-    height: 130px;
+    width: 115px;
+    height: 145px;
     background-color: #ddd;
     flex-shrink: 0;
 }
 
 
-/* DETALLE */
+
 .carrito-detalle {
+    flex: 1;
+    min-width: 0;
     padding-top: 2px;
 }
 
 .carrito-detalle h6 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
-    margin: 0 0 4px;
+    font-size: 22px;
+    margin: 0 0 8px;
     font-weight: 600;
+    line-height: 1.2;
 }
 
 .carrito-detalle p {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 17px;
-    margin: 0;
+    font-size: 18px;
+    margin: 0 0 4px;
+    line-height: 1.3;
 }
 
 
-/* PRECIO */
+
 .carrito-producto .carrito-detalle p:last-child {
-    position: absolute;
-    top: 3px;
-    right: 45px;
+    position: static;
+    margin-top: 10px;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
+    font-size: 21px;
     font-weight: 600;
 }
 
 
-/* ELIMINAR */
+
 .carrito-eliminar {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 2px;
+    right: 5px;
     border: none;
     background: transparent;
-    color: #8b8b9c;
-    font-size: 20px;
+    color: #777;
+    font-size: 21px;
     cursor: pointer;
+    padding: 5px;
+    transition: color 0.2s ease;
 }
 
 .carrito-eliminar:hover {
@@ -622,67 +628,84 @@ footer a:hover{
 }
 
 
-/* CANTIDAD */
+
 .carrito-cantidad {
     display: flex;
-    margin-left: 125px;
-    margin-top: 12px;
+    align-items: center;
+    width: fit-content;
+    margin-left: 137px;
+    margin-top: 15px;
+    border: 1px solid #999;
+    border-radius: 3px;
+    overflow: hidden;
+    background-color: #f8f5f2;
 }
 
 .carrito-cantidad button,
 .carrito-cantidad span {
     width: 40px;
-    height: 32px;
-    border: 1px solid #777;
+    height: 34px;
+    border: none;
     background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
 }
 
 .carrito-cantidad button {
     cursor: pointer;
+    transition: background-color 0.2s ease,
+                color 0.2s ease;
 }
 
 .carrito-cantidad button:hover {
-    background-color: #ddd4ca;
+    background-color: #c11f25;
+    color: white;
+}
+
+.carrito-cantidad span {
+    min-width: 42px;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    font-weight: 500;
 }
 
 
-/* RESUMEN */
+
 .carrito-resumen {
-    margin-top: 15px;
-    padding: 0 18px;
+    margin-top: 25px;
+    padding: 0 25px;
 }
 
 .carrito-linea {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 19px;
-    margin-bottom: 5px;
+    font-size: 20px;
+    margin-bottom: 7px;
 }
 
 .carrito-total {
     border-top: 1px solid #999;
-    padding-top: 8px;
-    margin-top: 8px;
-    font-size: 21px;
+    padding-top: 10px;
+    margin-top: 10px;
+    font-size: 23px;
     font-weight: 600;
 }
 
 .carrito-total span:last-child {
     color: #c11f25;
-    font-size: 23px;
+    font-size: 25px;
 }
 
 
-/* INFORMACIÓN */
+
 .carrito-info {
-    margin-top: 5px;
-    padding: 0 18px;
+    margin-top: 10px;
+    padding: 0 25px;
 }
 
 .carrito-info p {
@@ -690,7 +713,7 @@ footer a:hover{
     font-family: 'Cormorant Garamond', serif;
     font-size: 16px;
     font-style: italic;
-    line-height: 19px;
+    line-height: 20px;
 }
 
 .carrito-info i {
@@ -698,26 +721,26 @@ footer a:hover{
 }
 
 
-/* BOTÓN */
+
 .iniciar-compra {
     display: block;
-    width: 190px;
-    height: 38px;
-    margin: 12px auto 0;
+    width: 220px;
+    height: 42px;
+    margin: 18px auto 0;
     border: none;
-    border-radius: 2px;
+    border-radius: 3px;
     background-color: #c11f25;
     color: white;
     font-family: 'Open Sans', sans-serif;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
     cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 .iniciar-compra:hover {
     background-color: #a9191f;
 }
-
 
 
 
@@ -727,4 +750,28 @@ footer a:hover{
         width: 90%;
     }
 
+    .carrito-lateral .offcanvas-header {
+        padding: 25px 25px 12px;
+    }
+
+    .carrito-lateral .offcanvas-body {
+        padding: 0 25px 25px;
+    }
+
+    .carrito-producto {
+        padding-right: 40px;
+    }
+
+    .carrito-detalle h6 {
+        font-size: 19px;
+    }
+
+    .carrito-detalle p {
+        font-size: 16px;
+    }
+
+    .carrito-cantidad {
+        margin-left: 0;
+        margin-top: 12px;
+    }
 }

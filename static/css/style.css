@@ -465,6 +465,8 @@ footer a:hover{
 
 
 
+
+
 @media (max-width: 992px) {
 
     .detalle-contenido {
@@ -500,6 +502,241 @@ footer a:hover{
 
     .detalle-info h1 {
         font-size: 30px;
+    }
+
+}
+
+
+
+/* =========================
+   CARRITO LATERAL
+   ========================= */
+
+.carrito-lateral {
+    width: 49%;
+    background-color: #efe8e0;
+    color: #222;
+}
+
+
+
+
+.carrito-lateral .offcanvas-header {
+    padding: 20px 24px 8px 28px;
+}
+
+.carrito-titulo {
+    color: #c11f25;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+
+
+
+.carrito-lateral .offcanvas-body {
+    padding: 0 22px 20px 28px;
+}
+
+
+
+
+.carrito-productos::before {
+    content: "";
+    display: block;
+    border-top: 1px solid #777;
+    border-bottom: 1px solid #777;
+    height: 30px;
+    margin-bottom: 15px;
+}
+
+
+
+
+.carrito-producto {
+    position: relative;
+    min-height: 130px;
+    padding-bottom: 18px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid #999;
+}
+
+
+
+.carrito-producto-contenido {
+    display: flex;
+    gap: 16px;
+}
+
+
+
+
+.carrito-imagen {
+    width: 82px;
+    height: 100px;
+    background-color: #ddd;
+    flex-shrink: 0;
+}
+
+
+
+
+.carrito-detalle {
+    padding-top: 2px;
+}
+
+.carrito-detalle h6 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    margin: 0 0 2px;
+    font-weight: 600;
+}
+
+.carrito-detalle p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    margin: 0;
+}
+
+
+
+
+.carrito-producto .carrito-detalle p:last-child {
+    position: absolute;
+    top: 3px;
+    right: 8px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+
+
+
+.carrito-eliminar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    background: transparent;
+    color: #8b8b9c;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.carrito-eliminar:hover {
+    color: #c11f25;
+}
+
+
+
+
+.carrito-cantidad {
+    display: flex;
+    margin-left: 98px;
+    margin-top: 7px;
+}
+
+.carrito-cantidad button,
+.carrito-cantidad span {
+    width: 34px;
+    height: 25px;
+    border: 1px solid #777;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+}
+
+.carrito-cantidad button {
+    cursor: pointer;
+}
+
+.carrito-cantidad button:hover {
+    background-color: #ddd4ca;
+}
+
+
+
+
+.carrito-resumen {
+    margin-top: 8px;
+    padding: 0 14px;
+}
+
+.carrito-linea {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    margin-bottom: 3px;
+}
+
+.carrito-total {
+    border-top: 1px solid #999;
+    padding-top: 5px;
+    margin-top: 5px;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.carrito-total span:last-child {
+    color: #c11f25;
+    font-size: 18px;
+}
+
+
+
+
+.carrito-info {
+    margin-top: 0;
+    padding: 0 14px;
+}
+
+.carrito-info p {
+    margin: 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-style: italic;
+    line-height: 15px;
+}
+
+.carrito-info i {
+    margin-right: 3px;
+}
+
+
+
+
+.iniciar-compra {
+    display: block;
+    width: 152px;
+    height: 27px;
+    margin: 5px auto 0;
+    border: none;
+    border-radius: 2px;
+    background-color: #c11f25;
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.iniciar-compra:hover {
+    background-color: #a9191f;
+}
+
+
+
+
+@media (max-width: 768px) {
+
+    .carrito-lateral {
+        width: 90%;
     }
 
 }

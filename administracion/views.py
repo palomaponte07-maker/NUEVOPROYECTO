@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from .forms import ProductoForm
-from productos.models import Producto, Imagen
+from productos.models import Producto, ProductoVariante, Imagen
 from pedidos.models import Pedido,DetallePedido
 
 def dashboard(request):
@@ -24,15 +24,31 @@ def agregar_producto(request):
         form = ProductoForm(request.POST,request.FILES)
         print("ARCHIVOS RECIBIDOS:", request.FILES)
         if form.is_valid():
+
             producto =form.save(commit=False)
-            producto.porcentajeDescuento = 0
             producto.precioVenta = (
                 producto.precioCosto +
                 (producto.precioCosto * producto.IVA / 100)
             )
             producto.save()
+            colores = request.POST.getlist('color[]') 
+            talles = request.POST.getlist('talle[]') 
+            stocks_producto = request.POST.getlist('stockProducto[]') 
+            stocks_deposito = request.POST.getlist('stockDeposito[]') 
+            for color, talle, stock_producto, stock_deposito in zip( 
+                colores, 
+                talles, 
+                stocks_producto, 
+                stocks_deposito ): 
+                    ProductoVariante.objects.create( 
+                        producto=producto, 
+                        color=color, talle=talle, 
+                        stockProducto=int(stock_producto or 0), 
+                        stockDeposito=int(stock_deposito or 0) )
+
             # Obtener las fotos enviadas desde el formulario
             fotos = request.FILES.getlist('foto')
+
 
             print("FOTOS:", fotos)
 
@@ -56,3 +72,16 @@ def agregar_producto(request):
 
 def editar_producto(request):
     return render(request, 'administracion/productos/editar.html')
+
+def cambiar_estado_producto(request, id):
+    producto = get_object_or_404(
+        Producto,
+        idProducto=id
+    )
+
+    if request.method == 'POST':
+        producto.estado = not producto.estado
+        producto.save()
+
+    return redirect('dashboard')
+

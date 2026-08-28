@@ -32,10 +32,12 @@
                     <div>Productos:</div>
                     <div>Descripción</div>
                     <div>Precio</div>
+                    <div>Descuento</div>
                     <div>Talles</div>
                     <div>Color</div>
                     <div>Stock Producto</div>
-                    <div>Stock Depocito</div>
+                    <div>Stock Deposito</div>
+                    <div>Estado</div>
                     <div>Acciones</div>
                 </div>
 
@@ -58,45 +60,101 @@
                        {{ producto.descripcion }}
                     </div>
 
-                    
                     <div>
                      ${{ producto.precio_mostrar }}
                     </div>
-
-                    <div class="talles">
+                    
+                    <div>
+                     {{ producto.porcentajeDescuento }}
+                    </div>
+                    <div class="Variantes-columna">
                         {% for variante in producto.variantes.all %}
-                            <span>{{ variante.talle }}</span>
+                            <div class="variante-dato"> 
+                                {{ variante.talle }} 
+                            </div> 
                         {% empty %}
-                            <span>Sin talle</span>
+                            <div class="variante-dato">
+                                Sin talle
+                            </div>
                         {% endfor %}
                     </div>
 
-                    <div>
-                        {% for variante in producto.variantes.all %}
-                            {{ variante.color }}
-                            {% if not forloop.last %}, {% endif %}
-                        {% empty %}
-                            Sin color
-                            {% endfor %}
+                    <div class="variantes-columna"> 
+                        {% for variante in producto.variantes.all %} 
+                            <div class="variante-dato"> 
+                            {{ variante.color }} 
+                            </div> 
+                        {% empty %} 
+                            <div class="variante-dato"> 
+                                Sin color 
+                            </div> 
+                        {% endfor %} 
+                    </div> 
+                    
+                    <div class="variantes-columna"> 
+                        {% for variante in producto.variantes.all %} 
+                            <div class="variante-dato"> 
+                                {{ variante.stockProducto }} 
+                            </div> 
+                        {% empty %} 
+                            <div class="variante-dato"> 
+                                0 
+                            </div> 
+                        {% endfor %} 
+                    </div> 
+                    <div class="variantes-columna"> 
+                        {% for variante in producto.variantes.all %} 
+                            <div class="variante-dato"> 
+                              {{ variante.stockDeposito }} 
+                            </div> 
+                        {% empty %} 
+                            <div class="variante-dato"> 
+                                0 
+                            </div> 
+                        {% endfor %} 
                     </div>
+                   
+                    <div class="estado-producto">
 
-                    <div>
-                        {% for variante in producto.variantes.all %}
-                            {{ variante.stockProducto }}
-                            {% if not forloop.last %}, {% endif %}
-                        {% empty %}
-                            0
-                        {% endfor %}
-                    </div>
+                        {% if producto.estado %}
 
-                    <div>
-                        {% for variante in producto.depocito.all %}
-                            {{ variante.stockDepocito }}
-                            {% if not forloop.last %}, {% endif %}
-                        {% empty %}
-                            0
-                        {% endfor %}
+                            <span class="estado activo">
+                                Activo
+                            </span>
+
+                            <form method="POST" action="{% url 'cambiar_estado_producto' producto.idProducto %}">
+                                {% csrf_token %}
+
+                                <button
+                                    type="submit"
+                                    class="btn-estado desactivar"
+                                >
+                                    Desactivar
+                                </button>
+                            </form>
+
+                        {% else %}
+
+                            <span class="estado inactivo">
+                                Inactivo
+                            </span>
+
+                            <form method="POST" action="{% url 'cambiar_estado_producto' producto.idProducto %}">
+                                {% csrf_token %}
+
+                                <button
+                                    type="submit"
+                                    class="btn-estado activar"
+                                >
+                                    Activar
+                                </button>
+                            </form>
+
+                        {% endif %}
+
                     </div>
+                    
+
 
                       <div class="acciones">
                          <button class="btn-icon editar" title="Editar">
@@ -105,9 +163,6 @@
                          <button class="btn-icon eliminar" title="Eliminar">
                               🗑︎
                          </button> 
-                         <button class="btn-icon descuento" title="Descuento">
-                             🏷︎
-                         </button>
                         </div>
 
                     </div>

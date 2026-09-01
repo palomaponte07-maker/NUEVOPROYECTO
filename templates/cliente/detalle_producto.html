@@ -123,7 +123,7 @@
 
                 <div class="detalle-boton">
 
-                    <a href="#" class="btn-carrito">
+                    <a href="#" class="btn-carrito" id="agregar-carrito">
                         AGREGAR AL CARRITO
                     </a>
 
@@ -380,6 +380,57 @@
 
     actualizarColores();
     actualizarTalles();
+
+
+    const botonAgregar = document.getElementById("agregar-carrito");
+
+    botonAgregar.addEventListener("click", function(event) {
+
+        event.preventDefault();
+
+        if (!colorSeleccionado || !talleSeleccionado) {
+            alert("Seleccioná un color y un talle.");
+            return;
+        }
+
+        const varianteEncontrada = variantes.find(function(variante) {
+
+            return normalizar(variante.color) === normalizar(colorSeleccionado)
+                && normalizar(variante.talle) === normalizar(talleSeleccionado)
+                && variante.stockProducto > 0;
+
+        });
+
+        if (!varianteEncontrada) {
+            alert("La variante seleccionada no está disponible.");
+            return;
+        }
+
+        const formulario = document.createElement("form");
+
+        formulario.method = "POST";
+        formulario.action = "{% url 'agregar_al_carrito' producto.idProducto %}";
+
+        const csrf = document.createElement("input");
+
+        csrf.type = "hidden";
+        csrf.name = "csrfmiddlewaretoken";
+        csrf.value = "{{ csrf_token }}";
+
+        const inputVariante = document.createElement("input");
+
+        inputVariante.type = "hidden";
+        inputVariante.name = "idVariante";
+        inputVariante.value = varianteEncontrada.idVariante;
+
+        formulario.appendChild(csrf);
+        formulario.appendChild(inputVariante);
+
+        document.body.appendChild(formulario);
+
+        formulario.submit();
+
+    });
 
 </script>
 

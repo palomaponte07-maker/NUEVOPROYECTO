@@ -2,7 +2,7 @@ from django.db import models
 
 class Carrito(models.Model):
     idCarrito = models.AutoField(primary_key=True)
-    cliente = models.ForeignKey("clientes.Cliente", on_delete=models.CASCADE, db_column="idCliente")
+    cliente = models.ForeignKey("clientes.Cliente", on_delete=models.CASCADE, db_column="idCliente", null=True, blank=True)
 
     fechaCreacion = models.DateTimeField()
     fechaExpiracion = models.DateTimeField(blank=True, null=True)

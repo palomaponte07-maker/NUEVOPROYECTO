@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
+from decimal import Decimal
 
 from .models import Carrito, CarritoProducto
 from productos.models import Producto, ProductoVariante
@@ -29,12 +30,30 @@ def carrito(request):
                 "variante"
             )
 
+    subtotal = sum(
+        item.subTotal or 0
+        for item in productos_carrito
+    )
+
+    cantidad = sum (
+        item.cantidad or 0
+        for item in productos_carrito
+    )
+
+    iva = subtotal * Decimal('0.21')
+
+    total = subtotal + iva
+
     return render(
         request,
         'cliente/carrito_producto.html',
         {
             'carrito': carrito,
             'productos_carrito': productos_carrito,
+            'subtotal': subtotal,
+            'cantidad': cantidad,
+            'iva': iva,
+            'total': total
         }
     )
 
@@ -113,6 +132,8 @@ def agregar_al_carrito(request, idProducto):
                 estado=True
             )
 
+
+        
         return redirect(
         "detalle_producto",
         id=producto.idProducto
@@ -122,3 +143,40 @@ def agregar_al_carrito(request, idProducto):
     "detalle_producto",
     id=producto.idProducto
     )
+
+def modificar_cantidad(request, idCarritoProducto, accion):
+
+    carrito_producto = get_object_or_404(
+        CarritoProducto,
+        idCarritoProducto=idCarritoProducto,
+        estado=True
+    )
+
+    if accion == "sumar":
+        carrito_producto.cantidad += 1
+
+    elif accion == "restar":
+        if carrito_producto.cantidad > 1:
+            carrito_producto.cantidad -= 1
+
+    carrito_producto.subTotal = (
+        carrito_producto.cantidad *
+        carrito_producto.precioUnitario
+    )
+
+    carrito_producto.save()
+
+    return redirect("carrito")
+
+def eliminar_del_carrito(request, idCarritoProducto):
+
+    carrito_producto = get_object_or_404(
+        CarritoProducto,
+        idCarritoProducto=idCarritoProducto,
+        estado=True
+    )
+
+    carrito_producto.estado = False
+    carrito_producto.save()
+
+    return redirect("carrito")

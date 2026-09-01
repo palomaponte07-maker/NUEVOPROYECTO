@@ -11,7 +11,7 @@ Iniciar compra
 
     <div class="container">
 
-        <!-- CONTENEDOR PRINCIPAL -->
+       
         <div class="row g-4 align-items-start">
 
            
@@ -131,7 +131,7 @@ Iniciar compra
 
                         <div class="row g-3">
 
-                            <!-- Calle -->
+                            
                             <div class="col-md-7">
                                 <label for="calle" class="form-label">
                                     Calle
@@ -281,7 +281,7 @@ Iniciar compra
 
                 <div class="pedido">
 
-                    <!-- TÍTULO DENTRO DEL CUADRADO -->
+                    
                     <div class="pedido-header">
 
                         <i class="bi bi-cart3"></i>
@@ -293,72 +293,85 @@ Iniciar compra
                     </div>
 
 
+                    {% for item in productos_carrito %}
                     
-                    <div class="pedido-producto">
+                        <div class="pedido-producto">
 
-                        <div class="pedido-producto-contenido">
+                            <div class="pedido-producto-contenido">
 
                             
-                            <div class="pedido-imagen">
-                                <!-- La imagen real se conectará después -->
+                                <div class="pedido-imagen">
+
+                                    {% with imagen=item.producto.imagen_set.first %}
+
+                                        {% if imagen and imagen.imagen %}
+                                            <img src="{{ imagen.imagen.url }}"
+                                                alt="{{ item.producto.nombre }}">
+
+                                        {% endif %}
+
+                                    {% endwith %}
+
+                                </div>
+
+                            
+                                
+                                <div class="pedido-detalle">
+
+                                    <h3>
+                                        {{ item.producto.nombre }}
+                                    </h3>
+
+                                    <p>
+                                        Color: {{ item.variante.color }}
+                                    </p>
+
+                                    <p>
+                                        Talle: {{ item.variante.talle }}
+                                    </p>
+
+                                    <p class="pedido-precio">
+                                        ${{ item.precioUnitario|floatformat:0 }}
+                                    </p>
+
+                                </div>
+
+
+                                <a href="{% url 'eliminar_del_carrito' item.idCarritoProducto %}"
+                                    class="pedido-eliminar"
+                                    aria-label="Eliminar producto">
+                                        <i class="bi bi-trash"></i>
+                                </a>
+
                             </div>
-
-
-                            
-                            <div class="pedido-detalle">
-
-                                <h3>
-                                    Nombre del producto
-                                </h3>
-
-                                <p>
-                                    Color: Celeste
-                                </p>
-
-                                <p>
-                                    Talle: 38
-                                </p>
-
-                                <p class="pedido-precio">
-                                    $40.900
-                                </p>
-
-                            </div>
-
-
-                            
-                            <button
-                                type="button"
-                                class="pedido-eliminar"
-                                aria-label="Eliminar producto">
-
-                                <i class="bi bi-trash"></i>
-
-                            </button>
-
-                        </div>
 
 
                         
-                        <div class="pedido-cantidad">
+                            <div class="pedido-cantidad">
 
-                            <button type="button">
-                                −
-                            </button>
+                                <a href="{% url 'modificar_cantidad' item.idCarritoProducto 'restar' %}">
+                                    -
+                                </a>
 
-                            <span>
-                                1
-                            </span>
+                                <span>
+                                    {{ item.cantidad }}
+                                </span>
 
-                            <button type="button">
-                                +
-                            </button>
+                                <a href="{% url 'modificar_cantidad' item.idCarritoProducto 'sumar' %}" >
+                                    +
+                                </a>
+
+                            </div>
 
                         </div>
 
-                    </div>
+                    {% empty %}
 
-
+                    <p> 
+                        No hay productos en el carrito.
+                    </p>
+                    
+                    {% endfor %}
                    
                     <div class="pedido-resumen">
 
@@ -369,7 +382,7 @@ Iniciar compra
                             </span>
 
                             <span>
-                                $40.900
+                                ${{ subtotal|floatformat:0 }}
                             </span>
 
                         </div>
@@ -382,7 +395,7 @@ Iniciar compra
                             </span>
 
                             <span>
-                                $8.589
+                                ${{ iva|floatformat:0 }}
                             </span>
 
                         </div>
@@ -395,7 +408,7 @@ Iniciar compra
                             </span>
 
                             <span>
-                                $49.489
+                                ${{ total|floatformat:0 }}
                             </span>
 
                         </div>

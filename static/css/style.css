@@ -782,7 +782,7 @@ footer a:hover{
 
 
 /* =========================================================
-   CHECKOUT / CARRITO PRODUCTO
+   CARRITO PRODUCTO
    ========================================================= */
 
 .checkout {
@@ -792,24 +792,20 @@ footer a:hover{
 }
 
 
-/* =========================================================
-   TITULO INICIAR COMPRA
-   ========================================================= */
+/* TITULO INICIAR COMPRA */
 
 .checkout-titulo {
     font-family: 'Cormorant Garamond', serif;
     color: #c11f25;
-    font-size: 38px;
+    font-size: 42px;
     font-weight: 600;
-    text-align: center;
+    text-align: left;
     margin-bottom: 22px;
     letter-spacing: 0.5px;
 }
 
 
-/* =========================================================
-   FORMULARIO IZQUIERDO
-   ========================================================= */
+/* FORMULARIO IZQUIERDO */
 
 .checkout-formulario {
     background-color: #f8f5f2;
@@ -823,11 +819,21 @@ footer a:hover{
 /* SECCIONES */
 
 .checkout-seccion h2 {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
     font-family: 'Cormorant Garamond', serif;
-    color: #333;
-    font-size: 23px;
+    color: #c11f25;
+    font-size: 32px;
     font-weight: 600;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
+}
+
+.checkout-seccion h2 i {
+    color: #c11f25;
+    font-size: 23px;
+    line-height: 1;
 }
 
 
@@ -835,7 +841,7 @@ footer a:hover{
 
 .checkout .form-label {
     font-family: 'Open Sans', sans-serif;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 600;
     color: #444;
     margin-bottom: 6px;
@@ -850,8 +856,8 @@ footer a:hover{
     border-radius: 2px;
     background-color: #fffdfb;
     color: #333;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 13px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
     padding: 9px 12px;
     box-shadow: none;
     transition: border-color 0.2s ease,
@@ -859,8 +865,9 @@ footer a:hover{
 }
 
 .checkout .form-control::placeholder {
+    font-family: 'Montserrat', sans-serif;
     color: #aaa29b;
-    font-size: 12px;
+    font-size: 15px;
 }
 
 .checkout .form-control:focus {
@@ -870,9 +877,7 @@ footer a:hover{
 }
 
 
-/* =========================================================
-   SEPARADORES
-   ========================================================= */
+/* SEPARADORES */
 
 .checkout-separador {
     width: 100%;
@@ -882,9 +887,7 @@ footer a:hover{
 }
 
 
-/* =========================================================
-   METODO DE PAGO
-   ========================================================= */
+/* METODO DE PAGO */
 
 .metodo-pago {
     margin-top: 5px;
@@ -938,14 +941,12 @@ footer a:hover{
 
 
 .metodo-pago-texto {
-    font-size: 14px;
+    font-size: 17px;
     color: #333;
 }
 
 
-/* =========================================================
-   BOTONES
-   ========================================================= */
+/* BOTONES */
 
 .checkout-botones {
     display: flex;
@@ -963,7 +964,7 @@ footer a:hover{
     background: transparent;
     color: #555;
     font-family: 'Open Sans', sans-serif;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 600;
     padding: 10px 5px;
     cursor: pointer;
@@ -982,7 +983,7 @@ footer a:hover{
     background-color: #c11f25;
     color: white;
     font-family: 'Open Sans', sans-serif;
-    font-size: 11px;
+    font-size: 15px;
     font-weight: 600;
     padding: 12px 24px;
     border-radius: 2px;
@@ -997,9 +998,7 @@ footer a:hover{
 }
 
 
-/* =========================================================
-   TU PEDIDO
-   ========================================================= */
+/* TU PEDIDO */
 
 .pedido {
     background-color: #f8f5f2;
@@ -1015,7 +1014,7 @@ footer a:hover{
 .pedido-header {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 9px;
     padding-bottom: 18px;
     border-bottom: 1px solid #d8cbbd;
@@ -1024,21 +1023,19 @@ footer a:hover{
 
 .pedido-header i {
     color: #c11f25;
-    font-size: 21px;
+    font-size: 27px;
 }
 
 .pedido-header h2 {
     margin: 0;
     color: #c11f25;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 27px;
+    font-size: 35px;
     font-weight: 600;
 }
 
 
-/* =========================================================
-   PRODUCTO
-   ========================================================= */
+/* PRODUCTO */
 
 .pedido-producto {
     padding-bottom: 20px;
@@ -1074,7 +1071,7 @@ footer a:hover{
 
 .pedido-detalle h3 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
+    font-size: 27px;
     line-height: 1.15;
     color: #333;
     font-weight: 600;
@@ -1084,7 +1081,7 @@ footer a:hover{
 
 .pedido-detalle p {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 14px;
+    font-size: 19px;
     color: #555;
     margin: 2px 0;
     line-height: 1.25;
@@ -1092,7 +1089,8 @@ footer a:hover{
 
 
 .pedido-detalle .pedido-precio {
-    font-size: 17px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 25px;
     color: #222;
     font-weight: 600;
     margin-top: 7px;
@@ -1108,7 +1106,7 @@ footer a:hover{
     border: none;
     background: transparent;
     color: #999;
-    font-size: 17px;
+    font-size: 26px;
     cursor: pointer;
     padding: 2px;
 }
@@ -1118,9 +1116,7 @@ footer a:hover{
 }
 
 
-/* =========================================================
-   CANTIDAD
-   ========================================================= */
+/* CANTIDAD */
 
 .pedido-cantidad {
     display: flex;
@@ -1168,9 +1164,7 @@ footer a:hover{
 }
 
 
-/* =========================================================
-   RESUMEN
-   ========================================================= */
+/* RESUMEN */
 
 .pedido-resumen {
     padding-top: 18px;
@@ -1181,8 +1175,8 @@ footer a:hover{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 19px;
     color: #444;
     margin-bottom: 7px;
 }
@@ -1199,24 +1193,22 @@ footer a:hover{
 
 
 .pedido-total span:first-child {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 25px;
     font-weight: 600;
     color: #333;
 }
 
 
 .pedido-total span:last-child {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 21px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 27px;
     font-weight: 600;
     color: #c11f25;
 }
 
 
-/* =========================================================
-   COMPRA SEGURA
-   ========================================================= */
+/* COMPRA SEGURA */
 
 .pedido-seguro {
     display: flex;
@@ -1231,25 +1223,40 @@ footer a:hover{
 
 .pedido-seguro i {
     color: #777;
-    font-size: 13px;
+    font-size: 18px;
 }
 
 
 .pedido-seguro span {
     font-family: 'Open Sans', sans-serif;
-    font-size: 10px;
+    font-size: 15px;
     color: #777;
 }
 
 
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
+/* ALINEACIÓN DE LOS DOS CUADROS */
+
+.checkout .row {
+    align-items: flex-start;
+}
+
+.checkout-formulario {
+    margin-top: 0 !important;
+    align-self: flex-start;
+}
+
+.pedido {
+    margin-top: 72px !important;
+    align-self: flex-start;
+}
+
+
+/* TABLET */
 
 @media (max-width: 991px) {
 
     .checkout-titulo {
-        font-size: 34px;
+        font-size: 38px;
     }
 
     .checkout-formulario {
@@ -1257,11 +1264,13 @@ footer a:hover{
     }
 
     .pedido {
-        margin-top: 10px;
+        margin-top: 0;
     }
 
 }
 
+
+/* CELULAR */
 
 @media (max-width: 767px) {
 
@@ -1270,7 +1279,7 @@ footer a:hover{
     }
 
     .checkout-titulo {
-        font-size: 30px;
+        font-size: 34px;
         margin-bottom: 18px;
     }
 
@@ -1278,8 +1287,37 @@ footer a:hover{
         padding: 25px 20px;
     }
 
+    .checkout-seccion h2 {
+        font-size: 27px;
+    }
+
+    .checkout .form-label {
+        font-size: 15px;
+    }
+
+    .checkout .form-control {
+        font-size: 15px;
+    }
+
+    .checkout .form-control::placeholder {
+        font-size: 14px;
+    }
+
+    .metodo-pago-texto {
+        font-size: 16px;
+    }
+
     .checkout-botones {
         padding: 0;
+    }
+
+    .btn-volver {
+        font-size: 14px;
+    }
+
+    .btn-confirmar {
+        font-size: 14px;
+        padding: 12px 18px;
     }
 
     .pedido {
@@ -1287,7 +1325,39 @@ footer a:hover{
     }
 
     .pedido-header h2 {
-        font-size: 24px;
+        font-size: 27px;
+    }
+
+    .pedido-header i {
+        font-size: 21px;
+    }
+
+    .pedido-detalle h3 {
+        font-size: 20px;
+    }
+
+    .pedido-detalle p {
+        font-size: 16px;
+    }
+
+    .pedido-detalle .pedido-precio {
+        font-size: 19px;
+    }
+
+    .pedido-linea {
+        font-size: 18px;
+    }
+
+    .pedido-total span:first-child {
+        font-size: 21px;
+    }
+
+    .pedido-total span:last-child {
+        font-size: 27px;
+    }
+
+    .pedido-seguro span {
+        font-size: 13px;
     }
 
 }

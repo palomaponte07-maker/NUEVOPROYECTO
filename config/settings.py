@@ -70,6 +70,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'carrito.context_processors.carrito_context',
             ],
         },
     },
@@ -87,7 +88,7 @@ DATABASES = {
         'NAME': 'Olivia',
         'USER': 'colaboradora',
         'PASSWORD': 'Olivia2024!',
-        'HOST': '10.0.2.118',
+        'HOST': '192.168.0.198',
         'PORT': '1433',
         'OPTIONS': {
             'driver': 'ODBC Driver 18 for SQL Server',

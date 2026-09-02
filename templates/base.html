@@ -100,7 +100,7 @@
 
     </main>
 
-    <!-- Carrito lateral -->
+    
     <div class="offcanvas offcanvas-end carrito-lateral"
         tabindex="-1"
         id="carritoLateral"
@@ -123,52 +123,73 @@
 
         <div class="offcanvas-body">
 
-            <!-- Productos del carrito -->
+            
             <div class="carrito-productos">
 
+                {% for item in productos_carrito %}
+
+                    <div class="carrito-producto">
+
+                    
+
+                        <div class="carrito-producto-contenido">
+
+                            <div class="carrito-imagen">
+                                {% with imagen=item.producto.imagen_set.first %}
+
+                                    {% if imagen and imagen.imagen %}
+                                        <img src="{{ imagen.imagen.url }}"
+                                            alt="{{ item.producto.nombre }}">
+
+                                    {% endif %}
+
+                                {% endwith %}
+                            </div>
+
+                            <div class="carrito-detalle">
+
+                                <h6>{{ item.producto.nombre }}</h6>
+
+                                <p>Talle: {{ item.variante.talle }}</p>
+
+                                <p>${{ item.subTotal|floatformat:0 }}</p>
+
+                            </div>
+
+                        </div>
+
+
+                        <a href="{% url 'eliminar_del_carrito' item.idCarritoProducto %}"
+                            class="carrito-eliminar"
+                            aria-label="Eliminar producto">
+
+                                <i class="bi bi-trash"></i>
+
+                        </a>
+
+
+                        <div class="carrito-cantidad">
+
+                            <a href="{% url 'modificar_cantidad' item.idCarritoProducto 'restar' %}">
+                                -                                  
+                            </a>
+
+                            <span>{{ item.cantidad }}</span>
+
+                            <a href="{% url 'modificar_cantidad' item.idCarritoProducto 'sumar' %}">
+                                +
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                {% empty %}
+
+                    <p class="carrito-vacio">Tu carrito está vacío.</p>
                 
-                <div class="carrito-producto">
-
-                    <div class="carrito-producto-contenido">
-
-                        <div class="carrito-imagen">
-                            <!-- La imagen real la conectaremos después -->
-                        </div>
-
-                        <div class="carrito-detalle">
-
-                            <h6>Nombre del producto</h6>
-
-                            <p>Talle: 38</p>
-
-                            <p>$40.900</p>
-
-                        </div>
-
-                    </div>
-
-
-                    <button type="button"
-                        class="carrito-eliminar"
-                        aria-label="Eliminar producto">
-
-                        <i class="bi bi-trash"></i>
-
-                    </button>
-
-
-                    <div class="carrito-cantidad">
-
-                        <button type="button">−</button>
-
-                        <span>1</span>
-
-                        <button type="button">+</button>
-
-                    </div>
-
-                </div>
-
+                    {% endfor %}
+            
             </div>
 
 
@@ -176,22 +197,22 @@
 
                 <div class="carrito-linea">
                     <span>Productos</span>
-                    <span>1</span>
+                    <span>{{ cantidad_carrito }}</span>
                 </div>
 
                 <div class="carrito-linea">
                     <span>Subtotal</span>
-                    <span>$40.900</span>
+                    <span>${{ subtotal_carrito|floatformat:0 }}</span>
                 </div>
 
                 <div class="carrito-linea">
                     <span>IVA</span>
-                    <span>$8.589</span>
+                    <span>${{ iva_carrito|floatformat:0 }}</span>
                 </div>
 
                 <div class="carrito-linea carrito-total">
                     <span>TOTAL</span>
-                    <span>$49.489</span>
+                    <span>${{ total_carrito|floatformat:0 }}</span>
                 </div>
 
             </div>
@@ -223,10 +244,26 @@
 
     </div>
 
-    <!-- Bootstrap JS -->
+    
 
     <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const parametros = new URLSearchParams(window.location.search);
+
+            if (parametros.get("carrito") === "abierto") {
+
+                const carrito = document.getElementById("carritoLateral");
+
+                const offcanvas = new bootstrap.Offcanvas(carrito);
+
+                offcanvas.show();
+            }
+
+        });
+    </script>
 
 </body>
 

@@ -135,13 +135,11 @@ def agregar_al_carrito(request, idProducto):
 
         
         return redirect(
-        "detalle_producto",
-        id=producto.idProducto
+            f"/productos/{producto.idProducto}/?carrito=abierto"    
         )
 
     return redirect(
-    "detalle_producto",
-    id=producto.idProducto
+    f"/productos/{producto.idProducto}/?carrito=abierto"
     )
 
 def modificar_cantidad(request, idCarritoProducto, accion):
@@ -166,7 +164,9 @@ def modificar_cantidad(request, idCarritoProducto, accion):
 
     carrito_producto.save()
 
-    return redirect("carrito")
+    return redirect(
+        f"/productos/{carrito_producto.producto.idProducto}/?carrito=abierto"
+    )
 
 def eliminar_del_carrito(request, idCarritoProducto):
 
@@ -179,4 +179,6 @@ def eliminar_del_carrito(request, idCarritoProducto):
     carrito_producto.estado = False
     carrito_producto.save()
 
-    return redirect("carrito")
+    return redirect(
+    f"/productos/{carrito_producto.producto.idProducto}/?carrito=abierto"
+    )

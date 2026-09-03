@@ -1,10 +1,10 @@
 from decimal import Decimal
-from django.conf.locale import de
+from productos.models import Clienete, Producto, ProductoVariante
 from django.db import transaction 
 from django.core.exceptions import ValidationError
 from .models import Pedido, DetallePedido
-from productos.models import Clienete, Producto, ProductoVariante
 from administracion.models import Administrador
+from productos.models import Producto, ProductoVariante
 from clientes.models import Cliente
 
 
@@ -22,10 +22,10 @@ def calcular_total_pedido(pedido):
     pedido.save(update_fields=["cantidad", "total"])
     return pedido
 
-@transaction.automic
+@transaction.atomic
 def crear_pedido(
     cliente_id,
-    administracion_id,
+    administrador_id,
     numero_pedido,
     fecha,
     estado_pago="pendiente",
@@ -55,13 +55,15 @@ def crear_pedido(
         )
     
     if estado_pago == "Pagado":
-        raise ValidationError(
+        if not metodo_pago:
+            raise ValidationError(
             "Un pedido pagado debe tener un método de pago."
         )
     if not cod_transaccion:
         raise ValidationError(
             "Un pedido pagado debe tener código de transacción."
         )
+    
     pedido = Pedido.objects.create(
         cliente = cliente,
         administrador = administrador,
@@ -96,7 +98,7 @@ def agregar_detalle(
         variante = ProductoVariante.objects.get(
             pk=variante_id
         )
-    if variante.producto_id ! = producto.idProducto:
+    if variante.producto_id != producto.idProducto:
         raise ValidationError(
             "la variante no pertenece al producto seleccionado."
         )
@@ -105,8 +107,6 @@ def agregar_detalle(
             "No hay suficiente stock disponible"
         )
     precio_unitario = producto.precioVenta 
-    else:
-    precio_unitario = producto.precioVenta
     subtotal = Decimal(cantidad) * precio_unitario
     detalle = DetallePedido.objects.create(
         pedido=pedido,
@@ -123,7 +123,7 @@ def agregar_detalle(
     calcular_total_pedido(pedido)
     return detalle
 @transaction.atomic
-def actualizar_detall(
+def actualizar_detalle(
     detalle_id,
     nueva_cantidad
 ):
@@ -171,6 +171,9 @@ def eliminar_detalle(detalle_id):
 
     pedido = detalle.pedido
     if detalle.variante:
+        variante = ProductoVariante.objects.select_for_update().get(
+            pk=detalle.variante_id
+        )
         variante.stockProducto += detalle.cantidad
         variante.save(
             update_fields=["stockProducto"]
@@ -186,7 +189,7 @@ def eliminar_pedido(pedido_id):
         pk=pedido_id
     )
     detalles = DetallePedido.objects.filter(
-       "variante" 
+       pedido=pedido
     ).filter(pedido=pedido)
     for detalle in detalles:
         if detalle.variante:

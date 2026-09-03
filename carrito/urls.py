@@ -21,4 +21,5 @@ urlpatterns = [
         views.eliminar_del_carrito,
         name='eliminar_del_carrito'
     ),
+
 ]

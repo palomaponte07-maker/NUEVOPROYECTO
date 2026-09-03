@@ -682,33 +682,7 @@ footer a:hover{
     font-weight: 500;
 }
 
-/* 
-=========================
-   RESUMEN DEL CARRITO
-   ========================= 
-   .pedido-cantidad a,
-.pedido-cantidad span {
-    width: 34px;
-    height: 32px;
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 15px;
-}
 
-.pedido-cantidad a {
-    background: transparent;
-    color: #555;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.pedido-cantidad a:hover {
-    background-color: #c11f25;
-    color: white;
-}*/
 
 .carrito-resumen {
     margin-top: 25px;
@@ -759,23 +733,34 @@ footer a:hover{
 
 
 .iniciar-compra {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     width: 220px;
     height: 42px;
     margin: 18px auto 0;
+
     border: none;
     border-radius: 3px;
+
     background-color: #c11f25;
     color: white;
+
     font-family: 'Open Sans', sans-serif;
     font-size: 12px;
     font-weight: 600;
+
+    text-decoration: none;
+
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
 
 .iniciar-compra:hover {
     background-color: #a9191f;
+    color: white;
+    text-decoration: none;
 }
 
 

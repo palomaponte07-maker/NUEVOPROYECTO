@@ -1,12 +1,10 @@
 from decimal import Decimal
-from productos.models import Clienete, Producto, ProductoVariante
 from django.db import transaction 
 from django.core.exceptions import ValidationError
-from .models import Pedido, DetallePedido
-from administracion.models import Administrador
 from productos.models import Producto, ProductoVariante
 from clientes.models import Cliente
-
+from administracion.models import Administrador
+from .models import Pedido, DetallePedido
 
 def calcular_total_pedido(pedido):
     """ recalcular la cintidad de total y el total monetario del pedido a partir de sus detalles."""
@@ -28,7 +26,7 @@ def crear_pedido(
     administrador_id,
     numero_pedido,
     fecha,
-    estado_pago="pendiente",
+    estado_pago="Pendiente",
     cod_transaccion=None,
     fecha_pago=None,
     metodo_pago=None
@@ -57,13 +55,13 @@ def crear_pedido(
     if estado_pago == "Pagado":
         if not metodo_pago:
             raise ValidationError(
-            "Un pedido pagado debe tener un método de pago."
-        )
-    if not cod_transaccion:
-        raise ValidationError(
-            "Un pedido pagado debe tener código de transacción."
-        )
-    
+                "Un pedido pagado debe tener un método de pago."
+            )
+
+        if not cod_transaccion:
+            raise ValidationError(
+                "Un pedido pagado debe tener código de transacción."
+            )
     pedido = Pedido.objects.create(
         cliente = cliente,
         administrador = administrador,
@@ -93,19 +91,23 @@ def agregar_detalle(
         raise ValidationError(
             "La cantidad debe ser mayor a cero."
         )
-    variante =None
+    variante = None
+
     if variante_id is not None:
         variante = ProductoVariante.objects.get(
             pk=variante_id
         )
-    if variante.producto_id != producto.idProducto:
-        raise ValidationError(
-            "la variante no pertenece al producto seleccionado."
-        )
-    if cantidad > variante.stockProducto:
-        raise ValidationError(
-            "No hay suficiente stock disponible"
-        )
+
+        if variante.producto_id != producto.idProducto:
+            raise ValidationError(
+                "La variante no pertenece al producto seleccionado."
+            )
+
+        if cantidad > variante.stockProducto:
+            raise ValidationError(
+                "No hay suficiente stock disponible."
+            )
+        
     precio_unitario = producto.precioVenta 
     subtotal = Decimal(cantidad) * precio_unitario
     detalle = DetallePedido.objects.create(
@@ -127,8 +129,9 @@ def actualizar_detalle(
     detalle_id,
     nueva_cantidad
 ):
-    """ Actualiza la cantidad de un detalle
-    Ajusta el stock y recalcula el subtotal y el pedido."""
+    """Actualiza la cantidad de un detalle.
+    Ajusta el stock y recalcula el subtotal y el pedido.
+    """
     detalle = DetallePedido.objects.select_for_update().get(
         pk=detalle_id
     )
@@ -136,32 +139,36 @@ def actualizar_detalle(
         raise ValidationError(
             "La cantidad debe ser mayor a cero."
         )
-    ccantidad_anterior = detalle.cantidad
-    diferencia = nueva_cantidad - ccantidad_anterior
-
+    cantidad_anterior = detalle.cantidad
+    diferencia = nueva_cantidad - cantidad_anterior
     if detalle.variante:
         variante = ProductoVariante.objects.select_for_update().get(
             pk=detalle.variante_id
         )
         if diferencia > 0:
+
             if diferencia > variante.stockProducto:
                 raise ValidationError(
-                    "No hay suficiente stock para aumentar la cantidad"
+                    "No hay suficiente stock para aumentar la cantidad."
                 )
-            variante.stockProducto -=diferencia
+            variante.stockProducto -= diferencia
         elif diferencia < 0:
+
             variante.stockProducto += abs(diferencia)
         variante.save(
             update_fields=["stockProducto"]
         )
-        detalle.subTotal = (
-            Decimal(nueva_cantidad) * detalle.precioUnitario 
-        )
-        detalle.save(
-            update_fields=["cantidad", "subTotal"]
-        )
-        calcular_total_pedido(detalle.pedido)
-        return detalle
+    detalle.cantidad = nueva_cantidad
+    detalle.subTotal = (
+        Decimal(nueva_cantidad)
+        * detalle.precioUnitario
+    )
+    detalle.save(
+        update_fields=["cantidad", "subTotal"]
+    )
+    calcular_total_pedido(detalle.pedido)
+
+    return detalle
 @transaction.atomic
 def eliminar_detalle(detalle_id):
     """Eliminar un detalle y devuelva el stock correspondiente."""
@@ -190,7 +197,7 @@ def eliminar_pedido(pedido_id):
     )
     detalles = DetallePedido.objects.filter(
        pedido=pedido
-    ).filter(pedido=pedido)
+    )
     for detalle in detalles:
         if detalle.variante:
             variante = ProductoVariante.objects.select_for_update().get(

@@ -46,19 +46,13 @@ def agregar_producto(request):
                         stockProducto=int(stock_producto or 0), 
                         stockDeposito=int(stock_deposito or 0) )
 
-            # Obtener las fotos enviadas desde el formulario
             fotos = request.FILES.getlist('foto')
-
-
             print("FOTOS:", fotos)
-
-            # Guardar cada foto relacionada con el producto
             for foto in fotos:
                 Imagen.objects.create(
                     producto=producto,
                     imagen=foto
                 )
-
             return redirect('dashboard')
 
     else:

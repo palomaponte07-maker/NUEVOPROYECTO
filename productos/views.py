@@ -32,11 +32,9 @@ def detalle_producto(request, id):
     )
 
     variantes = producto.variantes.all()
-
     variantes_data = []
 
     for variante in variantes:
-
         imagenes = []
 
         for imagen in variante.imagen_set.all():

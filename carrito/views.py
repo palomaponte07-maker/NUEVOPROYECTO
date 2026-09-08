@@ -57,8 +57,34 @@ def carrito(request):
         }
     )
 
+def actualizar_carrito(carrito):
+    productos = CarritoProducto.objects.filter(
+    carrito=carrito,
+    estado=True
+    )
+
+    subtotal = sum(
+    item.subTotal or 0
+    for item in productos
+    )
+
+    cantidad = sum(
+    item.cantidad or 0
+    for item in productos
+    )
+
+    iva = subtotal * Decimal('0.21')
+
+    total = subtotal + iva
+
+    carrito.subTotal = subtotal
+    carrito.cantidad = cantidad
+    carrito.total = total
+    carrito.save()
+
 
 def agregar_al_carrito(request, idProducto):
+    print("AGREGAR AL CARRITO:", request.method)
 
     if request.method == "POST":
 
@@ -99,6 +125,7 @@ def agregar_al_carrito(request, idProducto):
             )
 
             request.session["idCarrito"] = carrito.idCarrito
+            print("CARRITO CREADO:", carrito.idCarrito)
 
         carrito_producto = CarritoProducto.objects.filter(
             carrito=carrito,
@@ -132,8 +159,10 @@ def agregar_al_carrito(request, idProducto):
                 estado=True
             )
 
+        actualizar_carrito(carrito)
 
-        
+
+        print("PRODUCTO AGREGADO AL CARRITO:", producto.nombre)
         return redirect(
             f"/productos/{producto.idProducto}/?carrito=abierto"    
         )
@@ -163,6 +192,7 @@ def modificar_cantidad(request, idCarritoProducto, accion):
     )
 
     carrito_producto.save()
+    actualizar_carrito(carrito_producto.carrito)
 
     return redirect(
         f"/productos/{carrito_producto.producto.idProducto}/?carrito=abierto"

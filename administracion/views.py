@@ -10,6 +10,7 @@ def dashboard(request):
         producto.precio_mostrar = f"{producto.precioVenta:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
     pedidos = Pedido.objects.select_related('cliente').prefetch_related('detallepedido_set__producto').order_by('-idPedido')[:10]
+
     return render(
         request, 
         'administracion/dashboard.html',
@@ -17,6 +18,27 @@ def dashboard(request):
             'productos': productos,
             'pedidos': pedidos,
 
+        }
+    )
+def detalle_pedido(request, id):
+    pedido = get_object_or_404(
+        Pedido.objects.select_related('cliente'),
+        idPedido=id
+    )
+
+    detalles = DetallePedido.objects.filter(
+        pedido=pedido
+    ).select_related(
+        'producto',
+        'variante'
+    )
+
+    return render(
+        request,
+        'administracion/pedidos.html',
+        {
+            'pedido': pedido,
+            'detalles': detalles,
         }
     )
 

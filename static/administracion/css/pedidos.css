@@ -1,0 +1,220 @@
+/* ==============================
+   PÁGINA DETALLE DEL PEDIDO
+   ============================== */
+
+body {
+    margin: 0;
+    background-color: #eee8df;
+    font-family: Georgia, "Times New Roman", serif;
+    color: #111;
+}
+
+
+/* ==============================
+   ENCABEZADO
+   ============================== */
+
+.header-pedido {
+    height: 74px;
+    background-color: #f8f6f4;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 25px;
+    box-sizing: border-box;
+}
+
+
+/* LOGO */
+
+.header-pedido .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #c51f28;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+
+/* TÍTULO */
+
+.header-pedido h1 {
+    margin: 0;
+
+    color: #c51f28;
+    font-size: 25px;
+    font-weight: normal;
+}
+
+
+/* BOTÓN VOLVER */
+
+.btn-volver-header {
+    width: 28px;
+    height: 28px;
+
+    background-color: #c51f28;
+    color: white;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+    font-size: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.btn-volver-header:hover {
+    background-color: #a91820;
+}
+
+
+/* ==============================
+   CONTENEDOR PRINCIPAL
+   ============================== */
+
+.container-pedido {
+    width: 85%;
+    max-width: 1000px;
+
+    margin: 0 auto;
+    padding: 25px 0 45px;
+}
+
+
+/* ==============================
+   NÚMERO DE PEDIDO
+   ============================== */
+
+.numero-pedido {
+    border-bottom: 2px solid #999;
+
+    padding: 0 0 14px;
+    margin-bottom: 25px;
+
+    text-align: center;
+
+    font-size: 16px;
+}
+
+
+/* ==============================
+   SECCIONES
+   ============================== */
+
+.seccion-pedido {
+    margin-bottom: 35px;
+}
+
+
+.seccion-pedido h2 {
+    margin: 0 0 12px;
+
+    color: #c51f28;
+
+    font-size: 17px;
+    font-weight: normal;
+}
+
+
+/* ==============================
+   DATOS
+   ============================== */
+
+.datos-cliente,
+.datos-pedido,
+.datos-pago {
+    padding-left: 15px;
+
+    font-size: 16px;
+    line-height: 1.45;
+}
+
+
+.datos-cliente div,
+.datos-pedido div,
+.datos-pago div {
+    margin-bottom: 3px;
+}
+
+
+.datos-cliente strong,
+.datos-pedido strong,
+.datos-pago strong {
+    font-weight: normal;
+}
+
+
+/* ==============================
+   BOTÓN AVISAR
+   ============================== */
+
+.acciones-pedido {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 15px;
+}
+
+
+.btn-avisar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 10px 16px;
+
+    border: 1px solid #c51f28;
+
+    background-color: transparent;
+
+    color: #c51f28;
+
+    text-decoration: none;
+
+    font-size: 14px;
+}
+
+
+.btn-avisar:hover {
+    background-color: #c51f28;
+    color: white;
+}
+
+
+/* ==============================
+   RESPONSIVE
+   ============================== */
+
+@media (max-width: 700px) {
+
+    .header-pedido {
+        padding: 0 15px;
+    }
+
+    .header-pedido h1 {
+        font-size: 20px;
+    }
+
+    .header-pedido .logo {
+        font-size: 22px;
+    }
+
+    .container-pedido {
+        width: 90%;
+    }
+
+    .datos-cliente,
+    .datos-pedido,
+    .datos-pago {
+        padding-left: 5px;
+        font-size: 15px;
+    }
+}

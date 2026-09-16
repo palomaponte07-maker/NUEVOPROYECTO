@@ -192,22 +192,42 @@
                     <div>Estado</div>
                     <div>Acción</div>
                 </div>
-                    <button class="btn-detalle">
-                        detalle <br>
-                        pedido
-                    </button>
+                {% for pedido in pedidos %}
+                <div class="pedido-row">
+                            <div>{{ pedido.numeroPedido }}</div>
+                            <div>{{ pedido.cliente.nombre }}</div>
+                            <div>{{ pedido.cliente.apellido }}</div>
+
+                            <div>
+                                {% for detalle in pedido.detallepedido_set.all %}
+                                    {{ detalle.producto.nombre }}
+                                {% endfor %}
+                            </div>
+                            <div>{{ pedido.fecha }}</div>
+                            <div>{{ pedido.estadoPago }}</div>
+
+                            <div>
+                                <a href="{% url 'detalle_pedido' pedido.idPedido %}" class="btn-detalle">
+                                    detalle <br>
+                                    pedido
+                                </a>
+                            </div>
+                         </div>
+                        {% empty %}
+                        <div class="pedido-row">
+                            <div>No hay pedidos recientes.</div>
+                        </div>
+                        {% endfor %}
+                     </div>
+                    <div class="ver-pedidos">
+                        <a href="#">
+                        ver todos -->;
+                        </a>
+                  </div>
                 </div>
-            </div>
-            </div>
-            <div class="ver-pedidos">
-                <a href="#">
-                  ver todos --&gt;
-                </a>
-            </div>
-        </div>
-      </div>
+             </div>
+         </div>
     </div>
-</div>
 </section>
 </main>
 <footer></footer>

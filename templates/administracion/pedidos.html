@@ -1,0 +1,224 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Detalle Pedido</title>
+
+    <link rel="stylesheet" href="{% static 'administracion/css/pedidos.css' %}">
+</head>
+
+<body>
+
+    <!-- ENCABEZADO -->
+
+    <header class="header-pedido">
+
+        <div class="logo">
+            <span class="logo-hoja"></span>
+            <span>Olivia</span>
+        </div>
+
+        <h1>Detalle Pedido</h1>
+
+        <a href="{% url 'dashboard' %}" class="btn-volver-header">
+            ←
+        </a>
+
+    </header>
+
+
+    <main class="container-pedido">
+
+        <!-- NÚMERO DE PEDIDO -->
+
+        <div class="numero-pedido">
+            <span>pedido #{{ pedido.numeroPedido }}</span>
+        </div>
+
+
+        <!-- DATOS DEL CLIENTE -->
+
+        <section class="seccion-pedido">
+
+            <h2>DATOS DEL CLIENTE</h2>
+
+            <div class="datos-cliente">
+
+                <div>
+                    <strong>Nombre:</strong>
+                    {{ pedido.cliente.nombre }}
+                </div>
+
+                <div>
+                    <strong>Apellido:</strong>
+                    {{ pedido.cliente.apellido }}
+                </div>
+
+                <div>
+                    <strong>Email:</strong>
+                    {{ pedido.cliente.email }}
+                </div>
+
+                <div>
+                    <strong>Teléfono:</strong>
+                    {{ pedido.cliente.telefono }}
+                </div>
+
+                <div>
+                    <strong>Dirección de envío:</strong>
+                    {{ pedido.cliente.calle }}
+                    {{ pedido.cliente.numCalle }}
+                </div>
+
+                <div>
+                    <strong>Ciudad:</strong>
+                    {{ pedido.cliente.ciudad }}
+                </div>
+
+                <div>
+                    <strong>Provincia:</strong>
+                    {{ pedido.cliente.provincia }}
+                </div>
+
+                <div>
+                    <strong>Código Postal:</strong>
+                    {{ pedido.cliente.codPostal }}
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- DATOS DEL PEDIDO -->
+
+        <section class="seccion-pedido">
+    <h2>DATOS DEL PEDIDO</h2>
+
+    <div class="datos-pedido">
+
+        <div>
+            <strong>Num. pedido:</strong>
+            {{ pedido.numeroPedido }}
+        </div>
+
+        <div>
+            <strong>Fecha de la compra:</strong>
+            {{ pedido.fecha }}
+        </div>
+
+        <div>
+            <strong>Estado:</strong>
+            {{ pedido.estadoPago }}
+        </div>
+
+        <div>
+            <strong>Productos:</strong>
+            {% for detalle in detalles %}
+
+                <div class="detalle-producto">
+
+                    <div>
+                        <strong>Producto:</strong>
+                        {{ detalle.producto.nombre }}
+                    </div>
+
+                    <div>
+                        <strong>Precio:</strong>
+                        ${{ detalle.precioUnitario }}
+                    </div>
+
+                    <div>
+                        <strong>Cantidad:</strong>
+                        {{ detalle.cantidad }}
+                    </div>
+
+                    <div>
+                        <strong>Talle:</strong>
+                        {% if detalle.variante %}
+                            {{ detalle.variante.talle }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </div>
+
+                </div>
+
+            {% empty %}
+                -
+            {% endfor %}
+        </div>
+
+        <div>
+            <strong>Cantidad de unidades:</strong>
+            {{ pedido.cantidad }}
+        </div>
+
+        <div>
+            <strong>Precio Total:</strong>
+            ${{ pedido.total }}
+        </div>
+
+    </div>
+</section>
+
+
+        <!-- DATOS DE PAGO -->
+
+        <section class="seccion-pedido">
+
+            <h2>DATOS DE PAGO</h2>
+
+            <div class="datos-pago">
+
+                <div>
+                    <strong>Método de pago:</strong>
+                    {{ pedido.metodoPago|default:"-" }}
+                </div>
+
+                <div>
+                    <strong>Estado del pago:</strong>
+                    {{ pedido.estadoPago }}
+                </div>
+
+                <div>
+                    <strong>Total Pagado:</strong>
+                    ${{ pedido.total }}
+                </div>
+
+                <div>
+                    <strong>Código de transacción:</strong>
+                    {{ pedido.codTransaccion|default:"-" }}
+                </div>
+
+                <div>
+                    <strong>Fecha de pago:</strong>
+                    {{ pedido.fechaPago|default:"-" }}
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- BOTÓN AVISAR -->
+
+        <div class="acciones-pedido">
+
+            <a href="#" class="btn-avisar">
+                ✉
+                Avisar a la clienta por Gmail
+            </a>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

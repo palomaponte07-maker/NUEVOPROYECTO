@@ -43,11 +43,18 @@ body {
 }
 
 .notificacion {
-    margin-left: auto;
-    color: #c11f25;
-    font-size: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 450px;
+    height: 250px;
+    margin-right: 25px;
+    cursor: pointer;
 }
 
+.icono-notificacion {
+    font-size: 28px;
+}
 .container {
     width: 100%;
     padding: 25px 65px 100px;

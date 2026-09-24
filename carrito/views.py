@@ -5,6 +5,8 @@ from decimal import Decimal
 from .models import Carrito, CarritoProducto
 from productos.models import Producto, ProductoVariante
 from clientes.models import Cliente
+from pedidos.views import crear_pedido, agregar_detalle
+from administracion.models import Administrador
 
 def actualizar_carrito(carrito):
 
@@ -62,6 +64,8 @@ def carrito(request):
     
     if request.method == "POST" and carrito and productos_carrito:
 
+        metodo_pago = request.POST.get("metodoPago")
+
         cliente = Cliente.objects.create(
             nombre=request.POST.get("nombre"),
             apellido=request.POST.get("apellido"),
@@ -75,30 +79,44 @@ def carrito(request):
             provincia=request.POST.get("provincia")
         )
 
-        carrito.cliente = cliente
+        administrador = Administrador.objects.first()
 
+        carrito.cliente = cliente
+        
         if not carrito.numeroPedido:
             carrito.numeroPedido = carrito.idCarrito
 
+        pedido = crear_pedido(
+        cliente_id=cliente.idCliente,
+        administrador_id=administrador.idAdministrador,
+        numero_pedido=carrito.numeroPedido or str(carrito.idCarrito),
+        fecha=timezone.now().date(),
+        estado_pago="Pendiente",
+        metodo_pago=metodo_pago
+        )
+
         carrito.fecha = timezone.now()
         carrito.estadoPago = "PENDIENTE"
-
+        carrito.metodoPago = metodo_pago
         carrito.save()
 
         for item in productos_carrito:
-            item.numeroPedido = carrito.numeroPedido
-            item.fecha = carrito.fecha
-            item.estadoPago = "PENDIENTE"
-            item.save()
 
-        # El carrito deja de estar activo!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            agregar_detalle(
+                pedido_id=pedido.idPedido,
+                producto_id=item.producto.idProducto,
+                cantidad=item.cantidad,
+                variante_id=item.variante.idVariante if item.variante else None
+            )
+
+        
         carrito.estado = False
         carrito.save()
 
-        # Eliminamos el carrito de la sesión!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        
         request.session.pop("idCarrito", None)
 
-        #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
         return redirect("carrito")
 
     subtotal = sum(
@@ -261,4 +279,5 @@ def eliminar_del_carrito(request, idCarritoProducto):
     return redirect(
     f"/productos/{carrito_producto.producto.idProducto}/?carrito=abierto"
     )
+
 

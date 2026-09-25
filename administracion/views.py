@@ -20,6 +20,34 @@ def dashboard(request):
 
         }
     )
+
+def notificaciones(request):
+
+    # Variantes que actualmente tienen stock 0
+    variantes_sin_stock = (
+        ProductoVariante.objects
+        .select_related('producto')
+        .filter(stockProducto=0)
+        .order_by('producto__nombre')
+    )
+
+    # Últimos 5 pedidos registrados
+    pedidos_recientes = (
+        Pedido.objects
+        .select_related('cliente')
+        .order_by('-idPedido')[:5]
+    )
+
+    return render(
+        request,
+        'administracion/notificaciones.html',
+        {
+            'variantes_sin_stock': variantes_sin_stock,
+            'pedidos_recientes': pedidos_recientes,
+        }
+    )
+
+
 def detalle_pedido(request, id):
     pedido = get_object_or_404(
         Pedido.objects.select_related('cliente'),

@@ -1,0 +1,236 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #efe8e0;
+    font-family: Georgia, serif;
+    color: #171717;
+}
+
+
+/* =========================
+   CONTENEDOR
+========================= */
+
+.notificaciones-container {
+    min-height: 100vh;
+}
+
+
+/* =========================
+   ENCABEZADO
+========================= */
+
+.notificaciones-header {
+
+    height: 145px;
+
+    background-color: #faf8f6;
+
+    display: flex;
+    align-items: center;
+
+    position: relative;
+}
+
+
+/* LOGO */
+
+.logo-container {
+
+    margin-left: 40px;
+
+    width: 180px;
+}
+
+.logo {
+
+    width: 130px;
+
+    height: auto;
+}
+
+
+/* TITULO */
+
+.notificaciones-header h1 {
+
+    margin-left: 70px;
+
+    color: #c11f25;
+
+    font-size: 32px;
+
+    font-weight: normal;
+}
+
+
+/* BOTON VOLVER */
+
+.btn-volver {
+
+    position: absolute;
+
+    right: 45px;
+
+    top: 52px;
+
+    width: 37px;
+
+    height: 37px;
+
+    background-color: #c11f25;
+
+    color: white;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-decoration: none;
+
+    font-size: 24px;
+
+    font-family: Arial, sans-serif;
+}
+
+.btn-volver:hover {
+
+    background-color: #a8181d;
+}
+
+
+/* =========================
+   CONTENIDO
+========================= */
+
+.notificaciones-main {
+
+    min-height: calc(100vh - 145px);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: flex-start;
+
+    padding-top: 87px;
+}
+
+
+/* =========================
+   TARJETA
+========================= */
+
+.notificaciones-card {
+
+    width: 480px;
+
+    background-color: #faf9f7;
+
+    padding: 55px 60px;
+}
+
+
+/* =========================
+   NOTIFICACION
+========================= */
+
+.notificacion {
+
+    display: flex;
+
+    align-items: center;
+
+    margin-bottom: 40px;
+}
+
+.notificacion:last-child {
+
+    margin-bottom: 0;
+}
+
+
+/* ICONO */
+
+.notificacion-icono {
+
+    width: 55px;
+
+    min-width: 55px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    margin-right: 10px;
+}
+
+
+/* STOCK */
+
+.stock-icono {
+
+    color: #e00000;
+
+    font-size: 28px;
+}
+
+
+/* PEDIDO */
+
+.pedido-icono {
+
+    color: #777;
+
+    font-size: 32px;
+}
+
+
+/* =========================
+   TEXTO
+========================= */
+
+.notificacion-contenido h2 {
+
+    font-size: 19px;
+
+    font-weight: normal;
+
+    margin-bottom: 5px;
+}
+
+
+.notificacion-contenido p {
+
+    font-size: 14px;
+
+    color: #8b8b8b;
+
+    margin: 0;
+
+    line-height: 1.4;
+}
+
+
+/* =========================
+   SIN NOTIFICACIONES
+========================= */
+
+.sin-notificaciones {
+
+    text-align: center;
+
+    color: #888;
+
+    padding: 30px 0;
+}

@@ -4,170 +4,94 @@
 <html lang="es">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Notificaciones</title>
-
     <link rel="stylesheet"
           href="{% static 'administracion/css/notificaciones.css' %}">
 
 </head>
 
-
 <body>
-
     <div class="notificaciones-container">
-
-
         <!-- =========================
              ENCABEZADO
         ========================== -->
-
         <header class="notificaciones-header">
-
             <div class="logo-container">
-
                 <img src="{% static '/administracion/' %}"
                      alt="Olivia"
                      class="logo">
-
             </div>
-
-
             <h1>Notificaciones</h1>
-
 
             <a href="{% url 'dashboard' %}"
                class="btn-volver">
-
                 ←
-
             </a>
-
         </header>
-
-
-
         <!-- =========================
              CONTENIDO
         ========================== -->
-
         <main class="notificaciones-main">
-
-
             <div class="notificaciones-card">
-
-
                 <!-- =========================
                      SIN STOCK
                 ========================== -->
-
                 {% for variante in variantes_sin_stock %}
-
                     <div class="notificacion">
-
                         <div class="notificacion-icono stock-icono">
-
                             ⚠
-
                         </div>
-
-
                         <div class="notificacion-contenido">
-
                             <h2>
                                 Sin stock en
                                 “{{ variante.producto.nombre }}”
                             </h2>
-
-
                             <p>
-
                                 Talle {{ variante.talle }}
-
                                 ·
-
                                 Color {{ variante.color }}
-
                             </p>
-
                         </div>
-
                     </div>
-
                 {% endfor %}
-
-
-
                 <!-- =========================
                      PEDIDOS RECIENTES
                 ========================== -->
-
                 {% for pedido in pedidos_recientes %}
-
                     <div class="notificacion">
-
                         <div class="notificacion-icono pedido-icono">
-
                             ♡
-
                         </div>
 
-
                         <div class="notificacion-contenido">
-
                             <h2>
-
                                 Nuevo pedido #{{ pedido.numeroPedido }}
-
                             </h2>
-
-
                             <p>
-
                                 {{ pedido.cliente.nombre }}
                                 {{ pedido.cliente.apellido }}
-
                                 realizó una compra de
-
                                 ${{ pedido.total|floatformat:0 }}
 
                             </p>
-
                         </div>
-
                     </div>
-
                 {% endfor %}
-
-
 
                 <!-- =========================
                      SIN NOTIFICACIONES
                 ========================== -->
-
                 {% if not variantes_sin_stock and not pedidos_recientes %}
-
                     <div class="sin-notificaciones">
-
                         <p>
                             No hay nuevas notificaciones.
                         </p>
-
                     </div>
-
                 {% endif %}
-
-
             </div>
-
         </main>
-
     </div>
-
 </body>
-
 </html>

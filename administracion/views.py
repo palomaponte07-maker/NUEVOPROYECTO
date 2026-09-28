@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect,get_object_or_404
 from .forms import ProductoForm
 from productos.models import Producto, ProductoVariante, Imagen
 from pedidos.models import Pedido,DetallePedido
+from .models import Notificacion
 
 def dashboard(request):
     productos = Producto.objects.all().order_by('-idProducto')[:10]
@@ -11,12 +12,17 @@ def dashboard(request):
 
     pedidos = Pedido.objects.select_related('cliente').prefetch_related('detallepedido_set__producto').order_by('-idPedido')[:10]
 
+    notificaciones = Notificacion.objects.select_related(
+        'pedido',
+        'producto'
+    ).order_by('-idNotificacion')[:5]  
     return render(
         request, 
         'administracion/dashboard.html',
         {
             'productos': productos,
             'pedidos': pedidos,
+            'notificaciones': notificaciones,
 
         }
     )

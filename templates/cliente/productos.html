@@ -14,50 +14,75 @@ Productos
 
             {% for producto in productos %}
 
-            <div class="col-6 col-md-4 col-lg-3">
+                <div class="col-6 col-md-4 col-lg-3">
 
-                <a href="{% url 'detalle_producto' producto.idProducto %}" class="producto-link">
+                    {% if producto.tiene_stock %}
 
-                    <div class="producto-card">
+                        <a href="{% url 'detalle_producto' producto.idProducto %}" class="producto-link">
 
-                        <div class="linea-superior"></div>
+                    {% else %}
 
-                        {% with imagen=producto.imagen_set.first %}
+                        <div class="producto-link producto-agotado">
 
-                            {% if imagen and imagen.imagen %}
+                    {% endif %}
 
-                                <img src="{{ imagen.imagen.url }}"
-                                    class="img-fluid producto-img"
-                                    alt="{{ producto.nombre }}">
+                        <div class="producto-card">
 
-                            {% endif %}
+                            <div class="linea-superior"></div>
 
-                        {% endwith %}
+                                {% with imagen=producto.imagen_set.first %}
 
-                        <div class="producto-info">
+                                    {% if imagen and imagen.imagen %}
 
-                            <h5>{{ producto.nombre }}</h5>
+                                        <img src="{{ imagen.imagen.url }}"
+                                            class="img-fluid producto-img"
+                                            alt="{{ producto.nombre }}">
 
-                            <div class="precios">
-                                <span class="precio">
-                                    $ {{ producto.precioVenta|floatformat:0 }}
-                                </span>
-                            </div>
+                                    {% endif %}
 
-                            {% if producto.porcentajeDescuento > 0 %}
-                                <span class="descuento">
-                                    {{ producto.porcentajeDescuento|floatformat:0 }}% OFF
-                                </span>
-                            {% endif %}
+                                {% endwith %}
+
+                                <div class="producto-info">
+
+                                    <h5>{{ producto.nombre }}</h5>
+
+                                    <div class="precios">
+                                        <span class="precio">
+                                            $ {{ producto.precioVenta|floatformat:0 }}
+                                        </span>
+                                    </div>
+
+                                    {% if producto.porcentajeDescuento > 0 %}
+                                        <span class="descuento">
+                                            {{ producto.porcentajeDescuento|floatformat:0 }}% OFF
+                                        </span>
+                                    {% endif %}
+
+                                </div>
+
+                            <div class="linea-inferior"></div>
+
                         </div>
 
-                        <div class="linea-inferior"></div>
+                        {% if not producto.tiene_stock %}
 
-                    </div>
+                            <span class="producto-sin-stock">
+                                SIN STOCK
+                            </span>
 
-                </a>
+                        {% endif %}
 
-            </div>
+                    {% if producto.tiene_stock %}
+
+                        </a>
+
+                    {% else %}
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
 
             {% endfor %}
 

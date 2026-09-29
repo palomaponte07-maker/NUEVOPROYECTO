@@ -93,7 +93,7 @@ header,
 }
 
 
-
+/* ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¿PRODUCTO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 .producto h6 {
     font-family: var(--fuente-titulos);
     font-size: 26px;
@@ -161,6 +161,9 @@ header,
     color: white;
 }
 
+
+
+/*  ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡BANNER!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 .banner {
     position: relative;
 }
@@ -242,6 +245,9 @@ footer a:hover{
 
 
 
+
+
+/* ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡DETALLE PRODUCTO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 .detalle-producto {
     background-color: var(--color-fondo);
     padding: 50px 0 70px;
@@ -1389,4 +1395,93 @@ footer a:hover{
         font-size: 13px;
     }
 
+}
+
+
+
+
+/* ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡CARRITO!!!!!!!!!!!!!!! */
+
+/* FILTRO POR CATEGORÍA */
+
+.filtro-categoria {
+    display: flex;
+    justify-content: flex-start;
+    padding: 25px 60px 10px;
+}
+
+.filtro-categoria form {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.filtro-categoria label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #333;
+}
+
+.filtro-categoria select {
+    min-width: 190px;
+    height: 38px;
+    padding: 0 35px 0 12px;
+    border: 1px solid #cfc8c2;
+    border-radius: 2px;
+    background-color: #f8f5f2;
+    color: #333;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    outline: none;
+}
+
+.filtro-categoria select:focus {
+    border-color: #c11f25;
+}
+
+.filtro-categoria button {
+    height: 38px;
+    padding: 0 18px;
+    border: none;
+    border-radius: 2px;
+    background-color: #c11f25;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.filtro-categoria button:hover {
+    background-color: #a9191f;
+}
+
+
+/* ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¿PRODUCTO AGOTADO!!!!!!!!!!!!!!!!!!!!!!!!!!1 */
+.producto-agotado {
+    position: relative;
+    cursor: default;
+}
+
+.producto-agotado .producto-card,
+.producto-agotado img {
+    opacity: 0.55;
+    filter: grayscale(100%);
+}
+
+.producto-sin-stock {
+    display: block;
+    margin-top: 8px;
+    color: #c11f25;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }

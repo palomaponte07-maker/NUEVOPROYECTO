@@ -91,7 +91,36 @@
         </nav>
     </header>
 
-    
+    {% block mostrar_filtro %}
+        <div class="filtro-categoria">
+
+            <form method="GET" action="{% url 'productos' %}">
+
+                <label for="categoria">Filtrar por categoría</label>
+
+                <select name="categoria" id="categoria">
+
+                    <option value="">Todas las categorías</option>
+
+                    {% for categoria in categorias %}
+
+                        <option value="{{ categoria.idCategoria }}">
+                            {{ categoria.nombreCategoria }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+                <button type="submit">
+                    APLICAR FILTRO
+                </button>
+
+            </form>
+
+        </div>
+        
+    {% endblock %}
 
     <main>
 

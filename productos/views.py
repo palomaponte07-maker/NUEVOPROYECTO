@@ -1,27 +1,57 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Producto
 from django.utils import timezone
+from .models import Producto, Categoria
 
 def inicio(request):
     productos_destacados = Producto.objects.filter(
         estado=True
-    )
+    ).prefetch_related("variantes")
+
+    for producto in productos_destacados:
+        producto.tiene_stock = any(
+            variante.stockProducto > 0
+            for variante in producto.variantes.all()
+        )
+
+    categorias = Categoria.objects.all()
 
     return render(
         request,
         "cliente/inicio.html",
-        {"productos_destacados": productos_destacados}
+        {
+            "productos_destacados": productos_destacados,
+            "categorias": categorias
+        }
     )
 
 def productos(request):
     productos = Producto.objects.filter(
-         estado=True
-    )
+        estado=True
+    ).prefetch_related("variantes")
+
+    categoria = request.GET.get("categoria")
+
+    if categoria:
+        productos = productos.filter(
+            categoria_id=categoria
+        )
+
+    for producto in productos:
+        producto.tiene_stock = any(
+            variante.stockProducto > 0
+            for variante in producto.variantes.all()
+        )
+
+    categorias = Categoria.objects.all()
 
     return render(
         request,
         "cliente/productos.html",
-        {"productos": productos}
+        {
+            "productos": productos,
+            "categorias": categorias
+        }
     )
 
 def detalle_producto(request, id):

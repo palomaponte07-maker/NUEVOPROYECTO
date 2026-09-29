@@ -6,26 +6,31 @@ Inicio
 {% endblock %}
 
 {% block content %}
+
 <head>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
 <section class="banner">
-
     <div class="container-fluid p-0 position-relative">
 
-        <img src="{% static 'img/banner.png' %}" class="img-fluid w-100" alt="Banner">
+        <img src="{% static 'img/banner.png' %}"
+             class="img-fluid w-100"
+             alt="Banner">
 
         <div class="banner-texto">
 
-           <h1 class="titulo-temporada">
+            <h1 class="titulo-temporada">
                 <span>Nueva</span>
                 <span class="gris">2026</span><br>
                 <span>Temporada</span>
             </h1>
+
         </div>
+
     </div>
 </section>
+
 
 <section class="productos py-5">
 
@@ -34,47 +39,73 @@ Inicio
         <h2 class="titulo-seccion text-center mb-5">
             Productos Destacados
         </h2>
-   
+
         <div class="row g-4">
 
             {% for producto in productos_destacados %}
-            
-                <div class="col-lg-2 col-md-4 col-6">
 
-                    <a href="{% url 'detalle_producto' producto.idProducto %}" class="producto text-center">
+            <div class="col-lg-2 col-md-4 col-6">
 
-                        {% with imagen=producto.imagen_set.first %}
+                {% if producto.tiene_stock %}
 
-                            {% if imagen and imagen.imagen %}
+                    <a href="{% url 'detalle_producto' producto.idProducto %}"
+                       class="producto text-center">
 
-                                <img src="{{ imagen.imagen.url }}"
-                                    class="img-fluid"
-                                    alt="{{ producto.nombre }}">
-                            
-                            {% endif %}
+                {% else %}
 
-                        {% endwith %}
+                    <div class="producto producto-agotado text-center">
 
-                        <h6>{{ producto.nombre }}</h6>
+                {% endif %}
 
-                        
-                        <div class="precios">
+                    {% with imagen=producto.imagen_set.first %}
 
-                            <span class="precio">
-                                ${{ producto.precioVenta|floatformat:0 }}
+                        {% if imagen and imagen.imagen %}
+
+                            <img src="{{ imagen.imagen.url }}"
+                                 class="img-fluid"
+                                 alt="{{ producto.nombre }}">
+
+                        {% endif %}
+
+                    {% endwith %}
+
+                    <h6>{{ producto.nombre }}</h6>
+
+                    <div class="precios">
+
+                        <span class="precio">
+                            ${{ producto.precioVenta|floatformat:0 }}
+                        </span>
+
+                        {% if producto.porcentajeDescuento > 0 %}
+
+                            <span class="descuento">
+                                {{ producto.porcentajeDescuento|floatformat:0 }}% OFF
                             </span>
 
-                            {% if producto.porcentajeDescuento > 0 %}
-                                <span class="descuento">
-                                    {{ producto.porcentajeDescuento|floatformat:0 }}% OFF
-                                </span>
-                            {% endif %}
+                        {% endif %}
 
-                        </div>
-                    
+                    </div>
+
+                    {% if not producto.tiene_stock %}
+
+                        <span class="producto-sin-stock">
+                            SIN STOCK
+                        </span>
+
+                    {% endif %}
+
+                {% if producto.tiene_stock %}
+
                     </a>
 
-                </div>
+                {% else %}
+
+                    </div>
+
+                {% endif %}
+
+            </div>
 
             {% endfor %}
 

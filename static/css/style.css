@@ -1481,7 +1481,7 @@ footer a:hover{
     color: #c11f25;
     font-family: 'Montserrat', sans-serif;
     font-size: 12px;
-    font-weight: 800;
+    font-weight: 800; /*GROSOR NEGRITA*/
     letter-spacing: 1px;
     text-transform: uppercase;
 }

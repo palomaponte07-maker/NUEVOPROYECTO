@@ -176,6 +176,11 @@ def agregar_al_carrito(request, idProducto):
             producto=producto
         )
 
+        if variante.stockProducto <= 0:
+            return redirect(
+                f"/productos/{producto.idProducto}/?carrito=abierto"
+            )
+
         idCarrito = request.session.get("idCarrito")
 
         if idCarrito:
@@ -209,6 +214,11 @@ def agregar_al_carrito(request, idProducto):
         ).first()
 
         if carrito_producto:
+
+            if carrito_producto.cantidad >= variante.stockProducto:
+                return redirect(
+                    f"/productos/{producto.idProducto}/?carrito=abierto"
+                )
 
             carrito_producto.cantidad += 1
 
@@ -255,6 +265,14 @@ def modificar_cantidad(request, idCarritoProducto, accion):
     )
 
     if accion == "sumar":
+
+        stock = carrito_producto.variante.stockProducto
+
+        if carrito_producto.cantidad >= stock:
+            return redirect(
+                f"/productos/{carrito_producto.producto.idProducto}/?carrito=abierto"
+            )
+
         carrito_producto.cantidad += 1
 
     elif accion == "restar":

@@ -8,6 +8,8 @@ from clientes.models import Cliente
 from pedidos.views import crear_pedido, agregar_detalle
 from administracion.models import Administrador
 
+from administracion.models import Administrador, Notificacion
+
 def actualizar_carrito(carrito):
 
     productos = CarritoProducto.objects.filter(
@@ -109,6 +111,12 @@ def carrito(request):
                 variante_id=item.variante.idVariante if item.variante else None
             )
 
+        Notificacion.objects.create(
+            administrador=administrador,
+            producto=productos_carrito[0].producto,
+            pedido=pedido,
+            fecha=timezone.now().date()
+        )
         
         carrito.estado = False
         carrito.save()

@@ -1,9 +1,11 @@
 from decimal import Decimal
 from django.db import transaction 
 from django.core.exceptions import ValidationError
+from time import timezone
+
 from productos.models import Producto, ProductoVariante
 from clientes.models import Cliente
-from administracion.models import Administrador
+from administracion.models import Administrador, Notificacion
 from .models import Pedido, DetallePedido
 
 def calcular_total_pedido(pedido):
@@ -75,41 +77,29 @@ def crear_pedido(
         metodoPago = metodo_pago
     )
     return pedido
-@transaction.atomic
-def agregar_detalle(
-    pedido_id,
-    producto_id,
-    cantidad,
-    variante_id=None
-):
-    """ Agregar un prducto al pedido.
-    Validar producto, variante, cantidad, y stock."""
 
+@transaction.atomic
+def agregar_detalle(pedido_id, producto_id, cantidad, variante_id=None):
     pedido = Pedido.objects.get(pk=pedido_id)
     producto = Producto.objects.get(pk=producto_id)
+
     if cantidad <= 0:
-        raise ValidationError(
-            "La cantidad debe ser mayor a cero."
-        )
+        raise ValidationError("La cantidad debe ser mayor a cero.")
+
     variante = None
 
     if variante_id is not None:
-        variante = ProductoVariante.objects.get(
-            pk=variante_id
-        )
+        variante = ProductoVariante.objects.get(pk=variante_id)
 
         if variante.producto_id != producto.idProducto:
-            raise ValidationError(
-                "La variante no pertenece al producto seleccionado."
-            )
+            raise ValidationError("La variante no pertenece al producto seleccionado.")
 
         if cantidad > variante.stockProducto:
-            raise ValidationError(
-                "No hay suficiente stock disponible."
-            )
-        
-    precio_unitario = producto.precioVenta 
+            raise ValidationError("No hay suficiente stock disponible.")
+
+    precio_unitario = producto.precioVenta
     subtotal = Decimal(cantidad) * precio_unitario
+
     detalle = DetallePedido.objects.create(
         pedido=pedido,
         producto=producto,
@@ -118,12 +108,39 @@ def agregar_detalle(
         precioUnitario=precio_unitario,
         subTotal=subtotal
     )
+
     if variante is not None:
+        # Guardamos cuánto había en depósito antes de la reposición
+        stock_deposito_anterior = variante.stockDeposito
+
+        # Descontamos la venta del stock disponible
         variante.stockProducto -= cantidad
-        variante.save(update_fields=["stockProducto"])
+
+        # Si el stock queda en 3 o menos,
+        # reponemos hasta 5 unidades desde el depósito
+        if variante.stockProducto <= 3 and variante.stockDeposito > 0:
+
+            cantidad_reponer = min(5, variante.stockDeposito)
+
+            variante.stockProducto += cantidad_reponer
+            variante.stockDeposito -= cantidad_reponer
+
+        # Guardamos los nuevos valores
+        variante.save(
+            update_fields=["stockProducto", "stockDeposito"]
+        )
+
+        # Notificamos solamente cuando el depósito
+        # pasó de tener stock a quedar en 0
+        if stock_deposito_anterior > 0 and variante.stockDeposito == 0:
+            print(
+                f"El depósito de {producto.nombre} quedó sin stock."
+            )
 
     calcular_total_pedido(pedido)
+
     return detalle
+    
 @transaction.atomic
 def actualizar_detalle(
     detalle_id,

@@ -1485,3 +1485,78 @@ footer a:hover{
     letter-spacing: 1px;
     text-transform: uppercase;
 }
+
+
+/*  ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡CONTACTO!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+.contacto-redes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 60px;
+    gap: 35px;
+    margin-top: 30px;
+}
+
+.red-social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #c11f25;
+    text-decoration: none;
+    font-size: 20px;
+    transition: all 0.3s ease;
+}
+
+.red-social i {
+    color: #c11f25;
+}
+
+.red-social:hover {
+    color: #9f181d;
+    transform: translateY(-3px);
+}
+
+.red-social:hover i {
+    color: #9f181d;
+}
+
+
+/* INFORMACION */
+.contacto-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+.contacto-item {
+    display: flex;
+    align-items: center;
+    width: 250px;
+    gap: 12px;
+    color: #c11f25;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.contacto-item i {
+    width: 28px;
+    text-align: center;
+    color: #c11f25;
+    font-size: 22px;
+}
+
+.contacto-item span {
+    color: #c11f25;
+    text-decoration: none;
+}
+
+.contacto-item:hover {
+    color: #9f181d;
+    text-decoration: none;
+}
+
+.contacto-item:hover i,
+.contacto-item:hover span {
+    color: #9f181d;
+}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Contactos
+{% endblock %}
+
+{% block mostrar_filtro %}{% endblock %}
+
+{% block content %}
+
+<section class="contacto py-5">
+
+    <div class="contacto-contenido">
+
+
+        <div class="contacto-info">
+
+            <a href="tel:5493493404376" class="contacto-item">
+                <i class="bi bi-telephone"></i>
+                <span>3493-404376</span>
+            </a>
+
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=olivia@gmail.com&su=Consulta%20desde%20la%20tienda&body=Hola%20Olivia,%20me%20gustaría%20hacer%20una%20consulta." 
+                target="_blank" 
+                class="contacto-item">
+
+                    <i class="bi bi-envelope"></i>
+                    <span>olivia@gmail.com</span>
+
+            </a>
+
+            <a href="https://www.google.com/maps/place/31%C2%B015'48.5%22S+61%C2%B030'06.0%22W/@-31.263475,-61.501663,19z/data=!3m1!4b1!4m4!3m3!8m2!3d-31.263475!4d-61.501663?entry=ttu&g_ep=EgoyMDI2MTAwNC4wIKXMDSoASAFQAw%3D%3D?api=1&query=Saripanti+1234" 
+                target="_blank" 
+                class="contacto-item">
+
+                    <i class="bi bi-geo-alt"></i>
+                    <span>Saripanti 1234</span>
+
+            </a>
+
+        </div>
+
+
+        <div class="contacto-redes">
+
+            <a href="https://www.instagram.com/oliviashop.ok/" target="_blank" class="red-social">
+                <i class="bi bi-instagram"> </i>
+                <span> Instagram</span>
+            </a>
+
+            <a href="https://wa.me/5493493404376" target="_blank" class="red-social">
+                <i class="bi bi-whatsapp"> </i>
+                <span> WhatsApp</span>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

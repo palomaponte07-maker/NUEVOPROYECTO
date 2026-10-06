@@ -376,9 +376,19 @@ Iniciar compra
                                     {{ item.cantidad }}
                                 </span>
 
-                                <a href="{% url 'modificar_cantidad' item.idCarritoProducto 'sumar' %}" >
-                                    +
-                                </a>
+                                {% if item.cantidad < item.variante.stockProducto %}
+
+                                    <a href="{% url 'modificar_cantidad' item.idCarritoProducto 'sumar' %}">
+                                        +
+                                    </a>
+
+                                {% else %}
+
+                                    <span class="cantidad-deshabilitada">
+                                        +
+                                    </span>
+
+                                {% endif %}
 
                             </div>
 

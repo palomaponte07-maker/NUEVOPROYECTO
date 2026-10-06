@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Producto
 from django.utils import timezone
 from .models import Producto, Categoria
+from django.shortcuts import render
 
 def inicio(request):
     productos_destacados = Producto.objects.filter(
@@ -101,3 +102,6 @@ def detalle_producto(request, id):
             "talles": talles
         }
     )
+
+def contacto(request):
+    return render(request, 'cliente/contacto.html')

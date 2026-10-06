@@ -79,7 +79,13 @@ def crear_pedido(
     return pedido
 
 @transaction.atomic
-def agregar_detalle(pedido_id, producto_id, cantidad, variante_id=None):
+def agregar_detalle(
+    pedido_id,
+    producto_id,
+    cantidad,
+    variante_id=None,
+    stock_reservado=False
+):
     pedido = Pedido.objects.get(pk=pedido_id)
     producto = Producto.objects.get(pk=producto_id)
 
@@ -92,10 +98,16 @@ def agregar_detalle(pedido_id, producto_id, cantidad, variante_id=None):
         variante = ProductoVariante.objects.get(pk=variante_id)
 
         if variante.producto_id != producto.idProducto:
-            raise ValidationError("La variante no pertenece al producto seleccionado.")
+            raise ValidationError(
+                "La variante no pertenece al producto seleccionado."
+            )
 
-        if cantidad > variante.stockProducto:
-            raise ValidationError("No hay suficiente stock disponible.")
+        # Solo verificamos stock si todavía NO fue reservado
+        if not stock_reservado:
+            if cantidad > variante.stockProducto:
+                raise ValidationError(
+                    "No hay suficiente stock disponible."
+                )
 
     precio_unitario = producto.precioVenta
     subtotal = Decimal(cantidad) * precio_unitario
@@ -109,30 +121,38 @@ def agregar_detalle(pedido_id, producto_id, cantidad, variante_id=None):
         subTotal=subtotal
     )
 
-    if variante is not None:
+    # Solo descontamos stock si todavía NO fue reservado
+    if variante is not None and not stock_reservado:
+
         # Guardamos cuánto había en depósito antes de la reposición
         stock_deposito_anterior = variante.stockDeposito
 
         # Descontamos la venta del stock disponible
         variante.stockProducto -= cantidad
 
-        # Si el stock queda en 3 o menos,
-        # reponemos hasta 5 unidades desde el depósito
+        # Reposición automática
         if variante.stockProducto <= 3 and variante.stockDeposito > 0:
 
-            cantidad_reponer = min(5, variante.stockDeposito)
+            cantidad_reponer = min(
+                5,
+                variante.stockDeposito
+            )
 
             variante.stockProducto += cantidad_reponer
             variante.stockDeposito -= cantidad_reponer
 
-        # Guardamos los nuevos valores
         variante.save(
-            update_fields=["stockProducto", "stockDeposito"]
+            update_fields=[
+                "stockProducto",
+                "stockDeposito"
+            ]
         )
 
-        # Notificamos solamente cuando el depósito
-        # pasó de tener stock a quedar en 0
-        if stock_deposito_anterior > 0 and variante.stockDeposito == 0:
+        # Avisamos si el depósito pasó de tener stock a quedar en 0
+        if (
+            stock_deposito_anterior > 0
+            and variante.stockDeposito == 0
+        ):
             print(
                 f"El depósito de {producto.nombre} quedó sin stock."
             )
@@ -205,6 +225,8 @@ def eliminar_detalle(detalle_id):
     detalle.delete()
     calcular_total_pedido(pedido)
     return pedido
+
+
 @transaction.atomic
 def eliminar_pedido(pedido_id):
     """Eliminar un pedido completo.
@@ -220,9 +242,23 @@ def eliminar_pedido(pedido_id):
             variante = ProductoVariante.objects.select_for_update().get(
                 pk=detalle.variante_id
             )
+                        # 1. Devolver al stock de venta lo comprado
             variante.stockProducto += detalle.cantidad
+            # 2. Si el stock queda en 3 o menos,
+            #    reponer hasta 5 unidades desde el depósito
+            if variante.stockProducto <= 3 and variante.stockDeposito > 0:
+                cantidad_reponer = min(
+                    5,
+                    variante.stockDeposito
+                )
+                variante.stockProducto += cantidad_reponer
+                variante.stockDeposito -= cantidad_reponer
+            # 3. Guardar los nuevos valores
             variante.save(
-                update_fields=["stockProducto"]
+                update_fields=[
+                    "stockProducto",
+                    "stockDeposito"
+                ]
             )
     pedido.delete()
     return True

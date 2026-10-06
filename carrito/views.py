@@ -1,3 +1,5 @@
+from urllib import request
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from decimal import Decimal
@@ -9,6 +11,8 @@ from pedidos.views import crear_pedido, agregar_detalle
 from administracion.models import Administrador
 
 from administracion.models import Administrador, Notificacion
+
+from django.db import transaction
 
 def actualizar_carrito(carrito):
 
@@ -103,13 +107,13 @@ def carrito(request):
         carrito.save()
 
         for item in productos_carrito:
-
             agregar_detalle(
                 pedido_id=pedido.idPedido,
                 producto_id=item.producto.idProducto,
                 cantidad=item.cantidad,
-                variante_id=item.variante.idVariante if item.variante else None
-            )
+                variante_id=item.variante.idVariante if item.variante else None,
+                stock_reservado=True
+        )
 
         Notificacion.objects.create(
             administrador=administrador,
@@ -154,11 +158,11 @@ def carrito(request):
         }
     )
 
-
-
-
 def agregar_al_carrito(request, idProducto):
 
+    print("AGREGAR AL CARRITO EJECUTADO")
+    print("METODO:", request.method)
+    print("ID PRODUCTO:", idProducto)
 
     if request.method == "POST":
 
@@ -170,12 +174,15 @@ def agregar_al_carrito(request, idProducto):
 
         idVariante = request.POST.get("idVariante")
 
+        print("ID VARIANTE:", idVariante)
+
         variante = get_object_or_404(
             ProductoVariante,
             idVariante=idVariante,
             producto=producto
         )
 
+        # Verificar que haya stock disponible
         if variante.stockProducto <= 0:
             return redirect(
                 f"/productos/{producto.idProducto}/?carrito=abierto"
@@ -184,18 +191,14 @@ def agregar_al_carrito(request, idProducto):
         idCarrito = request.session.get("idCarrito")
 
         if idCarrito:
-
             carrito = Carrito.objects.filter(
                 idCarrito=idCarrito,
                 estado=True
             ).first()
-
         else:
-
             carrito = None
 
         if not carrito:
-
             carrito = Carrito.objects.create(
                 cliente=None,
                 fechaCreacion=timezone.now(),
@@ -205,7 +208,6 @@ def agregar_al_carrito(request, idProducto):
 
             request.session["idCarrito"] = carrito.idCarrito
 
-
         carrito_producto = CarritoProducto.objects.filter(
             carrito=carrito,
             producto=producto,
@@ -213,18 +215,34 @@ def agregar_al_carrito(request, idProducto):
             estado=True
         ).first()
 
-        if carrito_producto:
+        # Reservar una unidad de stock
+        variante.stockProducto -= 1
 
-            if carrito_producto.cantidad >= variante.stockProducto:
-                return redirect(
-                    f"/productos/{producto.idProducto}/?carrito=abierto"
-                )
+        # Reposición automática
+        if variante.stockProducto <= 3 and variante.stockDeposito > 0:
+
+            cantidad_reponer = min(
+                5,
+                variante.stockDeposito
+            )
+
+            variante.stockProducto += cantidad_reponer
+            variante.stockDeposito -= cantidad_reponer
+
+        variante.save(
+            update_fields=[
+                "stockProducto",
+                "stockDeposito"
+            ]
+        )
+
+        if carrito_producto:
 
             carrito_producto.cantidad += 1
 
             carrito_producto.subTotal = (
-                carrito_producto.cantidad *
-                carrito_producto.precioUnitario
+                carrito_producto.cantidad
+                * carrito_producto.precioUnitario
             )
 
             carrito_producto.save()
@@ -245,16 +263,55 @@ def agregar_al_carrito(request, idProducto):
 
         actualizar_carrito(carrito)
 
-
-
-
         return redirect(
-            f"/productos/{producto.idProducto}/?carrito=abierto"    
+            f"/productos/{producto.idProducto}/?carrito=abierto"
         )
 
     return redirect(
-    f"/productos/{producto.idProducto}/?carrito=abierto"
+        f"/productos/{idProducto}/?carrito=abierto"
     )
+
+@transaction.atomic
+def expirar_carritos():
+    ahora = timezone.now()
+
+    carritos_expirados = Carrito.objects.filter(
+        estado=True,
+        fechaExpiracion__lt=ahora
+    )
+
+    for carrito in carritos_expirados:
+
+        productos = CarritoProducto.objects.filter(
+            carrito=carrito,
+            estado=True
+        )
+
+        for item in productos:
+
+            if item.variante:
+
+                variante = ProductoVariante.objects.select_for_update().get(
+                    idVariante=item.variante_id
+                )
+
+                variante.stockProducto += item.cantidad
+
+                variante.save(
+                    update_fields=["stockProducto"]
+                )
+
+            item.estado = False
+
+            item.save(
+                update_fields=["estado"]
+            )
+
+        carrito.estado = False
+
+        carrito.save(
+            update_fields=["estado"]
+        )
 
 def modificar_cantidad(request, idCarritoProducto, accion):
 

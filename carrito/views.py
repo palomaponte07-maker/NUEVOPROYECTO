@@ -271,6 +271,34 @@ def agregar_al_carrito(request, idProducto):
         f"/productos/{idProducto}/?carrito=abierto"
     )
 
+
+def modificar_cantidad(request, idCarritoProducto, accion):
+
+    carrito_producto = get_object_or_404(
+        CarritoProducto,
+        idCarritoProducto=idCarritoProducto,
+        estado=True
+    )
+
+    if accion == "sumar":
+        carrito_producto.cantidad += 1
+
+    elif accion == "restar":
+        if carrito_producto.cantidad > 1:
+            carrito_producto.cantidad -= 1
+
+    carrito_producto.subTotal = (
+        carrito_producto.cantidad *
+        carrito_producto.precioUnitario
+    )
+
+    carrito_producto.save()
+
+    return redirect("carrito")
+
+
+
+
 @transaction.atomic
 def expirar_carritos():
     ahora = timezone.now()
@@ -313,41 +341,7 @@ def expirar_carritos():
             update_fields=["estado"]
         )
 
-def modificar_cantidad(request, idCarritoProducto, accion):
-
-    carrito_producto = get_object_or_404(
-        CarritoProducto,
-        idCarritoProducto=idCarritoProducto,
-        estado=True
-    )
-
-    if accion == "sumar":
-
-        stock = carrito_producto.variante.stockProducto
-
-        if carrito_producto.cantidad >= stock:
-            return redirect(
-                f"/productos/{carrito_producto.producto.idProducto}/?carrito=abierto"
-            )
-
-        carrito_producto.cantidad += 1
-
-    elif accion == "restar":
-        if carrito_producto.cantidad > 1:
-            carrito_producto.cantidad -= 1
-
-    carrito_producto.subTotal = (
-        carrito_producto.cantidad *
-        carrito_producto.precioUnitario
-    )
-
-    carrito_producto.save()
-    actualizar_carrito(carrito_producto.carrito)
-
-    return redirect(
-        f"/productos/{carrito_producto.producto.idProducto}/?carrito=abierto"
-    )
-
+@transaction.atomic
 def eliminar_del_carrito(request, idCarritoProducto):
 
     carrito_producto = get_object_or_404(
@@ -356,11 +350,26 @@ def eliminar_del_carrito(request, idCarritoProducto):
         estado=True
     )
 
+    variante = carrito_producto.variante
+
+    # Devolver al stock las unidades reservadas
+    if variante:
+        variante.stockProducto += carrito_producto.cantidad
+
+        variante.save(
+            update_fields=["stockProducto"]
+        )
+
+    # Marcar el producto del carrito como inactivo
     carrito_producto.estado = False
-    carrito_producto.save()
+    carrito_producto.save(
+        update_fields=["estado"]
+    )
+
+    actualizar_carrito(carrito_producto.carrito)
 
     return redirect(
-    f"/productos/{carrito_producto.producto.idProducto}/?carrito=abierto"
+        f"/productos/{carrito_producto.producto.idProducto}/?carrito=abierto"
     )
 
 

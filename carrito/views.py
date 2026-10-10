@@ -296,9 +296,6 @@ def modificar_cantidad(request, idCarritoProducto, accion):
 
     return redirect("carrito")
 
-
-
-
 @transaction.atomic
 def expirar_carritos():
     ahora = timezone.now()

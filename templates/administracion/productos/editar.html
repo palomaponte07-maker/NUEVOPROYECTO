@@ -1,70 +1,185 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Producto</title>
-    <link rel="stylesheet"
-          href="{% static 'administracion/css/productos.css' %}">
+    <title>Editar producto</title>
+    <link rel="stylesheet" href="{% static 'administracion/css/productos.css' %}">
 </head>
 <body>
-    <header class="header-productos">
-        <div class="logo-productos">
-          <span>Olivia</span>
+<div class="productos-editar">
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="mensaje {{ message.tags }}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="producto-imagen-editar">
+            {% with imagen=producto.imagen_set.first %}
+                {% if imagen and imagen.imagen %}
+                    <img src="{{ imagen.imagen.url }}"
+                         alt="{{ producto.nombre }}">
+                {% else %}
+                    <span>Sin imagen</span>
+                {% endif %}
+            {% endwith %}
         </div>
-        <h1>Editar Producto</h1>
-        <a href="#" class="btn-volver-producto">↩</a>
-    </header>
-    <main class="editar-contenedor">
-        <div class="productos-editar">
-            <div class="editar-header">
-                <div>Productos:</div>
-                <div>Descripción</div>
-                <div>Precio</div>
-                <div>Stock</div>
-                <div>Color</div>
+
+        <div class="editar-formulario">
+            <div class="campo-editar">
+                <label for="nombre">Nombre</label>
+                <input id="nombre" name="nombre"
+                       value="{{ producto.nombre }}" required>
             </div>
 
-            <div class="editar-row">
-                <div class="producto-imagen-editar">
-                    <img src="{% static 'administracion/img/jean-gase.jpg' %}"
-                         alt="jean Gase">
-                </div>
-                <div class="producto-dato">
-                    Jean Gase
-                </div>
-                <div class="producto-dato">
-                    $40.900
-                </div>
-                <div class="producto-dato">
-                    13
-                </div>
-                <div class="producto-dato">
-                    Celeste
-                </div>
+            <div class="campo-editar">
+                <label for="categoria">Categoría</label>
+                <select id="categoria" name="categoria" required>
+                    {% for categoria in categorias %}
+                        <option value="{{ categoria.idCategoria }}"
+                            {% if categoria.idCategoria == producto.categoria.idCategoria %}
+                                selected
+                            {% endif %}>
+                            {{ categoria.nombreCategoria }}
+                        </option>
+                    {% endfor %}
+                </select>
             </div>
 
-            <div class="editar-row">
-                <div class="producto-imagen-editar">
-                    <img src="{% static 'administracion/img/remera-emma.jpg' %}"
-                         alt="Remera Emma">
-                </div>
-                <div class="producto-dato">
-                    Remera Emma
-                </div>
-                <div class="producto-dato">
-                    $9.000
-                </div>
-                <div class="producto-dato">
-                    4
-                </div>
-                <div class="producto-dato">
-                    Rojo y Blanco
-                </div>
+            <div class="campo-editar">
+                <label for="precioCosto">Precio de costo</label>
+                <input id="precioCosto" name="precioCosto"
+                       type="number" min="0" step="0.01"
+                       value="{{ producto.precioCosto }}" required>
             </div>
+
+            <div class="campo-editar">
+                <label for="precioVenta">Precio de venta</label>
+                
+            <input id="precioVenta" name="precioVenta"
+                type="number" min="0" step="0.01"
+                value="{{ producto.precioVenta }}"
+                readonly>
+
+            </div>
+
+            <div class="campo-editar">
+                <label for="IVA">IVA (%)</label>
+                <input id="IVA" name="IVA" type="number"
+                       min="0" step="0.01"
+                       value="{{ producto.IVA }}" required>
+            </div>
+
+            <div class="campo-editar">
+                <label for="porcentajeDescuento">Descuento (%)</label>
+                <input id="porcentajeDescuento"
+                       name="porcentajeDescuento"
+                       type="number" min="0" max="100" step="0.01"
+                       value="{{ producto.porcentajeDescuento }}" required>
+            </div>
+
+            <div class="campo-editar">
+                <label for="fechaInicioDescuento">Inicio del descuento</label>
+                <input id="fechaInicioDescuento"
+                       name="fechaInicioDescuento"
+                       type="datetime-local"
+                       value="{{ producto.fechaInicioDescuento|date:'Y-m-d\TH:i' }}">
+            </div>
+
+            <div class="campo-editar">
+                <label for="fechaFinDescuento">Fin del descuento</label>
+                <input id="fechaFinDescuento"
+                       name="fechaFinDescuento"
+                       type="datetime-local"
+                       value="{{ producto.fechaFinDescuento|date:'Y-m-d\TH:i' }}">
+            </div>
+
+            <div class="campo-editar">
+                <label for="descripcion">Descripción</label>
+                <textarea id="descripcion" name="descripcion"
+                          required>{{ producto.descripcion }}</textarea>
+            </div>
+
+            <h2>Variantes existentes</h2>
+
+            {% for variante in variantes %}
+                <fieldset class="variante-editar">
+                    <legend>Variante {{ forloop.counter }}</legend>
+
+                    <div class="campo-editar">
+                        <label for="color_{{ variante.idVariante }}">Color</label>
+                        <input id="color_{{ variante.idVariante }}"
+                               name="color_{{ variante.idVariante }}"
+                               value="{{ variante.color }}" required>
+                    </div>
+
+                    <div class="campo-editar">
+                        <label for="talle_{{ variante.idVariante }}">Talle</label>
+                        <input id="talle_{{ variante.idVariante }}"
+                               name="talle_{{ variante.idVariante }}"
+                               value="{{ variante.talle }}" required>
+                    </div>
+
+                    <div class="campo-editar">
+                        <label for="stockProducto_{{ variante.idVariante }}">Stock de producto</label>
+                        <input id="stockProducto_{{ variante.idVariante }}"
+                               name="stockProducto_{{ variante.idVariante }}"
+                               type="number" min="0"
+                               value="{{ variante.stockProducto }}" required>
+                    </div>
+
+                    <div class="campo-editar">
+                        <label for="stockDeposito_{{ variante.idVariante }}">Stock de depósito</label>
+                        <input id="stockDeposito_{{ variante.idVariante }}"
+                               name="stockDeposito_{{ variante.idVariante }}"
+                               type="number" min="0"
+                               value="{{ variante.stockDeposito }}" required>
+                    </div>
+                </fieldset>
+            {% empty %}
+                <p>Este producto no tiene variantes.</p>
+            {% endfor %}
+
+            <button type="submit" class="btn-guardar">
+                Guardar cambios
+            </button>
         </div>
-    </main>
+    </form>
+</div>
+
+<script>
+    const precioCosto = document.getElementById('precioCosto');
+    const iva = document.getElementById('IVA');
+    const precioVenta = document.getElementById('precioVenta');
+
+    function calcularPrecioVenta() {
+        const costo = parseFloat(precioCosto.value);
+        const porcentajeIVA = parseFloat(iva.value);
+
+        if (
+            precioCosto.value.trim() === '' ||
+            iva.value.trim() === '' ||
+            !Number.isFinite(costo) ||
+            !Number.isFinite(porcentajeIVA)
+        ) {
+            precioVenta.value = '';
+            return;
+        }
+
+        const venta = costo + (costo * porcentajeIVA / 100);
+        precioVenta.value = venta.toFixed(2);
+    }
+
+    precioCosto.addEventListener('input', calcularPrecioVenta);
+    iva.addEventListener('input', calcularPrecioVenta);
+</script>
 </body>
 </html>
+

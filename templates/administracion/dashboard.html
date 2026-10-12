@@ -168,9 +168,11 @@
                     </div>
                     
                       <div class="acciones">
-                         <button class="btn-icon editar" title="Editar">
-                             ✎
-                         </button>
+                         <a href="{% url 'editar_producto' producto.idProducto %}"
+                                class="btn-icon editar"
+                                title="Editar">
+                                ✎
+                            </a>
                          <button class="btn-icon eliminar" title="Eliminar">
                               🗑︎
                          </button> 

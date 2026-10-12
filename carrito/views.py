@@ -294,7 +294,9 @@ def modificar_cantidad(request, idCarritoProducto, accion):
 
     carrito_producto.save()
 
-    return redirect("carrito")
+    return redirect(
+    f"/productos/{carrito_producto.producto.idProducto}/?carrito=abierto"
+)
 
 @transaction.atomic
 def expirar_carritos():

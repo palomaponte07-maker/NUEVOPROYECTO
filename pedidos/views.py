@@ -84,7 +84,7 @@ def agregar_detalle(
     producto_id,
     cantidad,
     variante_id=None,
-    stock_reservado=False
+    stock_reservado=True
 ):
     pedido = Pedido.objects.get(pk=pedido_id)
     producto = Producto.objects.get(pk=producto_id)

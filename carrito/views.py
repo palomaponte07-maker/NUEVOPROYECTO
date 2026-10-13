@@ -272,31 +272,68 @@ def agregar_al_carrito(request, idProducto):
     )
 
 
-def modificar_cantidad(request, idCarritoProducto, accion):
 
+@transaction.atomic
+def modificar_cantidad(request, idCarritoProducto, accion):
+    
     carrito_producto = get_object_or_404(
-        CarritoProducto,
+        CarritoProducto.objects.select_for_update(),
         idCarritoProducto=idCarritoProducto,
         estado=True
     )
 
+    # Comprobar que el artículo pertenece al carrito de esta sesión
+    idCarrito = request.session.get("idCarrito")
+
+    if carrito_producto.carrito_id != idCarrito:
+        return redirect("carrito")
+
+    variante = carrito_producto.variante
+
+    if not variante:
+        return redirect("carrito")
+
+    variante = ProductoVariante.objects.select_for_update().get(
+        idVariante=variante.idVariante
+    )
+
     if accion == "sumar":
+        # No permitir reservar una unidad que no está disponible
+        if variante.stockProducto <= 0:
+            return redirect(
+                f"/productos/{carrito_producto.producto.idProducto}/?carrito=abierto&error=sin_stock"
+            )
+
+        # Reservar una unidad del stock disponible
+        variante.stockProducto -= 1
+        variante.save(update_fields=["stockProducto"])
+
         carrito_producto.cantidad += 1
 
     elif accion == "restar":
         if carrito_producto.cantidad > 1:
+            # Devolver una unidad al stock disponible
+            variante.stockProducto += 1
+            variante.save(update_fields=["stockProducto"])
+
             carrito_producto.cantidad -= 1
+
+    else:
+        return redirect("carrito")
 
     carrito_producto.subTotal = (
         carrito_producto.cantidad *
         carrito_producto.precioUnitario
     )
 
-    carrito_producto.save()
+    carrito_producto.save(update_fields=["cantidad", "subTotal"])
+
+    actualizar_carrito(carrito_producto.carrito)
 
     return redirect(
-    f"/productos/{carrito_producto.producto.idProducto}/?carrito=abierto"
-)
+        f"/productos/{carrito_producto.producto.idProducto}/?carrito=abierto"
+    )
+
 
 @transaction.atomic
 def expirar_carritos():
@@ -344,7 +381,7 @@ def expirar_carritos():
 def eliminar_del_carrito(request, idCarritoProducto):
 
     carrito_producto = get_object_or_404(
-        CarritoProducto,
+        CarritoProducto.objects.select_for_update(),
         idCarritoProducto=idCarritoProducto,
         estado=True
     )

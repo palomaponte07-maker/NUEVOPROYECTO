@@ -20,6 +20,10 @@ from django.db import transaction
 from django.utils import timezone
 from django.contrib.messages import get_messages
 
+from django.views.decorators.http import require_POST
+from django.db.models.deletion import ProtectedError
+from pedidos.models import DetallePedido
+
 def dashboard(request):
     productos = Producto.objects.all().order_by('-idProducto')[:10]
 
@@ -300,6 +304,55 @@ def editar_producto(request, idProducto):
         }
     )
 
+
+@require_POST
+def eliminar_producto(request, idProducto):
+    producto = get_object_or_404(
+        Producto,
+        idProducto=idProducto
+    )
+
+    # Buscar los pedidos que contienen este producto
+    detalles = DetallePedido.objects.filter(
+        producto_id=idProducto
+    ).select_related('pedido')
+
+    if detalles.exists():
+        numeros_pedido = list(
+            detalles.values_list(
+                'pedido__numeroPedido',
+                flat=True
+            ).distinct()
+        )
+
+        pedidos_texto = ', '.join(numeros_pedido)
+
+        messages.error(
+            request,
+            f"No se puede eliminar '{producto.nombre}' porque "
+            f"está asociado a los siguientes pedidos: {pedidos_texto}. "
+            "Podés desactivar el producto si ya no lo comercializás."
+        )
+
+        return redirect('dashboard')
+
+    try:
+        nombre_producto = producto.nombre
+        producto.delete()
+
+        messages.success(
+            request,
+            f"El producto '{nombre_producto}' se eliminó correctamente."
+        )
+
+    except ProtectedError:
+        messages.error(
+            request,
+            "No se puede eliminar este producto porque tiene "
+            "información relacionada que debe conservarse."
+        )
+
+    return redirect('dashboard')
 
 
 def cambiar_estado_producto(request, id):

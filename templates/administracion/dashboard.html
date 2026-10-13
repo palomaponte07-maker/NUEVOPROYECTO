@@ -173,9 +173,17 @@
                                 title="Editar">
                                 ✎
                             </a>
-                         <button class="btn-icon eliminar" title="Eliminar">
-                              🗑︎
-                         </button> 
+                         <form method="POST"
+                            action="{% url 'eliminar_producto' producto.idProducto %}"
+                            onsubmit="return confirm('¿Estás segura de que querés eliminar este producto?');">
+                            {% csrf_token %}
+                            <button type="submit"
+                                    class="btn-icon eliminar"
+                                    title="Eliminar"
+                                    aria-label="Eliminar producto">
+                                            🗑︎
+                            </button>
+                        </form> 
                         </div>
 
                     </div>

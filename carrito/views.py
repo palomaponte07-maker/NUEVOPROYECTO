@@ -45,6 +45,8 @@ def actualizar_carrito(carrito):
 
 def carrito(request):
 
+    expirar_carritos()
+    
     idCarrito = request.session.get("idCarrito")
 
     carrito = None

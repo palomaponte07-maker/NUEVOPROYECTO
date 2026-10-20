@@ -1,0 +1,59 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todos los pedidos - Olivia</title>
+    <link rel="stylesheet" href="{% static 'administracion/css/dashboard.css' %}">
+</head>
+<body>
+
+    <h1>Todos los pedidos</h1>
+
+    <a href="{% url 'dashboard' %}">← Volver al dashboard</a>
+
+    <div class="tabla-pedidos">
+        <div class="pedido-header">
+            <div>Num. pedido</div>
+            <div>Nombre</div>
+            <div>Apellido</div>
+            <div>Producto</div>
+            <div>Fecha</div>
+            <div>Estado</div>
+            <div>Acción</div>
+        </div>
+
+        {% for pedido in pedidos %}
+            <div class="pedido-row">
+                <div>{{ pedido.numeroPedido }}</div>
+                <div>{{ pedido.cliente.nombre }}</div>
+                <div>{{ pedido.cliente.apellido }}</div>
+
+                <div>
+                    {% for detalle in pedido.detallepedido_set.all %}
+                        {{ detalle.producto.nombre }}{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        Sin productos
+                    {% endfor %}
+                </div>
+
+                <div>{{ pedido.fecha }}</div>
+                <div>{{ pedido.estadoPago }}</div>
+
+                <div>
+                    <a href="{% url 'detalle_pedido' pedido.idPedido %}" class="btn-detalle">
+                        Ver detalle
+                    </a>
+                </div>
+            </div>
+        {% empty %}
+            <div class="pedido-row">
+                <div>No hay pedidos registrados.</div>
+            </div>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

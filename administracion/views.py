@@ -47,9 +47,44 @@ def dashboard(request):
         }
     )
 
+
+def todos_los_pedidos(request):
+    pedidos = Pedido.objects.select_related(
+        'cliente'
+    ).prefetch_related(
+        'detallepedido_set__producto'
+    ).order_by('-idPedido')
+
+    return render(
+        request,
+        'administracion/todos_los_pedidos.html',
+        {
+            'pedidos': pedidos,
+        }
+    )
+
+
+def todos_los_productos(request):
+    productos = Producto.objects.all().order_by('-idProducto')
+
+    for producto in productos:
+        producto.precio_mostrar = (
+            f"{producto.precioVenta:,.2f}"
+            .replace(",", "X")
+            .replace(".", ",")
+            .replace("X", ".")
+        )
+
+    return render(
+        request,
+        'administracion/productos.html',
+        {
+            'productos': productos,
+        }
+    )
+
 def notificaciones(request):
 
-    # Variantes que actualmente tienen stock 0
     variantes_sin_stock = (
         ProductoVariante.objects
         .select_related('producto')
@@ -353,7 +388,6 @@ def eliminar_producto(request, idProducto):
         )
 
     return redirect('dashboard')
-
 
 def cambiar_estado_producto(request, id):
     producto = get_object_or_404(

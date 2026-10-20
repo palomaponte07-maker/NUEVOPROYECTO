@@ -1,7 +1,7 @@
 from decimal import Decimal
 from django.db import transaction 
 from django.core.exceptions import ValidationError
-from time import timezone
+from django.utils import timezone
 
 from productos.models import Producto, ProductoVariante
 from clientes.models import Cliente

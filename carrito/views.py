@@ -4,6 +4,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from decimal import Decimal
 
+from pedidos.models import Pedido
+
 from .models import Carrito, CarritoProducto
 from productos.models import Producto, ProductoVariante
 from clientes.models import Cliente
@@ -91,13 +93,16 @@ def carrito(request):
 
         carrito.cliente = cliente
         
-        if not carrito.numeroPedido:
-            carrito.numeroPedido = carrito.idCarrito
+        ultimo_pedido = Pedido.objects.order_by('-idPedido').first()
 
+        if ultimo_pedido:
+            nuevo_numero = int(ultimo_pedido.numeroPedido) + 1
+        else:
+            nuevo_numero = 1
         pedido = crear_pedido(
         cliente_id=cliente.idCliente,
         administrador_id=administrador.idAdministrador,
-        numero_pedido=carrito.numeroPedido or str(carrito.idCarrito),
+        numero_pedido=str(nuevo_numero),
         fecha=timezone.now().date(),
         estado_pago="Pendiente",
         metodo_pago=metodo_pago

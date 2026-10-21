@@ -21,9 +21,10 @@
 </header>
 
 <main class="contenedor">
-    <form method="POST" 
-          enctype="multipart/form-data"
-          class="formulario-producto">
+    <form method="POST"
+      enctype="multipart/form-data"
+      class="formulario-producto"
+      lang="es">
 
         {% csrf_token %}
         {% if form.errors %}
@@ -205,6 +206,9 @@
                 <label for="precioCosto">
                     Precio (costo)
                 </label>
+                <small class="ayuda-campo">
+                    Ingrese solo números. Para decimales, use punto (.)
+                </small>
                 <input
                     type="number"
                     id="precioCosto"
@@ -287,6 +291,9 @@
                 <label for="porcentajeDescuento">
                     Porcentaje de descuento
                 </label>
+                <small class="ayuda-campo">
+                    Ingrese solo el número, sin el símbolo %. Ejemplo: 15 para un 15% de descuento.
+                </small>
                 <input
                     type="number"
                     id="porcentajeDescuento"
@@ -372,7 +379,10 @@ function calcularPrecio() {
         costo + (costo * porcentajeIVA / 100);
 
     precioVentaVisual.value =
-        "$" + precioFinal.toFixed(2);
+    "$" + precioFinal.toLocaleString("es-AR", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
 
 
     precioVenta.value =
@@ -494,7 +504,29 @@ btnAgregarVariante.addEventListener(
 
     }
 );
+const formulario = document.querySelector(".formulario-producto");
 
+formulario.querySelectorAll("input, textarea, select").forEach(campo => {
+    campo.addEventListener("invalid", function () {
+        if (campo.validity.valueMissing) {
+            campo.setCustomValidity("Este campo es obligatorio.");
+        } else if (campo.validity.rangeUnderflow) {
+            campo.setCustomValidity("El valor no puede ser menor que " + campo.min + ".");
+        } else if (campo.validity.rangeOverflow) {
+            campo.setCustomValidity("El valor no puede ser mayor que " + campo.max + ".");
+        } else if (campo.validity.stepMismatch) {
+            campo.setCustomValidity("Ingrese un valor válido.");
+        }
+    });
+
+    campo.addEventListener("input", function () {
+        campo.setCustomValidity("");
+    });
+
+    campo.addEventListener("change", function () {
+        campo.setCustomValidity("");
+    });
+});
 </script>
 </body>
 </html>

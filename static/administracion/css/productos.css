@@ -609,4 +609,25 @@ body {
     .variante-editar {
         grid-template-columns: 1fr;
     }
+
+/* Ocultar las flechas de los campos numéricos */
+.formulario-producto input[type="number"]::-webkit-inner-spin-button,
+.formulario-producto input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.formulario-producto input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+/* Texto de ayuda pequeño y gris */
+.ayuda-campo {
+    display: block;
+    margin-top: 5px;
+    color: #888;
+    font-size: 12px;
+    font-weight: normal;
+}
 }

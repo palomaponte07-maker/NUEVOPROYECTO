@@ -70,7 +70,7 @@
                 </div>
 
                 <div>
-                    <strong>Dirección de envío:</strong>
+                    <strong>Dirección:</strong>
                     {{ pedido.cliente.calle }}
                     {{ pedido.cliente.numCalle }}
                 </div>
@@ -118,7 +118,6 @@
         </div>
 
         <div>
-            <strong>Productos:</strong>
             {% for detalle in detalles %}
 
                 <div class="detalle-producto">
@@ -210,9 +209,11 @@
 
         <div class="acciones-pedido">
 
-            <a href="#" class="btn-avisar">
-                ✉
-                Avisar a la clienta por Gmail
+            <a href="https://wa.me/{{ pedido.cliente.telefono }}"
+                class="btn-avisar"
+                target="_blank"
+                rel="noopener noreferrer">
+                    Contactar por WhatsApp
             </a>
 
         </div>

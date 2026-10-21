@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todos los productos - Olivia</title>
+
+    <link rel="stylesheet" href="{% static 'administracion/css/dashboard.css' %}">
+</head>
+<body>
+
+    <main class="container">
+
+        <section class="seccion productos-section">
+
+            <div class="section-header">
+                <h2>TODOS LOS PRODUCTOS</h2>
+            </div>
+
+            <div class="tabla-productos">
+
+                <div class="producto-header">
+                    <div>Productos</div>
+                    <div>Descripción</div>
+                    <div>Precio</div>
+                    <div>Descuento</div>
+                    <div>Talles</div>
+                    <div>Color</div>
+                    <div>Stock Producto</div>
+                    <div>Stock Depósito</div>
+                    <div>Estado</div>
+                    <div>Acciones</div>
+                </div>
+
+                {% for producto in productos %}
+
+                <div class="producto-row">
+
+                    <div class="producto-info">
+                        {% with producto.imagen_set.first as imagen %}
+                            {% if imagen and imagen.imagen %}
+                                <img src="{{ imagen.imagen.url }}" alt="{{ producto.nombre }}">
+                            {% else %}
+                                <div class="sin-imagen">Sin imagen</div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+
+                    <div>{{ producto.descripcion }}</div>
+
+                    <div>${{ producto.precio_mostrar }}</div>
+
+                    <div>{{ producto.porcentajeDescuento }}%</div>
+
+                    <div class="variantes-columna">
+                        {% for variante in producto.variantes.all %}
+                            <div class="variante-dato">{{ variante.talle }}</div>
+                        {% empty %}
+                            <div class="variante-dato">Sin talle</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="variantes-columna">
+                        {% for variante in producto.variantes.all %}
+                            <div class="variante-dato">{{ variante.color }}</div>
+                        {% empty %}
+                            <div class="variante-dato">Sin color</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="variantes-columna">
+                        {% for variante in producto.variantes.all %}
+                            <div class="variante-dato">{{ variante.stockProducto }}</div>
+                        {% empty %}
+                            <div class="variante-dato">0</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="variantes-columna">
+                        {% for variante in producto.variantes.all %}
+                            <div class="variante-dato">{{ variante.stockDeposito }}</div>
+                        {% empty %}
+                            <div class="variante-dato">0</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="estado-producto">
+                        {% if producto.estado %}
+                            <span class="estado activo">Activo</span>
+
+                            <form method="POST" action="{% url 'cambiar_estado_producto' producto.idProducto %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-estado desactivar">
+                                    Desactivar
+                                </button>
+                            </form>
+                        {% else %}
+                            <span class="estado inactivo">Inactivo</span>
+
+                            <form method="POST" action="{% url 'cambiar_estado_producto' producto.idProducto %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-estado activar">
+                                    Activar
+                                </button>
+                            </form>
+                        {% endif %}
+                    </div>
+
+                    <div class="acciones">
+                        <a href="{% url 'editar_producto' producto.idProducto %}"
+                           class="btn-icon editar"
+                           title="Editar">✎</a>
+
+                        <form method="POST"
+                              action="{% url 'eliminar_producto' producto.idProducto %}"
+                              onsubmit="return confirm('¿Estás segura de que querés eliminar este producto?');">
+                            {% csrf_token %}
+                            <button type="submit"
+                                    class="btn-icon eliminar"
+                                    title="Eliminar"
+                                    aria-label="Eliminar producto">🗑︎</button>
+                        </form>
+                    </div>
+
+                </div>
+
+                {% empty %}
+                    <div class="producto-row">
+                        <div>No hay productos registrados.</div>
+                    </div>
+                {% endfor %}
+
+            </div>
+
+            <div class="ver-pedidos">
+                <a href="{% url 'dashboard' %}">
+                    ← Volver
+                </a>
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+</html>

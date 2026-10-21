@@ -77,7 +77,7 @@ def todos_los_productos(request):
 
     return render(
         request,
-        'administracion/productos.html',
+        'administracion/todos_los_productos.html',
         {
             'productos': productos,
         }

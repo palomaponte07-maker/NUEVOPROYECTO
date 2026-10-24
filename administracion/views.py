@@ -92,7 +92,7 @@ def notificaciones(request):
         .order_by('producto__nombre')
     )
 
-    # Últimos 5 pedidos registrados
+    
     pedidos_recientes = (
         Pedido.objects
         .select_related('cliente')
@@ -144,10 +144,12 @@ def agregar_producto(request):
                 (producto.precioCosto * producto.IVA / 100)
             )
             producto.save()
+
             colores = request.POST.getlist('color[]') 
             talles = request.POST.getlist('talle[]') 
             stocks_producto = request.POST.getlist('stockProducto[]') 
             stocks_deposito = request.POST.getlist('stockDeposito[]') 
+            
             for color, talle, stock_producto, stock_deposito in zip( 
                 colores, 
                 talles, 
@@ -347,7 +349,7 @@ def eliminar_producto(request, idProducto):
         idProducto=idProducto
     )
 
-    # Buscar los pedidos que contienen este producto
+
     detalles = DetallePedido.objects.filter(
         producto_id=idProducto
     ).select_related('pedido')

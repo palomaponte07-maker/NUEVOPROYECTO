@@ -222,10 +222,10 @@ def agregar_al_carrito(request, idProducto):
             estado=True
         ).first()
 
-        # Reservar una unidad de stock
+
         variante.stockProducto -= 1
 
-        # Reposición automática
+
         if variante.stockProducto <= 3 and variante.stockDeposito > 0:
 
             cantidad_reponer = min(
@@ -305,13 +305,13 @@ def modificar_cantidad(request, idCarritoProducto, accion):
     )
 
     if accion == "sumar":
-        # No permitir reservar una unidad que no está disponible
+     
         if variante.stockProducto <= 0:
             return redirect(
                 f"/productos/{carrito_producto.producto.idProducto}/?carrito=abierto&error=sin_stock"
             )
 
-        # Reservar una unidad del stock disponible
+        
         variante.stockProducto -= 1
         variante.save(update_fields=["stockProducto"])
 
@@ -395,7 +395,7 @@ def eliminar_del_carrito(request, idCarritoProducto):
 
     variante = carrito_producto.variante
 
-    # Devolver al stock las unidades reservadas
+
     if variante:
         variante.stockProducto += carrito_producto.cantidad
 
@@ -403,7 +403,7 @@ def eliminar_del_carrito(request, idCarritoProducto):
             update_fields=["stockProducto"]
         )
 
-    # Marcar el producto del carrito como inactivo
+
     carrito_producto.estado = False
     carrito_producto.save(
         update_fields=["estado"]

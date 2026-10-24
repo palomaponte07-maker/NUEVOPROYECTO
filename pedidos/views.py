@@ -124,13 +124,13 @@ def agregar_detalle(
     # Solo descontamos stock si todavía NO fue reservado
     if variante is not None and not stock_reservado:
 
-        # Guardamos cuánto había en depósito antes de la reposición
+
         stock_deposito_anterior = variante.stockDeposito
 
-        # Descontamos la venta del stock disponible
+
         variante.stockProducto -= cantidad
 
-        # Reposición automática
+
         if variante.stockProducto <= 3 and variante.stockDeposito > 0:
 
             cantidad_reponer = min(
@@ -148,7 +148,8 @@ def agregar_detalle(
             ]
         )
 
-        # Avisamos si el depósito pasó de tener stock a quedar en 0
+
+        
         if (
             stock_deposito_anterior > 0
             and variante.stockDeposito == 0

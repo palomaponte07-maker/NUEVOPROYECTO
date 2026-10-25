@@ -307,6 +307,7 @@ def editar_producto(request, idProducto):
                     f'color_{variante.idVariante}', ''
                 ).strip()
 
+                #actualiza el talle
                 variante.talle = request.POST.get(
                     f'talle_{variante.idVariante}', ''
                 ).strip()
@@ -340,10 +341,7 @@ def editar_producto(request, idProducto):
             )
             return redirect('editar_producto', idProducto=producto.idProducto)
 
-            return redirect(
-                'editar_producto',
-                idProducto=producto.idProducto
-            )
+
 
         except (
             ValidationError,

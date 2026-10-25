@@ -141,15 +141,14 @@ def agregar_detalle(
             variante.stockProducto += cantidad_reponer
             variante.stockDeposito -= cantidad_reponer
 
+        # guarda los cambios en la BD
         variante.save(
-            update_fields=[
-                "stockProducto",
-                "stockDeposito"
+            update_fields=["stockProducto","stockDeposito"
             ]
         )
 
 
-        
+        #si ya no hay stock en el depósito, se notifica al administrador
         if (
             stock_deposito_anterior > 0
             and variante.stockDeposito == 0
@@ -161,15 +160,15 @@ def agregar_detalle(
     calcular_total_pedido(pedido)
 
     return detalle
-    
+
+   
 @transaction.atomic
 def actualizar_detalle(
     detalle_id,
     nueva_cantidad
 ):
-    """Actualiza la cantidad de un detalle.
-    Ajusta el stock y recalcula el subtotal y el pedido.
-    """
+
+    
     detalle = DetallePedido.objects.select_for_update().get(
         pk=detalle_id
     )
@@ -207,13 +206,14 @@ def actualizar_detalle(
     calcular_total_pedido(detalle.pedido)
 
     return detalle
+
 @transaction.atomic
 def eliminar_detalle(detalle_id):
-    """Eliminar un detalle y devuelva el stock correspondiente."""
+
     detalle = DetallePedido.objects.select_for_update().get(
         pk=detalle_id
     )
-
+    
     pedido = detalle.pedido
     if detalle.variante:
         variante = ProductoVariante.objects.select_for_update().get(
@@ -230,23 +230,24 @@ def eliminar_detalle(detalle_id):
 
 @transaction.atomic
 def eliminar_pedido(pedido_id):
-    """Eliminar un pedido completo.
-    Devuelve al stock las cantidades de sus variante"""
+    #busca el pedidio que se queire eliminar 
     pedido = Pedido.objects.select_for_update().get(
         pk=pedido_id
     )
     detalles = DetallePedido.objects.filter(
        pedido=pedido
     )
+
+    # devuelve las cantidades al stock
     for detalle in detalles:
         if detalle.variante:
             variante = ProductoVariante.objects.select_for_update().get(
                 pk=detalle.variante_id
             )
-                        # 1. Devolver al stock de venta lo comprado
+            # 1. Devolver al stock de venta lo comprado
             variante.stockProducto += detalle.cantidad
-            # 2. Si el stock queda en 3 o menos,
-            #    reponer hasta 5 unidades desde el depósito
+          
+            # 2. Si el stock queda en 3 o menos
             if variante.stockProducto <= 3 and variante.stockDeposito > 0:
                 cantidad_reponer = min(
                     5,
@@ -254,6 +255,7 @@ def eliminar_pedido(pedido_id):
                 )
                 variante.stockProducto += cantidad_reponer
                 variante.stockDeposito -= cantidad_reponer
+           
             # 3. Guardar los nuevos valores
             variante.save(
                 update_fields=[

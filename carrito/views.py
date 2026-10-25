@@ -182,7 +182,7 @@ def agregar_al_carrito(request, idProducto):
         idVariante = request.POST.get("idVariante")
 
         print("ID VARIANTE:", idVariante)
-
+        #verififca que hay stock 
         variante = get_object_or_404(
             ProductoVariante,
             idVariante=idVariante,
@@ -223,6 +223,7 @@ def agregar_al_carrito(request, idProducto):
         ).first()
 
 
+        #repone hasta cinco unidades, sin retirar más de las que hay en depósito.
         variante.stockProducto -= 1
 
 
@@ -236,6 +237,7 @@ def agregar_al_carrito(request, idProducto):
             variante.stockProducto += cantidad_reponer
             variante.stockDeposito -= cantidad_reponer
 
+        # Guardar los cambios en la BD
         variante.save(
             update_fields=[
                 "stockProducto",
@@ -304,6 +306,8 @@ def modificar_cantidad(request, idCarritoProducto, accion):
         idVariante=variante.idVariante
     )
 
+    #Primero verifica que haya stock. 
+    # Si hay, descuenta una unidad disponible y aumenta la cantidad del carrito.
     if accion == "sumar":
      
         if variante.stockProducto <= 0:
@@ -327,7 +331,7 @@ def modificar_cantidad(request, idCarritoProducto, accion):
 
     else:
         return redirect("carrito")
-
+    #actualiza el subtotal del producto y los totales del carrito
     carrito_producto.subTotal = (
         carrito_producto.cantidad *
         carrito_producto.precioUnitario
@@ -345,7 +349,7 @@ def modificar_cantidad(request, idCarritoProducto, accion):
 @transaction.atomic
 def expirar_carritos():
     ahora = timezone.now()
-
+    # Buscar carritos activos y expirados y devolver el stock de los productos
     carritos_expirados = Carrito.objects.filter(
         estado=True,
         fechaExpiracion__lt=ahora

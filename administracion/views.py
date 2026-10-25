@@ -146,9 +146,22 @@ def agregar_producto(request):
         if form.is_valid():
 
             producto =form.save(commit=False)
-            producto.precioVenta = (
-                producto.precioCosto +
-                (producto.precioCosto * producto.IVA / 100)
+            if (
+                producto.fechaInicioDescuento
+                and producto.fechaFinDescuento
+                and producto.fechaFinDescuento < producto.fechaInicioDescuento
+                ):
+                  form.add_error(
+                        'fechaFinDescuento',
+                        'La fecha de fin no puede ser anterior '
+                        'a la fecha de inicio del descuento.'
+                    )
+
+            else:
+
+                  producto.precioVenta = (
+                        producto.precioCosto +
+                        (producto.precioCosto * producto.IVA / 100)
             )
             producto.save()
 

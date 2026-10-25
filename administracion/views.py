@@ -30,7 +30,11 @@ def dashboard(request):
     for producto in productos:
         producto.precio_mostrar = f"{producto.precioVenta:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
-    pedidos = Pedido.objects.select_related('cliente').prefetch_related('detallepedido_set__producto').order_by('-idPedido')[:10]
+    pedidos = Pedido.objects.select_related(
+        'cliente'
+        ).prefetch_related(
+            'detallepedido_set__producto'
+            ).order_by('-idPedido')[:10]
 
     notificaciones = Notificacion.objects.select_related(
         'pedido',
@@ -133,9 +137,12 @@ def detalle_pedido(request, id):
 
 def agregar_producto(request):
     if request.method == 'POST':
-
+        # el post contiene los datos escritos
+        # el files contiene archivos como imagenes
         form = ProductoForm(request.POST,request.FILES)
         print("ARCHIVOS RECIBIDOS:", request.FILES)
+
+        #valida los datos del formulario
         if form.is_valid():
 
             producto =form.save(commit=False)
@@ -145,11 +152,15 @@ def agregar_producto(request):
             )
             producto.save()
 
+            # revisa las variables del producto
             colores = request.POST.getlist('color[]') 
             talles = request.POST.getlist('talle[]') 
+            #getlist() xq puede haber varios valores con el mismo valor
             stocks_producto = request.POST.getlist('stockProducto[]') 
             stocks_deposito = request.POST.getlist('stockDeposito[]') 
-            
+
+            #zip() combina las listas elemento 
+            #for recorre esas combinaciones
             for color, talle, stock_producto, stock_deposito in zip( 
                 colores, 
                 talles, 
@@ -161,6 +172,7 @@ def agregar_producto(request):
                         stockProducto=int(stock_producto or 0), 
                         stockDeposito=int(stock_deposito or 0) )
 
+            # obtiene todas las fotos para mostrarlas
             fotos = request.FILES.getlist('foto')
             print("FOTOS:", fotos)
             for foto in fotos:

@@ -188,27 +188,7 @@ body {
     display: block;
 }
 
-.galeria-producto .flecha-galeria {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 5;
-    width: 35px;
-    height: 40px;
-    border: none;
-    border-radius: 5px;
-    background: rgba(255, 255, 255, 0.9);
-    color: #292929;
-    cursor: pointer;
-}
 
-.galeria-producto .anterior {
-    left: 8px;
-}
-
-.galeria-producto .siguiente {
-    right: 8px;
-}
 
 
 .boton-imagen {
@@ -367,6 +347,12 @@ body {
 
 @media (max-width: 700px) {
 
+#foto {
+    display: none !important;
+}
+
+
+
     .header {
         padding: 0 20px;
     }
@@ -395,6 +381,12 @@ body {
     .variante {
         grid-template-columns: 1fr 1fr;
     }
+}
+
+
+/* Ocultar el selector original en todos los tamaños */
+.formulario-producto input[type="file"] {
+    display: none !important;
 }
 
 

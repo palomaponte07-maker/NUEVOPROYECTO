@@ -33,27 +33,30 @@
             </div>
         {% endif %}
         
+        <div id="vistaPrevia"></div>
+
+        <input
+            type="file"
+            name="foto"
+            id="foto"
+            accept="image/*"
+            multiple
+        >
+
+    
        
         <div class="campo imagen-campo">
-            <label for="foto">Imágenes del producto</label>
+            <label>Imágenes del producto</label>
 
             <label for="foto" class="boton-imagen">
-                Seleccionar imágenes
+                Agregar imágenes
             </label>
-
-            
-            <input
-                type="file"
-                id="foto"
-                name="foto"
-                accept="image/*"
-                multiple
-                hidden
-            >
 
             <div id="vistaPreviaImagenes" class="imagenes-container"></div>
 
-            <small>Podés seleccionar varias fotos a la vez.</small>
+            <small>
+                Podés seleccionar varias fotos juntas o agregarlas en distintas selecciones.
+            </small>
         </div>
 
 
@@ -341,15 +344,51 @@
 
 <script>
     
+
+
+const precioCosto =
+    document.getElementById("precioCosto");
+
+const iva =
+    document.getElementById("IVA");
+
+const precioVentaVisual =
+    document.getElementById("precioVentaVisual");
+
+
+const precioVenta =
+    document.getElementById("precioVenta");
+
 const inputFotos = document.getElementById("foto");
 const vistaPrevia = document.getElementById("vistaPreviaImagenes");
 
-inputFotos.addEventListener("change", function () {
-    vistaPrevia.innerHTML = "";
+let fotosSeleccionadas = [];
 
-    Array.from(inputFotos.files).forEach((foto) => {
+inputFotos.addEventListener("change", function () {
+    const nuevasFotos = Array.from(inputFotos.files);
+
+    nuevasFotos.forEach(foto => {
         if (!foto.type.startsWith("image/")) return;
 
+        const yaExiste = fotosSeleccionadas.some(
+            existente =>
+                existente.name === foto.name &&
+                existente.size === foto.size &&
+                existente.lastModified === foto.lastModified
+        );
+
+        if (!yaExiste) {
+            fotosSeleccionadas.push(foto);
+        }
+    });
+
+    actualizarVistaPrevia();
+});
+
+function actualizarVistaPrevia() {
+    vistaPrevia.innerHTML = "";
+
+    fotosSeleccionadas.forEach((foto, indice) => {
         const contenedor = document.createElement("div");
         contenedor.classList.add("vista-previa-foto");
 
@@ -364,24 +403,29 @@ inputFotos.addEventListener("change", function () {
         const nombre = document.createElement("small");
         nombre.textContent = foto.name;
 
+        const botonEliminar = document.createElement("button");
+        botonEliminar.type = "button";
+        botonEliminar.textContent = "Quitar";
+
+        botonEliminar.addEventListener("click", function () {
+            fotosSeleccionadas.splice(indice, 1);
+            actualizarVistaPrevia();
+        });
+
         contenedor.appendChild(imagen);
         contenedor.appendChild(nombre);
+        contenedor.appendChild(botonEliminar);
         vistaPrevia.appendChild(contenedor);
     });
-});
 
-const precioCosto =
-    document.getElementById("precioCosto");
+    const transferencia = new DataTransfer();
 
-const iva =
-    document.getElementById("IVA");
+    fotosSeleccionadas.forEach(foto => {
+        transferencia.items.add(foto);
+    });
 
-const precioVentaVisual =
-    document.getElementById("precioVentaVisual");
-
-
-const precioVenta =
-    document.getElementById("precioVenta");
+    inputFotos.files = transferencia.files;
+}
 
 function calcularPrecio() {
 

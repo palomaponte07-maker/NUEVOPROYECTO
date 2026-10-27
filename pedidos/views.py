@@ -124,7 +124,7 @@ def agregar_detalle(
         subTotal=subtotal
     )
 
-    # Solo descontamos stock si todavía NO fue reservado
+    # descuenta el stock cuando se registra el detalle del pedido
     if variante is not None and not stock_reservado:
 
 

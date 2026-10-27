@@ -238,12 +238,13 @@ def editar_producto(request, idProducto):
             producto.precioCosto = Decimal(request.POST.get('precioCosto', ''))
             producto.IVA = Decimal(request.POST.get('IVA', ''))
 
-            # Calcular automáticamente el precio de venta
+
            
             producto.precioVenta = (
                 producto.precioCosto
                 + (producto.precioCosto * producto.IVA / Decimal('100'))
             ).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+            #valida el producto
             producto.full_clean()
 
             producto.porcentajeDescuento = Decimal(
@@ -261,6 +262,7 @@ def editar_producto(request, idProducto):
                 'fechaFinDescuento', ''
             ).strip()
 
+            #convierte el texto en fecha
             producto.fechaInicioDescuento = (
                 datetime.strptime(
                     fecha_inicio, '%Y-%m-%dT%H:%M'

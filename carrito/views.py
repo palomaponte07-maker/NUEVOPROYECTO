@@ -33,7 +33,7 @@ def actualizar_carrito(carrito):
     for item in productos
     )
 
-    iva = subtotal * Decimal('0.21')
+    iva = subtotal * Decimal('0.00')
 
     total = subtotal + iva
 
@@ -49,7 +49,7 @@ def carrito(request):
     # Expira los carritos que han pasado su fecha de expiración y devuelve el stock de los productos
     expirar_carritos()
 
-    # Obtiene el id del carrito de la sesión del usuario
+    # Obtiene el id del carrito guardado en la sesión del navegador
     idCarrito = request.session.get("idCarrito")
 
     # Inicializa las variables en caso de que no haya un carrito activo
@@ -101,7 +101,8 @@ def carrito(request):
             nuevo_numero = int(ultimo_pedido.numeroPedido) + 1
         else:
             nuevo_numero = 1
-            
+
+        # Crear un nuevo pedido con los datos del carrito y del cliente
         pedido = crear_pedido(
         cliente_id=cliente.idCliente,
         administrador_id=administrador.idAdministrador,
@@ -140,7 +141,7 @@ def carrito(request):
 
 
         return redirect("carrito")
-
+    
     subtotal = sum(
         item.subTotal or 0
         for item in productos_carrito
@@ -151,7 +152,7 @@ def carrito(request):
         for item in productos_carrito
     )
 
-    iva = subtotal * Decimal('0.21')
+    iva = subtotal * Decimal('0.00')
 
     total = subtotal + iva
 
@@ -170,9 +171,7 @@ def carrito(request):
 
 def agregar_al_carrito(request, idProducto):
 
-    print("AGREGAR AL CARRITO EJECUTADO")
-    print("METODO:", request.method)
-    print("ID PRODUCTO:", idProducto)
+
 
     if request.method == "POST":
 
@@ -184,7 +183,7 @@ def agregar_al_carrito(request, idProducto):
 
         idVariante = request.POST.get("idVariante")
 
-        print("ID VARIANTE:", idVariante)
+
         #verififca que hay stock 
         variante = get_object_or_404(
             ProductoVariante,

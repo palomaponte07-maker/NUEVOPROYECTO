@@ -10,6 +10,7 @@ from .models import Pedido, DetallePedido
 
 def calcular_total_pedido(pedido):
     """ recalcular la cintidad de total y el total monetario del pedido a partir de sus detalles."""
+    # obtener todos los detalles del pedido
     detalles = DetallePedido.objects.filter(pedido=pedido)
     cantidad_total = 0
     total = Decimal("0.00")
@@ -34,10 +35,11 @@ def crear_pedido(
     metodo_pago=None
 ):
     """ Crea un pedido nuevo """
-    
+    # Obtener el cliente y el administrador
     cliente = Cliente.objects.get(pk=cliente_id)
     administrador = Administrador.objects.get(pk=administrador_id)
-
+    
+    # Validaciones
     if not numero_pedido:
         raise ValidationError(
             "El número de pedido es obligatorio."
@@ -93,10 +95,11 @@ def agregar_detalle(
         raise ValidationError("La cantidad debe ser mayor a cero.")
 
     variante = None
-
+    
+    # validar si la variante pertenece al producto y si hay suficiente stock
     if variante_id is not None:
         variante = ProductoVariante.objects.get(pk=variante_id)
-
+        # Validar que la variante pertenece al producto
         if variante.producto_id != producto.idProducto:
             raise ValidationError(
                 "La variante no pertenece al producto seleccionado."
@@ -168,7 +171,7 @@ def actualizar_detalle(
     nueva_cantidad
 ):
 
-    
+    # Obtener el detalle del pedido y bloquearlo para evitar condiciones de carrera
     detalle = DetallePedido.objects.select_for_update().get(
         pk=detalle_id
     )
@@ -178,6 +181,7 @@ def actualizar_detalle(
         )
     cantidad_anterior = detalle.cantidad
     diferencia = nueva_cantidad - cantidad_anterior
+    
     if detalle.variante:
         variante = ProductoVariante.objects.select_for_update().get(
             pk=detalle.variante_id

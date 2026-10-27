@@ -359,7 +359,7 @@ def expirar_carritos():
     )
 
     for carrito in carritos_expirados:
-
+        #busca los productos de cada carrito
         productos = CarritoProducto.objects.filter(
             carrito=carrito,
             estado=True
@@ -368,7 +368,7 @@ def expirar_carritos():
         for item in productos:
 
             if item.variante:
-
+                #debuelve las unidades al stock
                 variante = ProductoVariante.objects.select_for_update().get(
                     idVariante=item.variante_id
                 )
@@ -385,6 +385,7 @@ def expirar_carritos():
                 update_fields=["estado"]
             )
 
+        #desactiva el carrito expirado
         carrito.estado = False
 
         carrito.save(

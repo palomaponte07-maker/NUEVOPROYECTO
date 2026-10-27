@@ -32,44 +32,30 @@
                 {{ form.errors }}
             </div>
         {% endif %}
+        
+       
         <div class="campo imagen-campo">
-            <label>
-                Imágenes del producto
+            <label for="foto">Imágenes del producto</label>
+
+            <label for="foto" class="boton-imagen">
+                Seleccionar imágenes
             </label>
-            <div class="imagenes-container"
-                 id="imagenesContainer">
-                <label class="zona-imagen">
 
-                    <span class="icono-subir">
-                        ↑
-                    </span>
-                    <input
-                        type="file"
-                        name="foto"
-                        accept="image/*">
+            
+            <input
+                type="file"
+                id="foto"
+                name="foto"
+                accept="image/*"
+                multiple
+                hidden
+            >
 
-                </label>
+            <div id="vistaPreviaImagenes" class="imagenes-container"></div>
 
-                <label class="zona-imagen">
-                    <span class="icono-subir">
-                        ↑
-                    </span>
-                    <input
-                        type="file"
-                        name="foto"
-                        accept="image/*">
+            <small>Podés seleccionar varias fotos a la vez.</small>
+        </div>
 
-                </label>
-                <label class="imagen-agregar">
-                    <span>
-                        + agregar
-                    </span>
-                    <input
-                        type="file"
-                        name="foto"
-                        accept="image/*">
-                </label>
-            </div>
 
 
             <small>
@@ -354,6 +340,36 @@
 </main>
 
 <script>
+    
+const inputFotos = document.getElementById("foto");
+const vistaPrevia = document.getElementById("vistaPreviaImagenes");
+
+inputFotos.addEventListener("change", function () {
+    vistaPrevia.innerHTML = "";
+
+    Array.from(inputFotos.files).forEach((foto) => {
+        if (!foto.type.startsWith("image/")) return;
+
+        const contenedor = document.createElement("div");
+        contenedor.classList.add("vista-previa-foto");
+
+        const imagen = document.createElement("img");
+        imagen.src = URL.createObjectURL(foto);
+        imagen.alt = foto.name;
+        imagen.style.width = "120px";
+        imagen.style.height = "120px";
+        imagen.style.objectFit = "cover";
+        imagen.style.borderRadius = "8px";
+
+        const nombre = document.createElement("small");
+        nombre.textContent = foto.name;
+
+        contenedor.appendChild(imagen);
+        contenedor.appendChild(nombre);
+        vistaPrevia.appendChild(contenedor);
+    });
+});
+
 const precioCosto =
     document.getElementById("precioCosto");
 

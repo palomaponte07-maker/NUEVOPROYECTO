@@ -1166,6 +1166,83 @@ footer a:hover{
 }
 
 
+.galeria-producto {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.galeria-producto .foto-galeria {
+    display: none;
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+}
+
+.galeria-producto .foto-galeria.foto-activa {
+    display: block;
+}
+
+.galeria-producto .flecha-galeria {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    width: 35px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #292929;
+    cursor: pointer;
+}
+
+.galeria-producto .anterior {
+    left: 8px;
+}
+
+.galeria-producto .siguiente {
+    right: 8px;
+}
+/* Galería de imágenes del producto */
+.galeria-producto {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Ocultar todas las fotos por defecto */
+.galeria-producto .foto-galeria {
+    display: none;
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+}
+
+/* Mostrar solamente la foto activa */
+.galeria-producto .foto-galeria.foto-activa {
+    display: block;
+}
+
+/* Flechas para cambiar las fotos */
+.galeria-producto .flecha-galeria {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    cursor: pointer;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+}
+
+.galeria-producto .anterior {
+    left: 5px;
+}
+
+.galeria-producto .siguiente {
+    right: 5px;
+}
 .pedido-cantidad a,
 .pedido-cantidad span {
     width: 34px;

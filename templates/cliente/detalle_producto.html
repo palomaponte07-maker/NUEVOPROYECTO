@@ -20,21 +20,55 @@
 
                 </div>
 
-                <div class="imagen-principal">
+                
+                <div class="detalle-imagenes">
 
-                    {% with imagen=producto.imagen_set.first %}
+                    <div class="miniaturas" id="miniaturas">
+                        {% for imagen in producto.imagen_set.all %}
+                            {% if imagen.imagen %}
+                                <img
+                                    src="{{ imagen.imagen.url }}"
+                                    alt="{{ producto.nombre }}"
+                                    class="miniatura {% if forloop.first %}miniatura-activa{% endif %}"
+                                    data-imagen="{{ imagen.imagen.url }}"
+                                    onclick="cambiarImagen(this)"
+                                >
+                            {% endif %}
+                        {% endfor %}
+                    </div>
 
-                        {% if imagen and imagen.imagen %}
+                    <div class="imagen-principal">
 
-                            <img id="imagen-principal"
-                                src="{{ imagen.imagen.url }}"
-                                alt="{{ producto.nombre }}">
+                        {% with imagen=producto.imagen_set.first %}
+                            {% if imagen and imagen.imagen %}
 
+                                <img id="imagen-principal"
+                                    src="{{ imagen.imagen.url }}"
+                                    alt="{{ producto.nombre }}">
+
+                            {% endif %}
+                        {% endwith %}
+
+                        {% if producto.imagen_set.count > 1 %}
+                            <button type="button"
+                                    class="flecha-detalle anterior"
+                                    onclick="moverImagen(-1)"
+                                    aria-label="Imagen anterior">
+                                &#10094;
+                            </button>
+
+                            <button type="button"
+                                    class="flecha-detalle siguiente"
+                                    onclick="moverImagen(1)"
+                                    aria-label="Imagen siguiente">
+                                &#10095;
+                            </button>
                         {% endif %}
 
-                    {% endwith %}
+                    </div>
 
                 </div>
+
 
             </div>
 
@@ -432,6 +466,38 @@
         formulario.submit();
 
     });
+
+    let indiceImagen = 0;
+
+const miniaturas = document.querySelectorAll(".miniatura");
+const imagenPrincipal = document.getElementById("imagen-principal");
+
+function cambiarImagen(miniatura) {
+    indiceImagen = Array.from(miniaturas).indexOf(miniatura);
+    actualizarImagen();
+}
+
+function moverImagen(direccion) {
+    if (miniaturas.length <= 1) return;
+
+    indiceImagen =
+        (indiceImagen + direccion + miniaturas.length) %
+        miniaturas.length;
+
+    actualizarImagen();
+}
+
+function actualizarImagen() {
+    if (!imagenPrincipal || !miniaturas.length) return;
+
+    imagenPrincipal.src = miniaturas[indiceImagen].dataset.imagen;
+
+    miniaturas.forEach(miniatura => {
+        miniatura.classList.remove("miniatura-activa");
+    });
+
+    miniaturas[indiceImagen].classList.add("miniatura-activa");
+}
 
 </script>
 

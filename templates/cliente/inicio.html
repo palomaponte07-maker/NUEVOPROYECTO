@@ -57,17 +57,37 @@ Inicio
 
                 {% endif %}
 
-                    {% with imagen=producto.imagen_set.first %}
+                    
+<div class="galeria-producto">
 
-                        {% if imagen and imagen.imagen %}
+    {% with imagenes=producto.imagen_set.all %}
+        {% for imagen in imagenes %}
+            {% if imagen.imagen %}
+                <img
+                    src="{{ imagen.imagen.url }}"
+                    class="img-fluid foto-galeria {% if forloop.first %}foto-activa{% endif %}"
+                    alt="{{ producto.nombre }}"
+                >
+            {% endif %}
+        {% endfor %}
 
-                            <img src="{{ imagen.imagen.url }}"
-                                 class="img-fluid"
-                                 alt="{{ producto.nombre }}">
+        {% if imagenes|length > 1 %}
+            <button type="button"
+                    class="flecha-galeria anterior"
+                    aria-label="Foto anterior">
+                &#10094;
+            </button>
 
-                        {% endif %}
+            <button type="button"
+                    class="flecha-galeria siguiente"
+                    aria-label="Foto siguiente">
+                &#10095;
+            </button>
+        {% endif %}
+    {% endwith %}
 
-                    {% endwith %}
+</div>
+
 
                     <h6>{{ producto.nombre }}</h6>
 
@@ -166,5 +186,35 @@ Inicio
         </div>
     </div>
 </footer>
+
+<script>
+document.querySelectorAll(".galeria-producto").forEach(galeria => {
+    const fotos = galeria.querySelectorAll(".foto-galeria");
+    const anterior = galeria.querySelector(".anterior");
+    const siguiente = galeria.querySelector(".siguiente");
+
+    if (fotos.length <= 1 || !anterior || !siguiente) return;
+
+    let indice = 0;
+
+    function mostrarFoto(nuevoIndice) {
+        fotos[indice].classList.remove("foto-activa");
+        indice = (nuevoIndice + fotos.length) % fotos.length;
+        fotos[indice].classList.add("foto-activa");
+    }
+
+    anterior.addEventListener("click", event => {
+        event.preventDefault();
+        event.stopPropagation();
+        mostrarFoto(indice - 1);
+    });
+
+    siguiente.addEventListener("click", event => {
+        event.preventDefault();
+        event.stopPropagation();
+        mostrarFoto(indice + 1);
+    });
+});
+</script>
 
 {% endblock %}

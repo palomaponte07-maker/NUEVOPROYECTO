@@ -170,6 +170,61 @@ body {
     font-size: 11px;
 }
 
+
+.galeria-producto {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.galeria-producto .foto-galeria {
+    display: none;
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+}
+
+.galeria-producto .foto-galeria.foto-activa {
+    display: block;
+}
+
+.galeria-producto .flecha-galeria {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    width: 35px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #292929;
+    cursor: pointer;
+}
+
+.galeria-producto .anterior {
+    left: 8px;
+}
+
+.galeria-producto .siguiente {
+    right: 8px;
+}
+
+
+.boton-imagen {
+    display: inline-block;
+    padding: 10px 16px;
+    background-color: #c11f25;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.boton-imagen:hover {
+    background-color: #a7191f;
+}
+
 .nombre-campo {
     margin-top: 20px;
 }

@@ -62,18 +62,22 @@
 
                 {% for producto in productos %}
                 <div class="producto-row">
-                     <div class="producto-info">
-                        {% with producto.imagen_set.first as imagen %}
-                            {% if imagen and imagen.imagen %}
-                               <img src="{{ imagen.imagen.url }}" 
-                                    alt="{{ producto.nombre }}">
-                            {% else %}
-                             <div class="sin-imagen">
-                                Sin imagen
-                             </div>
-                            {% endif %}
-                        {% endwith %}
-                    </div>
+                    
+                <div class="producto-info">
+                    {% for imagen in producto.imagen_set.all %}
+                        {% if imagen.imagen %}
+                            <img
+                                src="{{ imagen.imagen.url }}"
+                                alt="{{ producto.nombre }}"
+                            >
+                        {% endif %}
+                    {% empty %}
+                        <div class="sin-imagen">
+                            Sin imagen
+                        </div>
+                    {% endfor %}
+                </div>
+
 
                     <div>
                        {{ producto.descripcion }}

@@ -46,23 +46,25 @@ def actualizar_carrito(carrito):
 
 
 def carrito(request):
-
+    # Expira los carritos que han pasado su fecha de expiración y devuelve el stock de los productos
     expirar_carritos()
-    
+
+    # Obtiene el id del carrito de la sesión del usuario
     idCarrito = request.session.get("idCarrito")
 
+    # Inicializa las variables en caso de que no haya un carrito activo
     carrito = None
     productos_carrito = []
 
     if idCarrito:
-
+        # Busca el carrito activo en la base de datos
         carrito = Carrito.objects.filter(
             idCarrito=idCarrito,
             estado=True
         ).first()
 
         if carrito:
-
+            # Obtiene los productos del carrito activo y sus variantes, si existen
             productos_carrito = CarritoProducto.objects.filter(
                 carrito=carrito,
                 estado=True
@@ -71,7 +73,7 @@ def carrito(request):
                 "variante"
             )
 
-    
+    # Se ejecuta cuando cumple la condición de que el método sea POST y que haya un carrito activo con productos
     if request.method == "POST" and carrito and productos_carrito:
 
         metodo_pago = request.POST.get("metodoPago")
@@ -99,6 +101,7 @@ def carrito(request):
             nuevo_numero = int(ultimo_pedido.numeroPedido) + 1
         else:
             nuevo_numero = 1
+            
         pedido = crear_pedido(
         cliente_id=cliente.idCliente,
         administrador_id=administrador.idAdministrador,
@@ -109,7 +112,7 @@ def carrito(request):
         )
 
         carrito.fecha = timezone.now()
-        carrito.estadoPago = "PENDIENTE"
+        carrito.estadoPago = "Pendiente"
         carrito.metodoPago = metodo_pago
         carrito.save()
 
@@ -389,18 +392,20 @@ def expirar_carritos():
         )
 
 @transaction.atomic
-def eliminar_del_carrito(request, idCarritoProducto):
+def eliminar_del_carrito(idCarritoProducto):
 
+    #Busca el producto del carrito y lo bloquea para evitar conflictos de concurrencia
     carrito_producto = get_object_or_404(
         CarritoProducto.objects.select_for_update(),
         idCarritoProducto=idCarritoProducto,
         estado=True
     )
-
+    # Obtiene la variante asociada al producto del carrito, si existe
     variante = carrito_producto.variante
 
-
+    # Devolver al stock las unidades reservadas
     if variante:
+        # Devolver la cantidad del producto al stock disponible
         variante.stockProducto += carrito_producto.cantidad
 
         variante.save(
@@ -409,6 +414,7 @@ def eliminar_del_carrito(request, idCarritoProducto):
 
 
     carrito_producto.estado = False
+
     carrito_producto.save(
         update_fields=["estado"]
     )
